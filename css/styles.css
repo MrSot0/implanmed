@@ -2351,27 +2351,6 @@ html, body {
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
-@media (max-width: 900px) {
-    .blog-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-    }
-
-    .blog-card-destacada {
-        grid-row: span 1;
-    }
-
-    .blog-card-destacada .blog-img-wrapper {
-        min-height: 220px;
-        flex: none;
-        height: 220px;
-    }
-
-    .blog-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
 
 @media (max-width: 480px) {
     .blog-seccion {
@@ -2424,26 +2403,7 @@ html, body {
     pointer-events: auto;
     transform: translateY(0);
 }
-
-@media (max-width: 900px) {
-    .btn-volver-arriba {
-        width: 56px;
-        height: 56px;
-        padding: 0;
-        border-radius: 50%;
-        justify-content: center;
-        gap: 0;
-        bottom: 88px;
-        right: 20px;
-        flex-shrink: 0;
-        flex-grow: 0;
-    }
-
-    .btn-volver-arriba-label {
-        display: none;
-    }
-}
-
+    
 
 /* ==========================================================================
    BOTÓN FLOTANTE DE WHATSAPP
@@ -2496,7 +2456,46 @@ html, body {
     .btn-whatsapp-label {
         display: none;
     }
+
+    .blog-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .blog-card-destacada {
+        grid-row: span 1;
+    }
+
+    .blog-card-destacada .blog-img-wrapper {
+        min-height: 220px;
+        flex: none;
+        height: 220px;
+    }
+
+    .blog-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-volver-arriba {
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+        gap: 0;
+        bottom: 88px;
+        right: 20px;
+        flex-shrink: 0;
+        flex-grow: 0;
+    }
+
+    .btn-volver-arriba-label {
+        display: none;
+    }
 }
+
+
 
 @keyframes whatsapp-entrada {
     from { opacity: 0; transform: translateY(20px) scale(0.8); }
@@ -2645,4 +2644,20 @@ html, body {
 .popup-btn-cerrar:hover {
     border-color: #7B2D8B;
     color: #7B2D8B;
+}
+
+
+/* Optimización de render para elementos animados */
+.carrusel-track {
+    will-change: transform;
+}
+
+.btn-whatsapp-flotante,
+.btn-volver-arriba {
+    will-change: transform;
+}
+
+.blog-card,
+.producto-card {
+    will-change: transform;
 }
