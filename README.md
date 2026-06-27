@@ -1,3 +1,2 @@
 # implanmed
-implanmed website
-.
+implanmed website.
