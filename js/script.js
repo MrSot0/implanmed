@@ -183,3 +183,27 @@ window.addEventListener('scroll', () => {
 btnTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// POPUP EN CONSTRUCCIÓN
+function abrirPopupConstruccion(e) {
+    e.preventDefault();
+    document.getElementById('popup-construccion').classList.add('visible');
+}
+
+document.getElementById('popup-cerrar').addEventListener('click', () => {
+    document.getElementById('popup-construccion').classList.remove('visible');
+});
+
+// Cierra al hacer clic fuera de la card
+document.getElementById('popup-construccion').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('visible');
+});
+
+// Asigna el popup a los botones que aún no tienen funcionalidad
+document.getElementById('abrir-login').addEventListener('click', abrirPopupConstruccion);
+document.getElementById('abrir-registro').addEventListener('click', abrirPopupConstruccion);
+document.getElementById('abrir-carrito').addEventListener('click', abrirPopupConstruccion);
+// Botones de carrito en las tarjetas de producto
+document.querySelectorAll('.btn-card-carrito').forEach(btn => {
+    btn.addEventListener('click', abrirPopupConstruccion);
+});

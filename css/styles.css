@@ -2502,3 +2502,146 @@ html, body {
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+
+
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 12px 4%;
+    }
+
+    /* Ocultar texto del botón login en móvil */
+    .btn-login span,
+    .btn-login {
+        font-size: 0;        /* oculta el texto */
+        padding: 8px;
+        min-width: unset;
+    }
+
+    /* Solo mostrar el ícono del login */
+    .btn-login svg {
+        font-size: initial;
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Reducir botón registrarse */
+    .btn-registro {
+        padding: 7px 10px;
+        font-size: 0.75rem;
+    }
+
+    /* Reducir carrito */
+    .btn-carrito {
+        font-size: 0.85rem;
+        padding: 6px 8px;
+    }
+
+    /* Asegurar que el hamburger sea visible */
+    .nav-menu-toggle {
+        display: flex !important;
+        flex-shrink: 0;
+        margin-left: 8px;
+    }
+}
+
+
+/* ==========================================================================
+   POPUP EN CONSTRUCCIÓN
+   ========================================================================== */
+.popup-construccion {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.popup-construccion.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.popup-construccion-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px 36px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+
+    transform: translateY(16px) scale(0.97);
+    transition: transform 0.25s ease;
+}
+
+.popup-construccion.visible .popup-construccion-card {
+    transform: translateY(0) scale(1);
+}
+
+.popup-construccion-icono {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.popup-construccion-titulo {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.popup-construccion-texto {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.popup-construccion-botones {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.popup-btn-whatsapp {
+    display: block;
+    background-color: #25d366;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 13px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.popup-btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+}
+
+.popup-btn-cerrar {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    color: #64748b;
+    padding: 11px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.popup-btn-cerrar:hover {
+    border-color: #7B2D8B;
+    color: #7B2D8B;
+}
