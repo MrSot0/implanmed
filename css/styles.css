@@ -2659,3 +2659,116 @@ html, body {
 .producto-card {
     will-change: transform;
 }
+
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 10px 4%;
+        gap: 8px;
+    }
+
+    .nav-menu-toggle {
+        display: flex !important;
+        flex-shrink: 0;
+        order: 2;
+    }
+
+    .nav-logo {
+        order: 1;
+        flex: 1;
+    }
+
+    .nav-acciones {
+        order: 3;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    /* Ocultar texto, dejar solo ícono */
+    .btn-login {
+        padding: 8px;
+        min-width: unset;
+        font-size: 0;        /* oculta el texto */
+        gap: 0;
+    }
+
+    .btn-login svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    /* Ocultar "Registrarse" completamente en móvil muy pequeño */
+    @media (max-width: 400px) {
+        .btn-registro {
+            display: none;
+        }
+    }
+
+    .btn-registro {
+        padding: 7px 10px;
+        font-size: 0.75rem;
+    }
+
+    .btn-carrito {
+        padding: 7px 8px;
+        font-size: 0.85rem;
+    }
+
+    /* Nav links */
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #ffffff;
+        border-top: 1px solid #e2e8f0;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        z-index: 99;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition:
+            max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+            opacity    0.25s ease,
+            transform  0.25s ease,
+            padding    0.35s ease;
+    }
+
+    .nav-links.activo {
+        max-height: 560px;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        padding: 8px 0;
+    }
+
+    .nav-links li {
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links.activo li:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.05s; }
+    .nav-links.activo li:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.10s; }
+    .nav-links.activo li:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.15s; }
+    .nav-links.activo li:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.20s; }
+    .nav-links.activo li:nth-child(5) { opacity: 1; transform: translateX(0); transition-delay: 0.25s; }
+    .nav-links.activo li:nth-child(6) { opacity: 1; transform: translateX(0); transition-delay: 0.30s; }
+
+    .nav-links li a {
+        display: block;
+        padding: 14px 24px;
+        font-size: 1rem;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .nav-links li:last-child a {
+        border-bottom: none;
+    }
+}
