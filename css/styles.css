@@ -2569,3 +2569,36 @@ html, body {
 
 .programa-tag { text-align: center; }
 .programa-texto { text-align: center; }
+
+
+
+
+@media (max-width: 768px) {
+    .carrusel-slide {
+        flex-direction: column-reverse;
+        gap: 20px;
+        padding: 30px 20px 40px 20px;
+        min-height: auto !important;  /* ← elimina la altura mínima fija */
+        height: auto !important;
+        overflow: visible;            /* ← permite que el contenido sea visible */
+    }
+
+    .carrusel-ventana-global {
+        overflow: hidden;             /* ← el recorte lo hace el contenedor, no el slide */
+    }
+
+    .hero-contenido {
+        overflow: visible;            /* ← no cortar el contenido */
+        min-width: 0;
+    }
+}
+
+
+
+
+/* Desktop */
+.carrusel-slide {
+    min-height: 480px;
+    align-items: center;
+    overflow: visible;  /* ← cambiar de hidden a visible */
+}
