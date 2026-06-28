@@ -1901,164 +1901,100 @@ a {
    AJUSTES RESPONSIVE PARA EL HERO / CARRUSEL (MÓVIL Y TABLET)
    ========================================================================== */
 @media (max-width: 768px) {
-    /* 1. Cambiamos la distribución de horizontal a vertical */
     .carrusel-slide {
-        flex-direction: column-reverse; /* Coloca la imagen arriba y los textos abajo, o usa 'column' si prefieres los textos arriba */
-        gap: 30px;                     /* Reducimos el espacio exagerado de 60px */
-        padding: 40px 20px;
+        flex-direction: column-reverse;
+        gap: 30px;
+        padding: 40px 20px 60px 20px;
         min-height: auto;
+        overflow: hidden;
     }
 
-    /* 2. Permitimos que los contenedores ocupen el 100% del ancho disponible */
-    .hero-contenido, 
+    .hero-contenido,
     .hero-imagen-wrapper {
         max-width: 100%;
         width: 100%;
-        min-width: 0; /* Rompe el candado del min-width: 320px */
+        min-width: 0;
     }
 
-    /* 3. Reducimos el tamaño del título para que no se corte ni se encime */
+    .hero-contenido {
+        overflow: hidden;
+    }
+
     .hero-titulo {
-        font-size: 2rem; /* Tamaño mucho más adecuado para smartphones */
+        font-size: 2rem;
         line-height: 1.2;
     }
 
-
-
-    /* 5. Ajustamos los botones para que no se desborden si son muy largos */
     .hero-botones {
-        flex-direction: column; /* Apila los botones en vertical */
+        flex-direction: column;
         gap: 12px;
-    }
-    
-    .btn-cta-morado, .btn-cta-transparente {
         width: 100%;
-        text-align: center; /* Los centra perfectamente */
+        padding-bottom: 8px;
     }
 
-    /* 6. Ajustamos la barra de beneficios inferior */
+    .btn-cta-morado,
+    .btn-cta-transparente {
+        width: 100%;
+        text-align: center;
+        display: block;
+        box-sizing: border-box;
+    }
+
     .hero-beneficios-bar {
         flex-direction: column;
         gap: 12px;
         margin-top: 30px;
     }
-}
 
-/* Ajuste extra para pantallas extremadamente pequeñas (menos de 480px) */
-@media (max-width: 480px) {
-    .hero-titulo {
-        font-size: 1.75rem;
-    }
-    
-    .hero-seccion-global {
-        padding: 40px 4%; /* Reducimos el padding lateral del 8% al 4% para ganar espacio útil */
-    }
-}
-
-
-
-/* ==========================================================================
-   CORRECCIÓN GLOBAL RESPONSIVE (SOLUCIÓN A ESPACIO EN BLANCO Y TARJETAS)
-   ========================================================================== */
-
-/* 1. Evitamos que cualquier elemento rompa la pantalla hacia la derecha */
-html, body {
-    width: 100%;
-    max-width: 100vw;
-    overflow-x: hidden; /* Corta de raíz el espacio vacío del carrusel */
-}
-
-/* 2. Forzamos al contenedor del carrusel a no desbordar el fondo negro */
-.hero-seccion-global,
-.carrusel-ventana-global {
-    width: 100% !important;
-    max-width: 100vw !important;
-    overflow: hidden !important;
-}
-
-/* 3. Ajustes para la sección de Productos (Línea 390 de tu CSS) */
-@media (max-width: 992px) {
-    .productos-grid {
-        /* Pasamos de 4 columnas a 2 columnas en pantallas medianas (Tablets) */
-        grid-template-columns: repeat(2, 1fr) !important; 
-        gap: 20px;
-    }
-}
-
-@media (max-width: 650px) {
-    /* 4. Forzamos la alineación VERTICAL completa para celulares (630px) */
-    .productos-grid {
-        grid-template-columns: 1fr !important; /* Una sola columna, tarjetas apiladas */
-        gap: 16px;
+    /* NAVBAR */
+    .navbar {
+        padding: 10px 4%;
+        gap: 8px;
     }
 
-    /* Reducimos el padding exagerado del contenedor para ganar espacio en móvil */
-    .productos-seccion {
-        padding: 40px 16px !important;
+    .nav-logo {
+        order: 1;
+        flex: 1;
     }
-
-    /* Ajustamos los textos de las tarjetas para que no se corten */
-    .producto-tarjeta-contenido h3 {
-        font-size: 1.25rem !important;
-    }
-}
-
-
-
-
-
-
-
-
-/* ==========================================================================
-   NAVBAR RESPONSIVE — MENÚ HAMBURGER
-   ========================================================================== */
-
-/* Ocultar el botón hamburger en escritorio */
-.nav-menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 200;
-}
-
-.nav-menu-toggle span {
-    display: block;
-    width: 100%;
-    height: 2px;
-    background-color: #374151;
-    border-radius: 2px;
-    transition: all 0.3s ease;
-    transform-origin: center;
-}
-
-/* Animación de las barras → X al abrir */
-.nav-menu-toggle.abierto span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-}
-.nav-menu-toggle.abierto span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-}
-.nav-menu-toggle.abierto span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-}
-
-@media (max-width: 768px) {
 
     .nav-menu-toggle {
-        display: flex;
+        display: flex !important;
+        flex-shrink: 0;
+        order: 2;
     }
 
-    /* Base: oculto pero animable (NO usar display:none) */
+    .nav-acciones {
+        order: 3;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    .btn-login {
+        padding: 8px;
+        min-width: unset;
+        font-size: 0;
+        gap: 0;
+    }
+
+    .btn-login svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .btn-registro {
+        padding: 7px 10px;
+        font-size: 0.75rem;
+    }
+
+    .btn-carrito {
+        padding: 7px 8px;
+        font-size: 0.85rem;
+    }
+
+    /* NAV LINKS HAMBURGER */
     .nav-links {
-        display: flex;               /* Siempre flex, nunca display:none */
+        display: flex;
         flex-direction: column;
         gap: 0;
         position: absolute;
@@ -2068,34 +2004,28 @@ html, body {
         background-color: #ffffff;
         border-top: 1px solid #e2e8f0;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        padding: 0;
         z-index: 99;
-
-        /* Estado cerrado */
         max-height: 0;
         overflow: hidden;
         opacity: 0;
         transform: translateY(-8px);
-        pointer-events: none;        /* Evita clics mientras está oculto */
-
-        transition: 
+        pointer-events: none;
+        transition:
             max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
             opacity    0.25s ease,
             transform  0.25s ease,
             padding    0.35s ease;
     }
 
-    /* Estado abierto */
     .nav-links.activo {
-        text-align: center;
-        max-height: 400px;           /* Suficiente para todos los links */
+        max-height: 560px;
         opacity: 1;
         transform: translateY(0);
         pointer-events: auto;
         padding: 8px 0;
+        text-align: center;
     }
 
-    /* Animación escalonada de cada item */
     .nav-links li {
         opacity: 0;
         transform: translateX(-10px);
@@ -2119,31 +2049,109 @@ html, body {
     .nav-links li:last-child a {
         border-bottom: none;
     }
+}
 
-    .nav-acciones {
-        gap: 8px;
+/* Pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .hero-titulo {
+        font-size: 1.75rem;
     }
 
-    .btn-login {
-        padding: 7px 12px;
-        font-size: 0.8rem;
+    .hero-seccion-global {
+        padding: 40px 4%;
     }
 
-    .btn-registro {
-        padding: 7px 14px;
-        font-size: 0.8rem;
+    .blog-seccion {
+        padding: 50px 4%;
+    }
+
+    .blog-img-wrapper {
+        height: 180px;
+    }
+
+    .hero-imagen-wrapper {
+        height: 220px;
     }
 }
 
-
+/* Ocultar Registrarse en móviles muy pequeños */
+@media (max-width: 400px) {
+    .btn-registro {
+        display: none;
+    }
+}
 
 /* ==========================================================================
-   ALTURA FIJA DEL CARRUSEL — TODAS LAS IMÁGENES UNIFORMES
+   CORRECCIÓN GLOBAL RESPONSIVE
    ========================================================================== */
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
 
-/* Altura fija para el wrapper de imagen en desktop */
+.hero-seccion-global,
+.carrusel-ventana-global {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow: hidden !important;
+}
+
+@media (max-width: 992px) {
+    .productos-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 650px) {
+    .productos-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px;
+    }
+    .productos-seccion {
+        padding: 40px 16px !important;
+    }
+    .producto-tarjeta-contenido h3 {
+        font-size: 1.25rem !important;
+    }
+}
+
+/* ==========================================================================
+   NAVBAR RESPONSIVE — MENÚ HAMBURGER
+   ========================================================================== */
+.nav-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 200;
+}
+
+.nav-menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #374151;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.nav-menu-toggle.abierto span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.nav-menu-toggle.abierto span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-menu-toggle.abierto span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* ==========================================================================
+   ALTURA FIJA DEL CARRUSEL
+   ========================================================================== */
 .hero-imagen-wrapper {
-    height: 420px;   /* ← Ajusta este valor a tu gusto */
+    height: 420px;
 }
 
 .hero-imagen-wrapper img {
@@ -2154,308 +2162,17 @@ html, body {
     display: block;
 }
 
-/* También fijamos la altura mínima del slide para que no colapse */
 .carrusel-slide {
     min-height: 480px;
     align-items: center;
+    overflow: hidden;
 }
 
-/* Tablet */
 @media (max-width: 900px) {
     .hero-imagen-wrapper {
         height: 280px;
     }
-}
 
-/* Móvil */
-@media (max-width: 480px) {
-    .hero-imagen-wrapper {
-        height: 220px;
-    }
-}
-
-
-
-/* ==========================================================================
-   SECCIÓN BLOG
-   ========================================================================== */
-.blog-seccion {
-    padding: 80px 6%;
-    background-color: #f8fafc;
-}
-
-.blog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 40px;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-.btn-ver-todos-blog {
-    color: #7B2D8B;
-    font-weight: 700;
-    text-decoration: none;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    transition: color 0.2s ease;
-}
-
-.btn-ver-todos-blog:hover {
-    color: #621F72;
-    text-decoration: underline;
-}
-
-/* Grid principal: 2 columnas, card destacada ocupa 2 filas */
-.blog-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 24px;
-    align-items: stretch;
-}
-
-/* ==========================================================================
-   CARDS
-   ========================================================================== */
-.blog-card {
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    border: 2px solid transparent;
-}
-
-.blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 32px rgba(123, 45, 139, 0.12);
-    border-color: #7B2D8B;
-}
-
-/* Card destacada: ocupa las 2 filas de la columna izquierda */
-.blog-card-destacada {
-    grid-row: span 2;
-    display: flex;
-    flex-direction: column;
-}
-
-/* ==========================================================================
-   IMÁGENES
-   ========================================================================== */
-.blog-img-wrapper {
-    position: relative;
-    overflow: hidden;
-    height: 200px;
-    flex-shrink: 0;
-}
-
-.blog-card-destacada .blog-img-wrapper {
-    flex: 1;               /* ocupa todo el espacio restante en la card */
-    height: auto;
-    min-height: 260px;
-}
-
-.blog-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease;
-}
-
-.blog-card:hover .blog-img {
-    transform: scale(1.05);
-}
-
-/* ==========================================================================
-   BADGES DE CATEGORÍA
-   ========================================================================== */
-.blog-categoria {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    padding: 5px 14px;
-    border-radius: 50px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-/* Colores del logo */
-.cat-postoperatorio { background-color: #6BB8C8; color: #ffffff; }
-.cat-productos      { background-color: #8DC46A; color: #ffffff; }
-.cat-articulo       { background-color: #7B2D8B; color: #ffffff; }
-
-/* ==========================================================================
-   CUERPO DE LA CARD
-   ========================================================================== */
-.blog-cuerpo {
-    padding: 20px 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.blog-card-destacada .blog-cuerpo {
-    padding: 24px;
-}
-
-.blog-fecha {
-    font-size: 0.78rem;
-    color: #94a3b8;
-}
-
-.blog-titulo {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #0f172a;
-    line-height: 1.4;
-    transition: color 0.2s ease;
-}
-
-.blog-card:hover .blog-titulo {
-    color: #7B2D8B;
-}
-
-.blog-card-destacada .blog-titulo {
-    font-size: 1.25rem;
-}
-
-.blog-resumen {
-    font-size: 0.85rem;
-    color: #64748b;
-    line-height: 1.65;
-}
-
-/* ==========================================================================
-   FOOTER DE CADA CARD
-   ========================================================================== */
-.blog-footer-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-    padding-top: 14px;
-    border-top: 1px solid #f1f5f9;
-}
-
-.blog-autor {
-    font-size: 0.78rem;
-    color: #94a3b8;
-    font-weight: 600;
-}
-
-.blog-leer-mas {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: #7B2D8B;
-    text-decoration: none;
-    transition: color 0.2s ease, gap 0.2s ease;
-}
-
-.blog-leer-mas:hover {
-    color: #621F72;
-    text-decoration: underline;
-}
-
-/* ==========================================================================
-   RESPONSIVE
-   ========================================================================== */
-
-@media (max-width: 480px) {
-    .blog-seccion {
-        padding: 50px 4%;
-    }
-
-    .blog-img-wrapper {
-        height: 180px;
-    }
-}
-
-/* ==========================================================================
-   BOTÓN VOLVER ARRIBA
-   ========================================================================== */
-.btn-volver-arriba {
-    position: fixed;
-    bottom: 100px;
-    right: 28px;
-    z-index: 999;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    background-color: #7B2D8B;
-    color: #ffffff;
-    border: none;
-    cursor: pointer;
-    padding: 14px 14px;
-    border-radius: 50px;
-    box-shadow: 0 6px 24px rgba(123, 45, 139, 0.4);
-
-    font-weight: 700;
-    font-size: 0.9rem;
-    white-space: nowrap;
-
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(10px);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-}
-
-.btn-volver-arriba:hover {
-    transform: translateY(-3px) scale(1.04);
-    box-shadow: 0 10px 32px rgba(123, 45, 139, 0.55);
-}
-
-.btn-volver-arriba.visible {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-}
-    
-
-/* ==========================================================================
-   BOTÓN FLOTANTE DE WHATSAPP
-   ========================================================================== */
-.btn-whatsapp-flotante {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: #25d366;
-    color: #ffffff;
-    text-decoration: none;
-    padding: 14px 14px;
-    border-radius: 50px;
-    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
-    font-weight: 700;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    animation: whatsapp-entrada 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 1s;
-}
-
-.btn-whatsapp-label {
-    display: inline;
-}
-
-.btn-whatsapp-flotante:hover {
-    transform: translateY(-3px) scale(1.04);
-    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
-}
-
-@media (max-width: 900px) {
     .btn-whatsapp-flotante {
         width: 56px;
         height: 56px;
@@ -2511,54 +2228,237 @@ html, body {
     }
 }
 
+/* ==========================================================================
+   SECCIÓN BLOG
+   ========================================================================== */
+.blog-seccion {
+    padding: 80px 6%;
+    background-color: #f8fafc;
+}
 
+.blog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.btn-ver-todos-blog {
+    color: #7B2D8B;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.btn-ver-todos-blog:hover {
+    color: #621F72;
+    text-decoration: underline;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.blog-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 2px solid transparent;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(123, 45, 139, 0.12);
+    border-color: #7B2D8B;
+}
+
+.blog-card-destacada {
+    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.blog-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    flex-shrink: 0;
+}
+
+.blog-card-destacada .blog-img-wrapper {
+    flex: 1;
+    height: auto;
+    min-height: 260px;
+}
+
+.blog-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.blog-card:hover .blog-img {
+    transform: scale(1.05);
+}
+
+.blog-categoria {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.cat-postoperatorio { background-color: #6BB8C8; color: #ffffff; }
+.cat-productos      { background-color: #8DC46A; color: #ffffff; }
+.cat-articulo       { background-color: #7B2D8B; color: #ffffff; }
+
+.blog-cuerpo {
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.blog-card-destacada .blog-cuerpo {
+    padding: 24px;
+}
+
+.blog-fecha { font-size: 0.78rem; color: #94a3b8; }
+
+.blog-titulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.blog-card:hover .blog-titulo { color: #7B2D8B; }
+.blog-card-destacada .blog-titulo { font-size: 1.25rem; }
+
+.blog-resumen {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.65;
+}
+
+.blog-footer-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.blog-autor { font-size: 0.78rem; color: #94a3b8; font-weight: 600; }
+
+.blog-leer-mas {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #7B2D8B;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.blog-leer-mas:hover { color: #621F72; text-decoration: underline; }
+
+/* ==========================================================================
+   BOTÓN VOLVER ARRIBA
+   ========================================================================== */
+.btn-volver-arriba {
+    position: fixed;
+    bottom: 100px;
+    right: 28px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #7B2D8B;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    padding: 14px 14px;
+    border-radius: 50px;
+    box-shadow: 0 6px 24px rgba(123, 45, 139, 0.4);
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    will-change: transform;
+}
+
+.btn-volver-arriba:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 32px rgba(123, 45, 139, 0.55);
+}
+
+.btn-volver-arriba.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   BOTÓN FLOTANTE DE WHATSAPP
+   ========================================================================== */
+.btn-whatsapp-flotante {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #25d366;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 14px 14px;
+    border-radius: 50px;
+    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: whatsapp-entrada 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 1s;
+    will-change: transform;
+}
+
+.btn-whatsapp-label { display: inline; }
+
+.btn-whatsapp-flotante:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
+}
 
 @keyframes whatsapp-entrada {
     from { opacity: 0; transform: translateY(20px) scale(0.8); }
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
-
-@media (max-width: 768px) {
-
-    .navbar {
-        padding: 12px 4%;
-    }
-
-    /* Ocultar texto del botón login en móvil */
-    .btn-login span,
-    .btn-login {
-        font-size: 0;        /* oculta el texto */
-        padding: 8px;
-        min-width: unset;
-    }
-
-    /* Solo mostrar el ícono del login */
-    .btn-login svg {
-        font-size: initial;
-        width: 18px;
-        height: 18px;
-    }
-
-    /* Reducir botón registrarse */
-    .btn-registro {
-        padding: 7px 10px;
-        font-size: 0.75rem;
-    }
-
-    /* Reducir carrito */
-    .btn-carrito {
-        font-size: 0.85rem;
-        padding: 6px 8px;
-    }
-
-    /* Asegurar que el hamburger sea visible */
-    .nav-menu-toggle {
-        display: flex !important;
-        flex-shrink: 0;
-        margin-left: 8px;
-    }
-}
-
 
 /* ==========================================================================
    POPUP EN CONSTRUCCIÓN
@@ -2573,7 +2473,6 @@ html, body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease;
@@ -2592,7 +2491,6 @@ html, body {
     width: 100%;
     text-align: center;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
-
     transform: translateY(16px) scale(0.97);
     transition: transform 0.25s ease;
 }
@@ -2601,10 +2499,7 @@ html, body {
     transform: translateY(0) scale(1);
 }
 
-.popup-construccion-icono {
-    font-size: 3rem;
-    margin-bottom: 16px;
-}
+.popup-construccion-icono { font-size: 3rem; margin-bottom: 16px; }
 
 .popup-construccion-titulo {
     font-size: 1.3rem;
@@ -2660,159 +2555,17 @@ html, body {
     color: #7B2D8B;
 }
 
+/* Optimización de render */
+.carrusel-track { will-change: transform; }
+.blog-card, .producto-card { will-change: transform; }
 
-/* Optimización de render para elementos animados */
-.carrusel-track {
-    will-change: transform;
-}
-
-.btn-whatsapp-flotante,
-.btn-volver-arriba {
-    will-change: transform;
-}
-
-.blog-card,
-.producto-card {
-    will-change: transform;
-}
-
-@media (max-width: 768px) {
-
-    .navbar {
-        padding: 10px 4%;
-        gap: 8px;
-    }
-
-    .nav-menu-toggle {
-        display: flex !important;
-        flex-shrink: 0;
-        order: 2;
-    }
-
-    .nav-logo {
-        order: 1;
-        flex: 1;
-    }
-
-    .nav-acciones {
-        order: 3;
-        gap: 6px;
-        flex-shrink: 0;
-    }
-
-    /* Ocultar texto, dejar solo ícono */
-    .btn-login {
-        padding: 8px;
-        min-width: unset;
-        font-size: 0;        /* oculta el texto */
-        gap: 0;
-    }
-
-    .btn-login svg {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-    }
-
-    /* Ocultar "Registrarse" completamente en móvil muy pequeño */
-    @media (max-width: 400px) {
-        .btn-registro {
-            display: none;
-        }
-    }
-
-    .btn-registro {
-        padding: 7px 10px;
-        font-size: 0.75rem;
-    }
-
-    .btn-carrito {
-        padding: 7px 8px;
-        font-size: 0.85rem;
-    }
-
-    /* Nav links */
-    .nav-links {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: #ffffff;
-        border-top: 1px solid #e2e8f0;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        z-index: 99;
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(-8px);
-        pointer-events: none;
-        transition:
-            max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-            opacity    0.25s ease,
-            transform  0.25s ease,
-            padding    0.35s ease;
-    }
-
-    .nav-links.activo {
-        max-height: 560px;
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-        padding: 8px 0;
-    }
-
-    .nav-links li {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: opacity 0.2s ease, transform 0.2s ease;
-    }
-
-    .nav-links.activo li:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.05s; }
-    .nav-links.activo li:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.10s; }
-    .nav-links.activo li:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.15s; }
-    .nav-links.activo li:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.20s; }
-    .nav-links.activo li:nth-child(5) { opacity: 1; transform: translateX(0); transition-delay: 0.25s; }
-    .nav-links.activo li:nth-child(6) { opacity: 1; transform: translateX(0); transition-delay: 0.30s; }
-
-    .nav-links li a {
-        display: block;
-        padding: 14px 24px;
-        font-size: 1rem;
-        border-bottom: 1px solid #f1f5f9;
-    }
-
-    .nav-links li:last-child a {
-        border-bottom: none;
-    }
-}
-
-/* Fix: evitar que el contenido desborde al slide siguiente */
-.carrusel-slide {
-    overflow: hidden;
-}
-
-.hero-contenido {
-    overflow: hidden;
-    min-width: 0;      /* permite que flex shrink funcione correctamente */
-}
-
-/* Fix: borde inferior del botón transparente no se corta */
-.hero-botones {
-    padding-bottom: 4px;  /* da espacio para que el borde sea visible */
-}
-
+/* ==========================================================================
+   CARDS ACADEMIA — CENTRADO
+   ========================================================================== */
 .programa-tarjeta {
     align-items: center;
     text-align: center;
 }
 
-.programa-tag {
-    text-align: center;
-}
-
-.programa-texto {
-    text-align: center;
-}
+.programa-tag { text-align: center; }
+.programa-texto { text-align: center; }
