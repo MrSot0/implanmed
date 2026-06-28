@@ -2591,8 +2591,27 @@ html, body {
         overflow: visible;            /* ← no cortar el contenido */
         min-width: 0;
     }
-}
 
+    .btn-servicio-cta {
+        min-height: 48px;
+        padding: 14px 28px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .btn-cotizar {
+        min-height: unset;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-card-carrito {
+        width: 44px;
+        height: 44px;
+    }
+}
 
 
 
