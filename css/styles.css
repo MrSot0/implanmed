@@ -2165,7 +2165,7 @@ html, body {
 .carrusel-slide {
     min-height: 480px;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
 }
 
 @media (max-width: 900px) {
