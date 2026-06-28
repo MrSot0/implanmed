@@ -207,3 +207,30 @@ document.getElementById('abrir-carrito').addEventListener('click', abrirPopupCon
 document.querySelectorAll('.btn-card-carrito').forEach(btn => {
     btn.addEventListener('click', abrirPopupConstruccion);
 });
+
+
+// Fix: pausar autoplay al tocar/hover el hero para evitar bug de botones
+const heroSeccion = document.querySelector('.hero-seccion-global');
+
+if (heroSeccion) {
+    // En móvil: pausa al tocar la sección
+    heroSeccion.addEventListener('touchstart', () => {
+        detenerAutoplay();
+    }, { passive: true });
+
+    // Reactiva al soltar el dedo
+    heroSeccion.addEventListener('touchend', () => {
+        setTimeout(() => {
+            iniciarAutoplay();
+        }, 3000); // Espera 3 segundos antes de reanudar
+    }, { passive: true });
+
+    // En desktop: pausa al pasar el mouse
+    heroSeccion.addEventListener('mouseenter', () => {
+        detenerAutoplay();
+    });
+
+    heroSeccion.addEventListener('mouseleave', () => {
+        iniciarAutoplay();
+    });
+}
