@@ -828,6 +828,7 @@ body {
 }
 
 .servicio-nombre {
+    text-align: center;
     font-size: 1.4rem;
     font-weight: 700;
     color: #0f172a;
@@ -2611,8 +2612,22 @@ html, body {
         width: 44px;
         height: 44px;
     }
-}
 
+    .blog-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .blog-card-destacada {
+        grid-row: span 1;
+    }
+
+    .blog-card-destacada .blog-img-wrapper {
+        height: 220px;
+        min-height: unset;
+        flex: none;
+    }
+}
 
 
 /* Desktop */
