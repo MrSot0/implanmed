@@ -6,12 +6,13 @@ html {
 }
 
 :root {
-    --bg-oscuro: #090d16;       
-    --bg-tarjeta: #131926;     
+    --bg-oscuro: #090d16;       /* Fondo oscuro profundo del Figma */
+    --bg-tarjeta: #131926;      /* Fondo de elementos flotantes o tarjetas */
     --texto-principal: #ffffff;
     --texto-secundario: #94a3b8;
-    --color-primario: #7B2D8B; 
+    --color-primario: #7B2D8B;  /* Morado real del botón Solicitar Presupuesto */
     --border-soft: rgba(255, 255, 255, 0.08);
+    --nav-h: 76px;              /* Alto real de la navbar fija, usado para que el hero pantalla-completa no quede tapado */
 }
 
 * {
@@ -47,7 +48,7 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: nowrap;    
+    flex-wrap: nowrap;       /* evita que se parta en dos filas */
     padding: 12px 5%;
     gap: 16px;
 }
@@ -68,22 +69,24 @@ body {
 
 .nav-links a {
     text-decoration: none;
-    color: #475569;                     
+    color: #475569;                      /* ← Gris oscuro legible sobre blanco */
     font-weight: 500;
     font-size: 0.95rem;
     transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-    color: #0f172a;                     
+    color: #0f172a;                      /* ← Casi negro al hacer hover */
 }
 
+/* Bloque de Acciones (Derecha) */
 .nav-acciones {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
+/* Botón Iniciar Sesión — con ícono y borde */
 .btn-login {
     display: inline-flex;
     align-items: center;
@@ -111,6 +114,7 @@ body {
     color: #0f172a;
 }
 
+/* Botón Registrarse — oscuro sobre blanco */
 .btn-registro {
     background-color: transparent;
     border: 1.5px solid #7B2D8B;
@@ -136,7 +140,7 @@ body {
     cursor: pointer;
     position: relative;
     padding: 4px 8px;
-    color: #374151;                     
+    color: #374151;                      /* ← Oscuro para fondo blanco */
     transition: color 0.2s;
 }
 
@@ -165,7 +169,13 @@ body {
 .hero-seccion-global {
     position: relative;
     width: 100%;
-    padding: 70px 8%;                 
+    box-sizing: border-box;
+    min-height: 100vh;                   /* ← Fallback para navegadores sin soporte de dvh */
+    min-height: 100dvh;                  /* ← Ocupa el 100% del alto real visible en cualquier pantalla */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;             /* ← Centra el carrusel verticalmente dentro de la pantalla completa */
+    padding: calc(var(--nav-h) + 24px) 8% 32px;  /* ← Deja libre el espacio de la navbar fija */
 }
 
 /* Ventana de recorte */
@@ -181,13 +191,13 @@ body {
     transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* Cada slide ocupa 25% del track = 100% visible */
 .carrusel-slide {
     width: 25%;
     display: flex;
-    align-items: center;                
+    align-items: center;                 /* ← Centra verticalmente texto e imagen */
     justify-content: space-between;
     gap: 60px;
-    min-height: 480px;          
 }
 
 
@@ -282,6 +292,7 @@ body {
     flex: 1;
     max-width: 520px;
     min-width: 320px;                    /* ← Evita que colapse si la imagen tarda */
+    aspect-ratio: 4 / 3;                 /* ← Escala de forma fluida en cualquier pantalla, sin alturas fijas */
     position: relative;
     border-radius: 24px;
     overflow: hidden;
@@ -291,7 +302,7 @@ body {
 
 .hero-imagen-wrapper img {
     width: 100%;
-    height: 100%;                       /* ← Altura fija para que la imagen llene bien */
+    height: 100%;
     object-fit: cover;
     object-position: center;
     display: block;
@@ -1913,6 +1924,10 @@ a {
         min-width: 0;
     }
 
+    .hero-imagen-wrapper {
+        aspect-ratio: 16 / 9;            /* ← Formato banner en pantallas angostas */
+    }
+
     .hero-contenido {
         overflow: hidden;
     }
@@ -2055,7 +2070,7 @@ a {
     }
 
     .hero-seccion-global {
-        padding: 40px 4%;
+        padding: calc(var(--nav-h) + 16px) 4% 24px;
     }
 
     .blog-seccion {
@@ -2064,10 +2079,6 @@ a {
 
     .blog-img-wrapper {
         height: 180px;
-    }
-
-    .hero-imagen-wrapper {
-        height: 220px;
     }
 }
 
@@ -2145,31 +2156,14 @@ html, body {
 .nav-menu-toggle.abierto span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
 /* ==========================================================================
-   ALTURA FIJA DEL CARRUSEL
+   CARRUSEL — comportamiento base (altura fluida vía aspect-ratio arriba)
    ========================================================================== */
-.hero-imagen-wrapper {
-    height: 420px;
-}
-
-.hero-imagen-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-}
-
 .carrusel-slide {
-    min-height: 480px;
     align-items: center;
     overflow: visible;
 }
 
 @media (max-width: 900px) {
-    .hero-imagen-wrapper {
-        height: 280px;
-    }
-
     .btn-whatsapp-flotante {
         width: 56px;
         height: 56px;
@@ -2628,7 +2622,6 @@ html, body {
 
 /* Desktop */
 .carrusel-slide {
-    min-height: 480px;
     align-items: center;
     overflow: visible;  /* ← cambiar de hidden a visible */
 }
