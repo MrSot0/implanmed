@@ -17,42 +17,29 @@ document.addEventListener("DOMContentLoaded", function() {
     const totalSlides = slides.length; // Retorna 4 automáticamente
     let carruselIntervalo = null;
     const TIEMPO_CAMBIO = 5000; // Tiempo en milisegundos (5 segundos)
-
-    // 3. Paleta de colores hexadecimales extraídos de los Badges de Figma
-    // Lámina 0: Celeste | Lámina 1: Verde | Lámina 2: Coral | Lámina 3: Amarillo
     const coloresLaminas = ["#38bdf8", "#4ade80", "#f97316", "#facc15"];
 
-    /**
-     * Sincroniza la posición de la cinta (Track), la apariencia del punto indicador
-     * y los detalles cromáticos de la interfaz según el slide activo.
-     */
     function actualizarInterfaz() {
         // Cálculo exacto del desplazamiento porcentual basado en el total de láminas
         const porcentajeDesplazamiento = (indiceActual * -100) / totalSlides;
         track.style.transform = `translateX(${porcentajeDesplazamiento}%)`;
 
-        // Recorrido de los indicadores inferiores (Dots)
         dots.forEach((dot, index) => {
             if (index === indiceActual) {
-                // Transforma el punto en la cápsula alargada activa y le da su color correspondiente
                 dot.classList.add("activo");
                 dot.style.backgroundColor = coloresLaminas[indiceActual];
             } else {
-                // Restaura los puntos inactivos a su estado circular base
+
                 dot.classList.remove("activo");
-                dot.style.backgroundColor = "#334155"; // Gris pizarra de fondo
+                dot.style.backgroundColor = "#334155";
             }
         });
 
-        // Sincroniza dinámicamente las viñetas de la barra de beneficios inferior
         puntosCheck.forEach(punto => {
             punto.style.color = coloresLaminas[indiceActual];
         });
     }
-
-    /**
-     * Activa el temporizador para el movimiento automático
-     */
+    
     function iniciarAutoplay() {
         // Nos aseguramos de limpiar cualquier intervalo previo antes de crear uno nuevo
         detenerAutoplay();
@@ -127,11 +114,11 @@ document.addEventListener("DOMContentLoaded", function() {
             const detalle = document.getElementById("detalle").value;
             
             const mensaje = `*Nueva Solicitud de Presupuesto - IMPLANMED*\n\n` +
-                            `👤 *Nombre:* ${nombre}\n` +
-                            `📞 *Teléfono:* ${telefono}\n` +
-                            `✉️ *Correo:* ${correo}\n` +
-                            `💼 *Tipo de perfil:* ${tipoUsuarioTexto}\n\n` +
-                            `📝 *Detalle del requerimiento:*\n${detalle}`;
+                            `*Nombre:* ${nombre}\n` +
+                            `*Teléfono:* ${telefono}\n` +
+                            `*Correo:* ${correo}\n` +
+                            `*Tipo de perfil:* ${tipoUsuarioTexto}\n\n` +
+                            `*Detalle del requerimiento:*\n${detalle}`;
             
             const numeroWhatsApp = "584246434299"; 
             const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
@@ -168,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
 // BOTÓN VOLVER ARRIBA
 const btnTop = document.getElementById('btn-top');
 
@@ -184,7 +170,6 @@ btnTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// POPUP EN CONSTRUCCIÓN
 function abrirPopupConstruccion(e) {
     e.preventDefault();
     document.getElementById('popup-construccion').classList.add('visible');
@@ -194,12 +179,10 @@ document.getElementById('popup-cerrar').addEventListener('click', () => {
     document.getElementById('popup-construccion').classList.remove('visible');
 });
 
-// Cierra al hacer clic fuera de la card
 document.getElementById('popup-construccion').addEventListener('click', function(e) {
     if (e.target === this) this.classList.remove('visible');
 });
 
-// Asigna el popup a los botones que aún no tienen funcionalidad
 document.getElementById('abrir-login').addEventListener('click', abrirPopupConstruccion);
 document.getElementById('abrir-registro').addEventListener('click', abrirPopupConstruccion);
 document.getElementById('abrir-carrito').addEventListener('click', abrirPopupConstruccion);
@@ -208,12 +191,9 @@ document.querySelectorAll('.btn-card-carrito').forEach(btn => {
     btn.addEventListener('click', abrirPopupConstruccion);
 });
 
-
-// Fix: pausar autoplay al tocar/hover el hero para evitar bug de botones
 const heroSeccion = document.querySelector('.hero-seccion-global');
 
 if (heroSeccion) {
-    // En móvil: pausa al tocar la sección
     heroSeccion.addEventListener('touchstart', () => {
         detenerAutoplay();
     }, { passive: true });
@@ -225,7 +205,6 @@ if (heroSeccion) {
         }, 3000); // Espera 3 segundos antes de reanudar
     }, { passive: true });
 
-    // En desktop: pausa al pasar el mouse
     heroSeccion.addEventListener('mouseenter', () => {
         detenerAutoplay();
     });
