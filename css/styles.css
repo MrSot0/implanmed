@@ -2651,5 +2651,6 @@ html, body {
 /* Desktop */
 .carrusel-slide {
     align-items: center;
-    overflow: visible;  /* ← cambiar de hidden a visible */
+    overflow: visible; 
+   margin: 0px 20px;
 }
