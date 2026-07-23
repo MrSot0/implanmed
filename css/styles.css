@@ -2025,16 +2025,21 @@ a {
         flex: 1;
     }
 
-    .nav-menu-toggle {
-        display: flex !important;
-        flex-shrink: 0;
-        margin-left: 4px;         /* ← Separación respecto al botón del carrito */
+    .nav-links {
+        order: 2;
     }
 
     .nav-acciones {
         order: 3;
         gap: 6px;
         flex-shrink: 0;
+    }
+
+    .nav-menu-toggle {
+        display: flex !important;
+        flex-shrink: 0;
+        order: 4;                 /* ← Se coloca después de nav-acciones (a la derecha del carrito) sin importar su posición en el HTML */
+        margin-left: 4px;         /* ← Separación respecto al botón del carrito */
     }
 
     .btn-login {
