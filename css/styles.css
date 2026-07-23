@@ -2710,7 +2710,7 @@ html, body {
 
 
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
     .carrusel-slide {
         flex-direction: column-reverse;
         gap: 20px;
@@ -2763,6 +2763,10 @@ html, body {
         min-height: unset;
         flex: none;
     }
+
+   .presupuesto-seccion{
+      align-items: stretch
+   }
 }
 
 
