@@ -2014,6 +2014,12 @@ a {
         backdrop-filter: none;
     }
 
+}
+
+/* ==========================================================================
+   NAVBAR — pasa a menú hamburguesa antes (pantallas medianas/tablet)
+   ========================================================================== */
+@media (max-width: 992px) {
     /* NAVBAR */
     .navbar {
         padding: 10px 4%;
