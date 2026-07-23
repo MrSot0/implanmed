@@ -2631,7 +2631,7 @@ html, body {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     .carrusel-slide {
         flex-direction: column-reverse;
         gap: 20px;
