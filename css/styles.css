@@ -2077,9 +2077,12 @@ a {
         text-align: center;
         display: block;
         box-sizing: border-box;
+        padding: 14px 20px;      /* ← Vuelve a un tamaño cómodo en móvil (el grande es solo para escritorio) */
+        font-size: 0.9rem;
     }
 
     .hero-seccion-global {
+        justify-content: flex-start;      /* ← Evita que láminas con títulos largos se desborden hacia arriba y queden tapadas por el navbar */
         padding-bottom: 32px;             /* ← En móvil la barra vuelve al flujo normal, no necesita espacio reservado */
     }
 
