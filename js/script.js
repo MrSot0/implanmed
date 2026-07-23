@@ -38,6 +38,11 @@ document.addEventListener("DOMContentLoaded", function() {
         puntosCheck.forEach(punto => {
             punto.style.color = coloresLaminas[indiceActual];
         });
+
+        // Marca la lámina visible para activar el efecto de zoom lento en su imagen
+        slides.forEach((slide, index) => {
+            slide.classList.toggle("slide-activa", index === indiceActual);
+        });
     }
     
     function iniciarAutoplay() {
