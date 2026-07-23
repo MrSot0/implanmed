@@ -175,7 +175,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;             /* ← Centra el carrusel verticalmente dentro de la pantalla completa */
-    padding: calc(var(--nav-h) + 24px) 8% 32px;  /* ← Deja libre el espacio de la navbar fija */
+    padding: calc(var(--nav-h) + 24px) 8% 110px;  /* ← Deja libre el espacio de la navbar fija y el "piso" de beneficios */
 }
 
 /* Ventana de recorte */
@@ -289,15 +289,16 @@ body {
    5. COLUMNA DERECHA: VENTANA DE IMAGEN Y TEXTO INTERNO
    ========================================================================== */
 .hero-imagen-wrapper {
-    flex: 1;
-    max-width: 520px;
+    flex: 1.15;                           /* ← Le da un poco más de protagonismo que al texto */
+    max-width: 620px;                     /* ← Antes 520px: imagen más grande y visible */
     min-width: 320px;                    /* ← Evita que colapse si la imagen tarda */
     aspect-ratio: 4 / 3;                 /* ← Escala de forma fluida en cualquier pantalla, sin alturas fijas */
     position: relative;
     border-radius: 24px;
     overflow: hidden;
-    border: 1px solid var(--border-soft);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     background-color: #131926;           /* ← Fondo mientras carga la imagen */
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
 }
 
 .hero-imagen-wrapper img {
@@ -306,6 +307,14 @@ body {
     object-fit: cover;
     object-position: center;
     display: block;
+    filter: brightness(1.05) contrast(1.05) saturate(1.08); /* ← Realza detalle y color de la fotografía */
+    transform: scale(1);
+    transition: transform 8s ease;
+}
+
+/* Zoom lento y continuo mientras la lámina está visible: da vida a la imagen */
+.carrusel-slide.slide-activa .hero-imagen-wrapper img {
+    transform: scale(1.06);
 }
 
 /* Etiqueta flotante inferior sobre la fotografía */
@@ -380,16 +389,26 @@ body {
     border-radius: 10px;
 }
 
-/* Barra inferior de beneficios */
+/* Barra inferior de beneficios: anclada al "piso" del carrusel/hero */
 .hero-beneficios-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 32px;
-    margin-top: 50px;
+    margin: 0;
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--texto-secundario);
     border-top: 1px solid var(--border-soft);
-    padding-top: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(6px);
+    box-sizing: border-box;
+    padding: 20px 8%;
+    z-index: 5;
 }
 
 .punto-check {
@@ -1952,10 +1971,19 @@ a {
         box-sizing: border-box;
     }
 
+    .hero-seccion-global {
+        padding-bottom: 32px;             /* ← En móvil la barra vuelve al flujo normal, no necesita espacio reservado */
+    }
+
     .hero-beneficios-bar {
+        position: static;
         flex-direction: column;
+        align-items: center;
         gap: 12px;
         margin-top: 30px;
+        padding: 20px 0 0;
+        background: none;
+        backdrop-filter: none;
     }
 
     /* NAVBAR */
