@@ -448,10 +448,38 @@ body {
 /* Encabezado */
 .productos-header {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 48px;
-    gap: 24px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 48px auto;
+    gap: 20px;
+}
+
+/* Dentro del catálogo de productos, el bloque de texto ocupa todo el ancho centrado del encabezado */
+.productos-header .header-texto {
+    max-width: 100%;
+}
+
+/* El subtítulo pasa a llevar una línea decorativa a cada lado, igual que en Servicios */
+.productos-header .subtitulo-seccion {
+    padding: 0 24px;
+    display: inline-block;
+}
+
+.productos-header .subtitulo-seccion::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 2px;
+    background-color: #7B2D8B;
+}
+
+.productos-header .titulo-seccion {
+    margin-top: 16px;
 }
 
 /* Limita el ancho del bloque de texto para que el título haga wrap como en el Figma */
@@ -2651,6 +2679,6 @@ html, body {
 /* Desktop */
 .carrusel-slide {
     align-items: center;
-    overflow: visible; 
-   margin: 0px 20px;
+    overflow: visible;  /* ← cambiar de hidden a visible */
+   maring: 0px 20px;
 }
