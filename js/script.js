@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const totalSlides = slides.length; // Retorna 4 automáticamente
     let carruselIntervalo = null;
     const TIEMPO_CAMBIO = 5000; // Tiempo en milisegundos (5 segundos)
-    const coloresLaminas = ["#38bdf8", "#4ade80", "#f97316", "#facc15"];
+    const coloresLaminas = ["#6BB8C8", "#8DC46A", "#E8A090", "#E8E87A"];
 
     function actualizarInterfaz() {
         // Cálculo exacto del desplazamiento porcentual basado en el total de láminas
