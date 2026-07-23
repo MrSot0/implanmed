@@ -2028,7 +2028,7 @@ a {
     .nav-menu-toggle {
         display: flex !important;
         flex-shrink: 0;
-        order: 2;
+        margin-left: 4px;         /* ← Separación respecto al botón del carrito */
     }
 
     .nav-acciones {
@@ -2680,5 +2680,5 @@ html, body {
 .carrusel-slide {
     align-items: center;
     overflow: visible;  /* ← cambiar de hidden a visible */
-   maring: 0px 20px;
+   margin: 0pc 20px;
 }
