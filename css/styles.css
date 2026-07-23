@@ -239,7 +239,7 @@ body {
 .hero-botones {
     text-decoration: none;
     display: flex;
-    gap: 16px;
+    gap: 18px;
 }
 
 /* Botón Llamado a la Acción (Morado Figma) */
@@ -248,10 +248,10 @@ body {
     background-color: var(--color-primario);
     color: inherit;
     border: none;
-    padding: 14px 28px;
-    border-radius: 10px;
+    padding: 18px 36px;
+    border-radius: 12px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1.05rem;
     cursor: pointer;
     transition: background-color 0.2s;
     letter-spacing: 0.02em;
@@ -266,10 +266,10 @@ body {
     background-color: transparent;
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 14px 28px;
-    border-radius: 10px;
+    padding: 18px 36px;
+    border-radius: 12px;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     cursor: pointer;
     transition: background-color 0.2s;
 }
@@ -1737,6 +1737,7 @@ body {
 @media (max-width: 1024px) {
     .presupuesto-seccion {
         flex-direction: column;
+        align-items: stretch;    /* ← En columna, esto hace que el formulario ocupe todo el ancho disponible en vez de encogerse */
         gap: 50px;
     }
     .presupuesto-info {
@@ -2710,7 +2711,7 @@ html, body {
 
 
 
-@media (max-width: 1024px) {
+@media (max-width: 992px) {
     .carrusel-slide {
         flex-direction: column-reverse;
         gap: 20px;
@@ -2763,10 +2764,6 @@ html, body {
         min-height: unset;
         flex: none;
     }
-
-   .presupuesto-seccion{
-      align-items: stretch
-   }
 }
 
 
