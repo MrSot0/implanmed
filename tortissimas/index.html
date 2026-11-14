@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tortissimas | Pastelería en Maracaibo</title>
+<meta name="description" content="Tortissimas — pastelería en el C.C. Valle Alto, Maracaibo. Tortas, cupcakes, postres y pedidos personalizados. Pide por WhatsApp.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#e8457c; --pink-d:#c42e63; --pink-50:#fff0f5; --pink-100:#ffe0ea;
+    --cream:#fffaf5; --choco:#3b2420; --choco-70:#6b5550; --mint:#2fb59a; --sky:#5aa9e6;
+    --line:#f1dfe4; --wa:#25d366; --radius:18px;
+    --shadow:0 10px 30px -12px rgba(59,36,32,.25);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Nunito",system-ui,sans-serif;color:var(--choco);background:var(--cream);line-height:1.55;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.1;letter-spacing:-.01em}
+  .eyebrow{display:inline-block;font-weight:800;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pink)}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.4rem;border-radius:999px;font-weight:800;transition:transform .15s,background .15s,box-shadow .15s}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--pink);color:#fff;box-shadow:0 8px 20px -8px var(--pink)}
+  .btn-primary:hover{background:var(--pink-d)}
+  .btn-ghost{background:#fff;border:2px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--pink)}
+  .btn-wa{background:var(--wa);color:#fff}
+  .btn-wa:hover{background:#1eb757}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:40;background:rgba(255,250,245,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+  .logo{font-family:"Fraunces",serif;font-weight:800;font-size:1.55rem;color:var(--pink);display:flex;align-items:center;gap:.4rem}
+  .logo b span{color:var(--choco)}
+  .nav ul{display:flex;gap:28px;list-style:none;font-weight:700}
+  .nav ul a:hover{color:var(--pink)}
+  .cart-btn{position:relative;display:flex;align-items:center;gap:.5rem;background:var(--choco);color:#fff;padding:.6rem 1rem;border-radius:999px;font-weight:800}
+  .cart-count{background:var(--pink);min-width:22px;height:22px;border-radius:99px;display:grid;place-items:center;font-size:.75rem;padding:0 6px}
+  .cart-count.bump{animation:bump .35s}
+  @keyframes bump{50%{transform:scale(1.35)}}
+  @media (max-width:760px){.nav ul{display:none}}
+
+  /* Hero */
+  .hero{position:relative;padding:72px 0 88px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,var(--pink-100),transparent 70%);z-index:-1}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(2.4rem,5.5vw,4.2rem);margin:14px 0 18px}
+  .hero h1 em{font-style:normal;color:var(--pink);position:relative}
+  .hero h1 em::after{content:"";position:absolute;left:0;right:0;bottom:.05em;height:.22em;background:var(--pink-100);z-index:-1;border-radius:4px}
+  .hero p.lead{font-size:1.15rem;color:var(--choco-70);max-width:34ch;margin-bottom:28px}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:22px;font-weight:700;font-size:.95rem}
+  .hero-meta div{display:flex;align-items:center;gap:.45rem}
+  .stars{color:#f5b301;letter-spacing:1px}
+  .open-dot{width:9px;height:9px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(47,181,154,.2)}
+  .open-dot.closed{background:#c9b8b4;box-shadow:0 0 0 4px rgba(201,184,180,.25)}
+  .hero-art{position:relative;aspect-ratio:1;max-width:460px;justify-self:center;width:100%}
+  .cake-plate{position:absolute;inset:6%;border-radius:50%;background:conic-gradient(from 200deg,#ffd6e4,#ffeef4,#ffd6e4,#fff,#ffd6e4);box-shadow:var(--shadow);display:grid;place-items:center}
+  .cake-plate svg{width:72%}
+  .chip{position:absolute;background:#fff;border-radius:16px;padding:.7rem .95rem;box-shadow:var(--shadow);font-weight:800;font-size:.9rem;display:flex;gap:.5rem;align-items:center;animation:float 5s ease-in-out infinite}
+  .chip small{display:block;font-weight:600;color:var(--choco-70);font-size:.75rem}
+  .chip.c1{top:6%;left:-4%}
+  .chip.c2{bottom:10%;right:-6%;animation-delay:-2.5s}
+  @keyframes float{50%{transform:translateY(-10px)}}
+  @media (max-width:860px){.hero-grid{grid-template-columns:1fr}.hero{padding:40px 0 64px}.hero-art{max-width:340px}.chip.c1{left:0}.chip.c2{right:0}}
+
+  /* Strip */
+  .strip{background:var(--choco);color:#fff;padding:18px 0;overflow:hidden;white-space:nowrap}
+  .strip-track{display:inline-flex;gap:40px;animation:marquee 28s linear infinite;font-family:"Fraunces",serif;font-size:1.25rem}
+  .strip-track span::after{content:"✦";margin-left:40px;color:var(--pink)}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+
+  section{padding:88px 0}
+  .sec-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+  .sec-head h2{font-size:clamp(2rem,4vw,2.9rem);margin-top:8px}
+  .sec-head p{color:var(--choco-70);max-width:42ch}
+
+  /* Menu */
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+  .filter{padding:.55rem 1.1rem;border-radius:999px;background:#fff;border:2px solid var(--line);font-weight:800;font-size:.92rem;transition:.15s}
+  .filter:hover{border-color:var(--pink)}
+  .filter[aria-pressed="true"]{background:var(--pink);border-color:var(--pink);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px}
+  .card{background:#fff;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .card-img{aspect-ratio:4/3;display:grid;place-items:center;font-size:4.2rem;position:relative}
+  .card-img .tag{position:absolute;top:12px;left:12px;background:#fff;font-size:.72rem;font-weight:800;padding:.3rem .6rem;border-radius:99px;color:var(--pink)}
+  .card-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .card-body h3{font-size:1.2rem}
+  .card-body p{color:var(--choco-70);font-size:.92rem;flex:1}
+  .card-foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+  .price{font-weight:800;font-size:1.2rem}
+  .add{width:42px;height:42px;border-radius:50%;background:var(--pink-50);color:var(--pink);font-size:1.4rem;font-weight:800;display:grid;place-items:center;transition:.15s}
+  .add:hover{background:var(--pink);color:#fff}
+  .bg-pink{background:linear-gradient(135deg,#ffe0ea,#ffc4d6)}
+  .bg-choco{background:linear-gradient(135deg,#f3e2d7,#e2c3ad)}
+  .bg-mint{background:linear-gradient(135deg,#dff7f0,#bfeee1)}
+  .bg-sky{background:linear-gradient(135deg,#e2f0fc,#c6e1f7)}
+  .bg-lemon{background:linear-gradient(135deg,#fff6d6,#ffe9a3)}
+
+  /* Custom orders */
+  .custom{background:var(--pink-50)}
+  .custom-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .steps{display:grid;gap:16px;margin:26px 0 30px}
+  .step{display:flex;gap:16px;align-items:flex-start;background:#fff;padding:18px;border-radius:var(--radius);border:1px solid var(--line)}
+  .step b{flex:none;width:38px;height:38px;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font-family:"Fraunces",serif}
+  .step h3{font-size:1.1rem;margin-bottom:2px}
+  .step p{color:var(--choco-70);font-size:.93rem}
+  .custom-form{background:#fff;border-radius:24px;padding:28px;box-shadow:var(--shadow);display:grid;gap:14px}
+  .custom-form h3{font-size:1.5rem}
+  label{font-weight:800;font-size:.85rem;display:grid;gap:6px}
+  input,select,textarea{font:inherit;padding:.75rem .9rem;border-radius:12px;border:2px solid var(--line);background:var(--cream);color:var(--choco)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--pink)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:860px){.custom-grid{grid-template-columns:1fr}}
+  @media (max-width:480px){.row2{grid-template-columns:1fr}}
+
+  /* Visit */
+  .visit-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px}
+  .info{background:#fff;border-radius:24px;padding:30px;border:1px solid var(--line);display:grid;gap:22px;align-content:start}
+  .info-item{display:flex;gap:14px}
+  .info-item .ic{flex:none;width:44px;height:44px;border-radius:14px;background:var(--pink-50);display:grid;place-items:center;font-size:1.25rem}
+  .info-item h3{font-family:"Nunito",sans-serif;font-size:1rem;font-weight:800}
+  .info-item p{color:var(--choco-70)}
+  .map{border-radius:24px;overflow:hidden;min-height:380px;border:1px solid var(--line);background:#eee}
+  .map iframe{width:100%;height:100%;min-height:380px;border:0}
+  @media (max-width:860px){.visit-grid{grid-template-columns:1fr}}
+
+  footer{background:var(--choco);color:#e9dcd8;padding:48px 0 32px}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;align-items:center}
+  footer .logo span{color:#fff}
+  footer small{display:block;margin-top:28px;opacity:.6;font-size:.8rem}
+
+  /* WhatsApp bubble */
+  .wa-float{position:fixed;right:20px;bottom:20px;z-index:50;display:flex;align-items:center;gap:10px}
+  .wa-tip{background:#fff;padding:.6rem .9rem;border-radius:14px;box-shadow:var(--shadow);font-weight:700;font-size:.88rem;opacity:0;transform:translateX(10px);transition:.3s;pointer-events:none}
+  .wa-float:hover .wa-tip,.wa-tip.show{opacity:1;transform:none}
+  .wa-btn{width:62px;height:62px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 25px -6px rgba(37,211,102,.6);position:relative}
+  .wa-btn::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--wa);animation:pulse 2.2s infinite;z-index:-1}
+  @keyframes pulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+  .wa-btn svg{width:32px;height:32px;fill:#fff}
+
+  /* Cart drawer */
+  .overlay{position:fixed;inset:0;background:rgba(59,36,32,.45);z-index:60;opacity:0;pointer-events:none;transition:.25s}
+  .overlay.open{opacity:1;pointer-events:auto}
+  .drawer{position:fixed;top:0;right:0;height:100%;width:min(420px,100%);background:var(--cream);z-index:70;transform:translateX(100%);transition:transform .3s ease;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .drawer-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line)}
+  .drawer-head h2{font-size:1.5rem}
+  .close{width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);font-size:1.3rem}
+  .items{flex:1;overflow-y:auto;padding:12px 22px;display:grid;gap:12px;align-content:start}
+  .item{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;background:#fff;padding:10px;border-radius:14px;border:1px solid var(--line)}
+  .item .thumb{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font-size:1.8rem}
+  .item h4{font-size:.95rem}
+  .item small{color:var(--choco-70);font-weight:700}
+  .qty{display:flex;align-items:center;gap:8px;background:var(--pink-50);border-radius:99px;padding:3px}
+  .qty button{width:28px;height:28px;border-radius:50%;background:#fff;font-weight:800;color:var(--pink)}
+  .qty span{min-width:16px;text-align:center;font-weight:800}
+  .empty{text-align:center;padding:60px 10px;color:var(--choco-70)}
+  .empty div{font-size:3rem;margin-bottom:8px}
+  .drawer-foot{padding:18px 22px 22px;border-top:1px solid var(--line);background:#fff;display:grid;gap:12px}
+  .total{display:flex;justify-content:space-between;font-weight:800;font-size:1.15rem}
+  .drawer-foot .btn{justify-content:center}
+  .drawer-foot .btn[disabled]{opacity:.45;pointer-events:none}
+  .note{font-size:.8rem;color:var(--choco-70);text-align:center}
+
+  .toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-160px);white-space:nowrap;background:var(--choco);color:#fff;padding:.75rem 1.2rem;border-radius:999px;font-weight:700;z-index:80;transition:transform .3s}
+  .toast.show{transform:translate(-50%,0)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo"><span aria-hidden="true">🎂</span><b style="font-weight:inherit;color:var(--pink)">Tortis<span>simas</span></b></a>
+    <ul>
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#pedidos">Pedidos especiales</a></li>
+      <li><a href="#visitanos">Visítanos</a></li>
+    </ul>
+    <button class="cart-btn" id="openCart" aria-label="Abrir carrito">
+      🛒 <span class="hide-sm">Carrito</span> <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Pastelería · Maracaibo</span>
+        <h1>Galletas, tortas y dulces que hacen <em>cada día</em> especial</h1>
+        <p class="lead">Postres hechos a mano en el C.C. Valle Alto. Pide tu antojo para hoy o encarga la torta de tu próxima celebración.</p>
+        <div class="hero-cta">
+          <a href="#menu" class="btn btn-primary">Ver menú →</a>
+          <a href="#pedidos" class="btn btn-ghost">Encargar torta</a>
+        </div>
+        <div class="hero-meta">
+          <div><span class="stars">★★★★★</span> 4.9 en Google</div>
+          <div><span class="open-dot" id="openDot"></span> <span id="openText">Abierto · cierra 6 p.m.</span></div>
+          <div>💵 Desde $1</div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="cake-plate">
+          <svg viewBox="0 0 200 200">
+            <ellipse cx="100" cy="168" rx="80" ry="12" fill="#f3c6d4"/>
+            <rect x="34" y="110" width="132" height="56" rx="10" fill="#e8457c"/>
+            <path d="M34 122c12 10 22 10 33 0s22-10 33 0 22 10 33 0 22-10 33 0v-6H34z" fill="#fff"/>
+            <rect x="48" y="72" width="104" height="44" rx="10" fill="#ffd6e4"/>
+            <path d="M48 82c9 8 17 8 26 0s17-8 26 0 17 8 26 0 17-8 26 0v-4H48z" fill="#fff"/>
+            <circle cx="70" cy="140" r="4" fill="#fff"/><circle cx="100" cy="146" r="4" fill="#fff"/><circle cx="130" cy="140" r="4" fill="#fff"/>
+            <rect x="96" y="44" width="8" height="28" rx="3" fill="#5aa9e6"/>
+            <path d="M100 26c6 8 6 14 0 18-6-4-6-10 0-18z" fill="#f5b301"/>
+            <circle cx="72" cy="66" r="7" fill="#c42e63"/><circle cx="128" cy="66" r="7" fill="#c42e63"/>
+          </svg>
+        </div>
+        <div class="chip c1">🧁 <div>Recién horneado<small>todos los días</small></div></div>
+        <div class="chip c2">🛵 <div>Pide por WhatsApp<small>y retira en tienda</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <span>Cookies</span><span>Tortas de cumpleaños</span><span>Cupcakes</span><span>Quesillo</span><span>Tres leches</span><span>Brownies</span><span>Galletas</span><span>Mesas dulces</span>
+      <span>Cookies</span><span>Tortas de cumpleaños</span><span>Cupcakes</span><span>Quesillo</span><span>Tres leches</span><span>Brownies</span><span>Galletas</span><span>Mesas dulces</span>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <section id="menu">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><span class="eyebrow">Nuestro menú</span><h2>Elige tu antojo</h2></div>
+        <p>Agrega al carrito y envía tu pedido por WhatsApp. Te confirmamos disponibilidad y hora de retiro.</p>
+      </div>
+      <div class="filters" id="filters" role="toolbar" aria-label="Filtrar menú"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- CUSTOM ORDERS -->
+  <section id="pedidos" class="custom">
+    <div class="wrap custom-grid">
+      <div class="reveal">
+        <span class="eyebrow">Pedidos especiales</span>
+        <h2 style="font-size:clamp(2rem,4vw,2.9rem);margin-top:8px">Tu torta, como la imaginas</h2>
+        <div class="steps">
+          <div class="step"><b>1</b><div><h3>Cuéntanos la idea</h3><p>Ocasión, sabor, tamaño y temática. Si tienes una foto de referencia, mejor.</p></div></div>
+          <div class="step"><b>2</b><div><h3>Te cotizamos</h3><p>Respondemos por WhatsApp con precio y fecha disponible.</p></div></div>
+          <div class="step"><b>3</b><div><h3>Retira y celebra</h3><p>Pasas por la tienda en el C.C. Valle Alto el día acordado.</p></div></div>
+        </div>
+      </div>
+      <form class="custom-form reveal" id="customForm">
+        <h3>Solicitar cotización</h3>
+        <div class="row2">
+          <label>Nombre<input name="nombre" required placeholder="Tu nombre"></label>
+          <label>Fecha del evento<input name="fecha" type="date" required></label>
+        </div>
+        <div class="row2">
+          <label>Ocasión
+            <select name="ocasion"><option>Cumpleaños</option><option>Baby shower</option><option>Bautizo</option><option>Boda</option><option>Graduación</option><option>Otra</option></select>
+          </label>
+          <label>Porciones
+            <select name="porciones"><option>10–15</option><option>20–30</option><option>40–60</option><option>Más de 60</option></select>
+          </label>
+        </div>
+        <label>Sabor y detalles<textarea name="detalles" rows="3" placeholder="Ej: vainilla con relleno de arequipe, temática unicornio, colores rosado y lila"></textarea></label>
+        <button class="btn btn-wa" type="submit" style="justify-content:center">Enviar por WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section id="visitanos">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><span class="eyebrow">Visítanos</span><h2>Te esperamos en Valle Alto</h2></div>
+      </div>
+      <div class="visit-grid">
+        <div class="info reveal">
+          <div class="info-item"><div class="ic">📍</div><div><h3>Dirección</h3><p>Centro Comercial Valle Alto, Circunvalación 2, Calle 95B-2, Maracaibo 4001, Zulia</p></div></div>
+          <div class="info-item"><div class="ic">🕕</div><div><h3>Horario</h3><p>Cierra a las 6:00 p.m.<br><small>(confirmar horario completo con la tienda)</small></p></div></div>
+          <div class="info-item"><div class="ic">⭐</div><div><h3>Reseñas</h3><p>4.9 de 5 en Google</p></div></div>
+          <a class="btn btn-primary" style="justify-content:center" target="_blank" rel="noopener" href="https://maps.app.goo.gl/rahuBDDMcRfZTazp7">Cómo llegar</a>
+        </div>
+        <div class="map reveal">
+          <iframe loading="lazy" title="Mapa de Tortissimas" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Tortissimas,+Centro+Comercial+Valle+Alto,+Maracaibo&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a href="#" class="logo"><span aria-hidden="true">🎂</span><b style="font-weight:inherit;color:var(--pink)">Tortis<span>simas</span></b></a>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn btn-wa" href="#" data-wa>WhatsApp</a>
+        <a class="btn" style="background:rgba(255,255,255,.1);color:#fff" href="https://www.instagram.com/tortissimas_cookies/" target="_blank" rel="noopener" aria-label="Instagram">@tortissimas_cookies</a>
+      </div>
+    </div>
+    <small>© <span id="year"></span> Tortissimas · Maracaibo, Venezuela · Prototipo — precios y productos de referencia.</small>
+  </div>
+</footer>
+
+<!-- WhatsApp floating bubble -->
+<a class="wa-float" href="#" data-wa aria-label="Escríbenos por WhatsApp">
+  <span class="wa-tip" id="waTip">¿Antojo? ¡Escríbenos! 👋</span>
+  <span class="wa-btn">
+    <svg viewBox="0 0 32 32"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.8 1.2 1.2-3.7-.3-.4c-1.2-1.8-1.9-3.9-1.9-6.1C4.9 9.8 9.9 4.9 16 4.9s11.1 4.9 11.1 10.9-5 10.6-11.1 10.6zm6.1-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.3-.7.1-.3-.2-1.4-.5-2.7-1.7-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.4 0-.6l-1-2.5c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.1 2.9 1.1 3.5.9 4.1.9.6-.1 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.2-.3-.3-.6-.4z"/></svg>
+  </span>
+</a>
+
+<!-- Cart -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Carrito" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Tu pedido</h2>
+    <button class="close" id="closeCart" aria-label="Cerrar carrito">×</button>
+  </div>
+  <div class="items" id="items"></div>
+  <div class="drawer-foot">
+    <div class="total"><span>Total</span><span id="total">$0.00</span></div>
+    <button class="btn btn-wa" id="checkout">Enviar pedido por WhatsApp</button>
+    <button class="btn btn-ghost" id="clear" style="justify-content:center">Vaciar carrito</button>
+    <p class="note">El pago y la hora de retiro se coordinan por WhatsApp.</p>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  // ⚠️ Reemplazar con el número real de la tienda (formato internacional, sin + ni espacios)
+  const WA_NUMBER = "584140000000";
+
+  const CATEGORIES = ["Todos","Galletas","Tortas","Porciones","Cupcakes","Postres"];
+  const PRODUCTS = [
+    {id:1,cat:"Tortas",name:"Torta de chocolate",desc:"Bizcocho húmedo con ganache. 20 porciones.",price:28,emoji:"🎂",bg:"bg-choco",tag:"Más pedida"},
+    {id:2,cat:"Tortas",name:"Torta tres leches",desc:"Clásica, bañada en tres leches y merengue.",price:24,emoji:"🍰",bg:"bg-pink"},
+    {id:3,cat:"Tortas",name:"Torta red velvet",desc:"Con frosting de queso crema.",price:30,emoji:"❤️",bg:"bg-pink"},
+    {id:4,cat:"Porciones",name:"Porción de chocolate",desc:"Una rebanada generosa para el antojo.",price:3.5,emoji:"🍫",bg:"bg-choco"},
+    {id:5,cat:"Porciones",name:"Porción tres leches",desc:"Fría y cremosa.",price:3,emoji:"🥛",bg:"bg-sky"},
+    {id:6,cat:"Porciones",name:"Cheesecake de fresa",desc:"Base de galleta y cobertura de fresa.",price:4.5,emoji:"🍓",bg:"bg-pink",tag:"Nuevo"},
+    {id:7,cat:"Cupcakes",name:"Cupcake vainilla",desc:"Con buttercream de colores.",price:1.5,emoji:"🧁",bg:"bg-lemon"},
+    {id:8,cat:"Cupcakes",name:"Caja de 6 cupcakes",desc:"Surtidos, ideal para compartir.",price:8,emoji:"🎁",bg:"bg-mint"},
+    {id:9,cat:"Postres",name:"Quesillo",desc:"Receta casera con caramelo.",price:2.5,emoji:"🍮",bg:"bg-lemon"},
+    {id:10,cat:"Postres",name:"Brownie",desc:"Denso, con trozos de chocolate.",price:2,emoji:"🟫",bg:"bg-choco"},
+    {id:11,cat:"Galletas",name:"Cookies con chispas",desc:"Paquete de 4 unidades.",price:2,emoji:"🍪",bg:"bg-lemon",tag:"Especialidad"},
+    {id:12,cat:"Galletas",name:"Galletas decoradas",desc:"Glaseado real, por unidad.",price:1.5,emoji:"⭐",bg:"bg-sky"}
+  ];
+
+  const $ = s => document.querySelector(s);
+  const fmt = n => "$" + n.toFixed(2);
+  const waLink = msg => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+
+  // --- Menu ---
+  let active = "Todos";
+  function renderFilters(){
+    $("#filters").innerHTML = CATEGORIES.map(c =>
+      `<button class="filter" aria-pressed="${c===active}" data-cat="${c}">${c}</button>`).join("");
+  }
+  function renderGrid(){
+    const list = PRODUCTS.filter(p => active==="Todos" || p.cat===active);
+    $("#grid").innerHTML = list.map(p => `
+      <article class="card">
+        <div class="card-img ${p.bg}">${p.tag?`<span class="tag">${p.tag}</span>`:""}<span aria-hidden="true">${p.emoji}</span></div>
+        <div class="card-body">
+          <h3>${p.name}</h3><p>${p.desc}</p>
+          <div class="card-foot"><span class="price">${fmt(p.price)}</span>
+            <button class="add" data-add="${p.id}" aria-label="Agregar ${p.name}">+</button></div>
+        </div>
+      </article>`).join("");
+  }
+  $("#filters").addEventListener("click", e => {
+    const b = e.target.closest("[data-cat]"); if(!b) return;
+    active = b.dataset.cat; renderFilters(); renderGrid();
+  });
+  $("#grid").addEventListener("click", e => {
+    const b = e.target.closest("[data-add]"); if(b) add(+b.dataset.add);
+  });
+
+  // --- Cart ---
+  let cart = {};
+  try { cart = JSON.parse(localStorage.getItem("tortis-cart")) || {}; } catch(_) {}
+  const save = () => { try { localStorage.setItem("tortis-cart", JSON.stringify(cart)); } catch(_) {} };
+  const byId = id => PRODUCTS.find(p => p.id===+id);
+
+  function add(id){
+    cart[id] = (cart[id]||0) + 1; save(); renderCart();
+    const c = $("#cartCount"); c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump");
+    toast(`${byId(id).name} agregado 🧁`);
+  }
+  function setQty(id, d){
+    cart[id] = (cart[id]||0) + d; if(cart[id]<=0) delete cart[id]; save(); renderCart();
+  }
+  function renderCart(){
+    const ids = Object.keys(cart);
+    const count = ids.reduce((s,id)=>s+cart[id],0);
+    const total = ids.reduce((s,id)=>s+cart[id]*byId(id).price,0);
+    $("#cartCount").textContent = count;
+    $("#total").textContent = fmt(total);
+    $("#checkout").disabled = !count; $("#clear").disabled = !count;
+    $("#items").innerHTML = ids.length ? ids.map(id => { const p = byId(id); return `
+      <div class="item">
+        <div class="thumb ${p.bg}">${p.emoji}</div>
+        <div><h4>${p.name}</h4><small>${fmt(p.price*cart[id])}</small></div>
+        <div class="qty"><button data-q="-1" data-id="${id}" aria-label="Quitar uno">−</button><span>${cart[id]}</span><button data-q="1" data-id="${id}" aria-label="Agregar uno">+</button></div>
+      </div>`; }).join("") : `<div class="empty"><div>🛒</div>Tu carrito está vacío.<br>¡Agrega algo dulce!</div>`;
+  }
+  $("#items").addEventListener("click", e => { const b = e.target.closest("[data-q]"); if(b) setQty(b.dataset.id, +b.dataset.q); });
+  $("#clear").addEventListener("click", () => { cart = {}; save(); renderCart(); });
+  $("#checkout").addEventListener("click", () => {
+    const lines = Object.keys(cart).map(id => `• ${cart[id]} x ${byId(id).name} — ${fmt(cart[id]*byId(id).price)}`);
+    const total = Object.keys(cart).reduce((s,id)=>s+cart[id]*byId(id).price,0);
+    const msg = `¡Hola Tortissimas! 🎂 Quiero hacer este pedido:\n\n${lines.join("\n")}\n\nTotal: ${fmt(total)}\n\n¿Me confirman disponibilidad y hora de retiro?`;
+    window.open(waLink(msg), "_blank");
+  });
+
+  const drawer = $("#drawer"), overlay = $("#overlay");
+  function openCart(o){ drawer.classList.toggle("open",o); overlay.classList.toggle("open",o); drawer.setAttribute("aria-hidden",!o); document.body.style.overflow = o?"hidden":""; }
+  $("#openCart").onclick = () => openCart(true);
+  $("#closeCart").onclick = overlay.onclick = () => openCart(false);
+  document.addEventListener("keydown", e => { if(e.key==="Escape") openCart(false); });
+
+  // --- WhatsApp links ---
+  document.querySelectorAll("[data-wa]").forEach(a => {
+    a.href = waLink("¡Hola Tortissimas! 👋 Quisiera información sobre sus productos.");
+    a.target = "_blank"; a.rel = "noopener";
+  });
+  setTimeout(() => $("#waTip").classList.add("show"), 2500);
+  setTimeout(() => $("#waTip").classList.remove("show"), 8000);
+
+  // --- Custom order form ---
+  $("#customForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.target));
+    const msg = `¡Hola Tortissimas! 🎂 Quiero cotizar una torta personalizada:\n\n• Nombre: ${f.nombre}\n• Fecha: ${f.fecha}\n• Ocasión: ${f.ocasion}\n• Porciones: ${f.porciones}\n• Detalles: ${f.detalles||"—"}`;
+    window.open(waLink(msg), "_blank");
+  });
+
+  // --- Open / closed indicator (asume 9 a.m. – 6 p.m., hora de Venezuela) ---
+  (function(){
+    const h = +new Intl.DateTimeFormat("en-US",{hour:"numeric",hourCycle:"h23",timeZone:"America/Caracas"}).format(new Date());
+    const open = h >= 9 && h < 18;
+    $("#openDot").classList.toggle("closed", !open);
+    $("#openText").textContent = open ? "Abierto · cierra 6 p.m." : "Cerrado ahora";
+  })();
+
+  // --- Misc ---
+  let tt; function toast(t){ const el=$("#toast"); el.textContent=t; el.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>el.classList.remove("show"),1800); }
+  $("#year").textContent = new Date().getFullYear();
+  const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }), {threshold:.12});
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  renderFilters(); renderGrid(); renderCart();
+</script>
+<style>@media (max-width:480px){.hide-sm{display:none}}</style>
+</body>
+</html>
