@@ -1,6 +1,6 @@
 # IMPLANMED: sitio web
 
-Sitio de IMPLANMED C.A. (Maracaibo, Venezuela) construido con [Astro](https://astro.build), con catálogo, solicitud de pedido por WhatsApp, blog y CMS.
+Sitio de IMPLANMED C.A. (Maracaibo, Venezuela) construido con [Astro](https://astro.build), con Tailwind CSS v4, catálogo, solicitud de pedido por WhatsApp, blog y CMS.
 
 ## Desarrollo
 
@@ -24,9 +24,16 @@ npm run preview
 | `src/data/site.ts` | Teléfono, WhatsApp, dirección, redes, menú |
 | `src/data/categorias.ts` | Las 4 líneas de producto |
 | `src/scripts/cart.ts` | Carrito en `localStorage` y armado del mensaje del pedido |
-| `src/styles/global.css` | Estilos del diseño original |
-| `src/styles/site.css` | Estilos nuevos (tienda, páginas internas, blog) |
+| `src/styles/global.css` | Tailwind: paleta de la marca (`@theme`), estilos base y dos utilidades propias |
+| `src/data/tonos.ts` | Clases de Tailwind por color de línea (azul, verde, coral, amarillo) |
+| `src/data/ui.ts` | Recetas de clases repetidas: botones, campos de formulario, títulos, texto largo |
 | `public/admin/config.yml` | Configuración del CMS |
+
+## Estilos
+
+Todo el estilo está escrito con utilidades de Tailwind en los componentes. Los colores de la marca son tokens del tema (`bg-morado`, `text-azul-texto`, `border-l-verde`…), definidos en `src/styles/global.css`. Para cambiar un color basta con editarlo ahí.
+
+Las clases que dependen de la línea de producto están completas en `src/data/tonos.ts` para que Tailwind las detecte; no armes clases con plantillas (`bg-${color}`), porque no se generan.
 
 ## Cómo funciona la tienda
 

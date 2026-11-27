@@ -3,6 +3,8 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Icon from './Icon.astro';
 import { CATEGORIAS } from '../data/categorias';
+import { TONOS } from '../data/tonos';
+import { btn, bullets } from '../data/ui';
 import { url } from '../data/url';
 
 const productos = (await getCollection('productos', ({ data }) => !data.draft)).sort(
@@ -10,32 +12,36 @@ const productos = (await getCollection('productos', ({ data }) => !data.draft)).
 );
 ---
 
-<div class="productos-grid">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
   {
     CATEGORIAS.map((c) => {
+      const t = TONOS[c.tono];
       const items = productos.filter((p) => p.data.category === c.slug);
-      const shown = items.slice(0, 3);
       const href = url(`/productos/categoria/${c.slug}`);
       return (
-        <article class={`producto-card card-hover-${c.tono}`}>
-          <a class="card-imagen-wrapper" href={href} tabindex="-1" aria-hidden="true">
-            <span class={`card-badge ${c.badgeClass}`}>{c.badge}</span>
-            <Image src={c.imagen} alt="" width={420} />
-            <div class={`linea-tematica linea-${c.tono}`} />
+        <article class:list={['flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1.5', t.card]}>
+          <a href={href} tabindex="-1" aria-hidden="true" class="relative block h-[220px] bg-linear-135 from-slate-200 to-slate-300">
+            <span class:list={['absolute top-3 left-3 z-[1] rounded-md px-2.5 py-1 text-xs font-bold', t.badge]}>{c.badge}</span>
+            <Image src={c.imagen} alt="" width={420} class="size-full object-cover" />
+            <span class:list={['absolute inset-x-0 bottom-0 h-1', t.bg]} />
           </a>
-          <div class="card-cuerpo">
-            <span class={`card-linea-decorativa bg-${c.tono}`} />
-            <h3 class="card-titulo"><a href={href}>{c.nombre}</a></h3>
-            <p class="card-descripcion">{c.resumen}</p>
-            <ul class={`card-lista lista-${c.tono}`}>
-              {shown.map((p) => <li><a href={url(`/productos/${p.id}`)}>{p.data.title}</a></li>)}
+          <div class="flex grow flex-col p-6">
+            <span class:list={['mb-3 block h-[3px] w-6 rounded-sm', t.bg]} />
+            <h3 class="mb-3 text-xl font-bold text-slate-900">
+              <a href={href} class="hover:text-morado">{c.nombre}</a>
+            </h3>
+            <p class="mb-5 text-[0.85rem] leading-relaxed text-slate-500 lg:min-h-24">{c.resumen}</p>
+            <ul class:list={[bullets, t.marker, 'mb-3']}>
+              {items.slice(0, 3).map((p) => (
+                <li><a href={url(`/productos/${p.id}`)} class="hover:text-morado hover:underline">{p.data.title}</a></li>
+              ))}
             </ul>
-            <a href={href} class={`btn-ver-mas color-${c.tono}`}>
+            <a href={href} class:list={['mb-6 inline-block text-[0.85rem] font-bold hover:underline', t.text]}>
               Ver {items.length} productos
             </a>
-            <div class="card-acciones">
-              <a href={href} class="btn-cotizar">Ver catálogo</a>
-              <a href={url('/carrito')} class={`btn-card-carrito btn-cart-${c.tono}`} aria-label="Ver mi solicitud">
+            <div class="mt-auto flex gap-3">
+              <a href={href} class:list={[btn.primary, 'flex-1']}>Ver catálogo</a>
+              <a href={url('/carrito')} aria-label="Ver mi solicitud" class:list={['flex size-11 items-center justify-center rounded-lg border transition-colors lg:size-[38px]', t.cartBtn]}>
                 <Icon name="cart" />
               </a>
             </div>

@@ -8,7 +8,9 @@ import Metrics from '../components/Metrics.astro';
 import MapBlock from '../components/MapBlock.astro';
 import QuoteSection from '../components/QuoteSection.astro';
 import BlogGrid from '../components/BlogGrid.astro';
+import SectionIntro from '../components/SectionIntro.astro';
 import { getPosts } from '../data/blog';
+import { btn } from '../data/ui';
 import { url } from '../data/url';
 
 const posts = (await getPosts()).slice(0, 4);
@@ -17,39 +19,33 @@ const posts = (await getPosts()).slice(0, 4);
 <BaseLayout>
   <HeroCarousel />
 
-  <section id="soluciones" class="productos-seccion">
-    <div class="productos-header">
-      <div class="header-texto">
-        <span class="subtitulo-seccion">CATÁLOGO</span>
-        <h2 class="titulo-seccion">Líneas de producto</h2>
-      </div>
-    </div>
+  <section id="soluciones" class="bg-slate-50 px-4 py-10 sm:px-10 sm:py-20">
+    <SectionIntro center eyebrow="Catálogo" title="Líneas de producto" class="mb-12" />
     <CategoryCards />
-    <p class="seccion-pie"><a class="btn-ver-todos-blog" href={url('/productos')}>Ver el catálogo completo</a></p>
+    <p class="mt-10 text-center"><a class={btn.link} href={url('/productos')}>Ver el catálogo completo</a></p>
   </section>
 
-  <section id="servicios" class="servicios-seccion">
-    <div class="servicios-header">
-      <span class="servicios-subtitulo">SERVICIOS</span>
-      <h2 class="servicios-titulo">Servicios para el pabellón</h2>
-      <p class="servicios-descripcion">
-        Instrumentistas en la cirugía, alquiler de sets esterilizados y presupuestos listos para el seguro del paciente.
-      </p>
-    </div>
+  <section id="servicios" class="bg-white px-4 py-20 sm:px-[8%]">
+    <SectionIntro
+      center
+      eyebrow="Servicios"
+      title="Servicios para el pabellón"
+      text="Instrumentistas en la cirugía, alquiler de sets esterilizados y presupuestos listos para el seguro del paciente."
+      class="mb-[60px]"
+    />
     <ServicesList />
   </section>
 
-  <section id="academia" class="academia-seccion">
-    <div class="academia-top">
-      <div class="academia-texto-bloque">
-        <span class="academia-subtitulo">ACADEMIA</span>
-        <h2 class="academia-titulo">Formación para cirujanos en el Zulia</h2>
-        <p class="academia-descripcion">
-          Además de distribuir implantes, organizamos talleres, sesiones de casos clínicos y charlas con cirujanos
-          invitados en Maracaibo.
-        </p>
-        <a class="btn-ver-todos-blog" href={url('/nosotros')}>Conocer al equipo</a>
-      </div>
+  <section id="academia" class="bg-slate-50 px-4 py-[100px] text-slate-900 sm:px-[8%]">
+    <div class="mb-20 flex flex-col items-center gap-10 lg:flex-row lg:gap-[60px]">
+      <SectionIntro
+        eyebrow="Academia"
+        title="Formación para cirujanos en el Zulia"
+        text="Además de distribuir implantes, organizamos talleres, sesiones de casos clínicos y charlas con cirujanos invitados en Maracaibo."
+        class="flex-1"
+      >
+        <a class:list={[btn.link, 'mt-5 inline-block']} href={url('/nosotros')}>Conocer al equipo</a>
+      </SectionIntro>
       <Metrics />
     </div>
     <AcademiaBlock />
@@ -58,13 +54,10 @@ const posts = (await getPosts()).slice(0, 4);
 
   <QuoteSection />
 
-  <section id="blog" class="blog-seccion">
-    <div class="blog-header">
-      <div>
-        <span class="subtitulo-seccion">BLOG</span>
-        <h2 class="titulo-seccion">Guías para pacientes y novedades del catálogo</h2>
-      </div>
-      <a href={url('/blog')} class="btn-ver-todos-blog">Todos los artículos</a>
+  <section id="blog" class="bg-slate-50 px-4 py-[50px] sm:px-[6%] sm:py-20">
+    <div class="mb-10 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+      <SectionIntro eyebrow="Blog" title="Guías para pacientes y novedades del catálogo" />
+      <a href={url('/blog')} class={btn.link}>Todos los artículos</a>
     </div>
     <BlogGrid posts={posts} />
   </section>

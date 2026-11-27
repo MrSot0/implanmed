@@ -1,6 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
+import { unified } from '@astrojs/markdown-remark';
 
 // El sitio se publica en Vercel, en la raíz del dominio.
 // SITE_URL fija el dominio de producción (canonical, sitemap, Open Graph). Si no está
@@ -35,8 +37,11 @@ export default defineConfig({
       filter: (page) => !/\/(admin|carrito|checkout|pedido)\b/.test(page),
     }),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   markdown: {
-    rehypePlugins: [rehypeBaseLinks],
+    processor: unified({ rehypePlugins: [rehypeBaseLinks] }),
   },
   image: {
     layout: 'constrained',

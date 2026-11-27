@@ -3,20 +3,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import BrandIcon from '../components/BrandIcon.astro';
 import { url } from '../data/url';
+import { btn, form, link } from '../data/ui';
 ---
 
 <BaseLayout title="Solicitud enviada" noindex>
   <PageHeader eyebrow="PEDIDO" title="Solicitud enviada" crumbs={[{ label: 'Solicitud enviada' }]} />
-  <section class="pedido-seccion">
-    <div class="presupuesto-form-card pedido-card">
-      <p class="pedido-codigo">Código de solicitud <strong data-code>—</strong></p>
+  <section class="flex justify-center bg-slate-50 px-4 pt-12 pb-24 sm:px-[8%]">
+    <div class:list={[form.card, 'flex w-full max-w-[720px] flex-col gap-[18px] leading-relaxed text-slate-700']}>
+      <p class="text-[1.1rem] text-slate-900">Código de solicitud <strong data-code class="font-mono text-morado">—</strong></p>
       <p>
         Abrimos WhatsApp con el detalle de tu pedido. Si no se abrió, o lo cerraste antes de enviarlo, usa el botón de
         abajo. Un asesor te responde con el presupuesto formal en menos de 2 horas hábiles.
       </p>
-      <ul class="checkout-items" data-items></ul>
-      <a class="btn-whatsapp-cta" data-wa href="#"><BrandIcon name="whatsapp" size={20} /> Abrir WhatsApp de nuevo</a>
-      <p><a class="link-morado" href={url('/productos')}>Volver al catálogo</a></p>
+      <ul data-items class="flex list-disc flex-col gap-1.5 pl-5 text-[0.9rem] marker:text-morado"></ul>
+      <a class:list={[btn.whatsapp, 'self-start']} data-wa href="#"><BrandIcon name="whatsapp" size={20} /> Abrir WhatsApp de nuevo</a>
+      <p><a class={link} href={url('/productos')}>Volver al catálogo</a></p>
     </div>
   </section>
 </BaseLayout>

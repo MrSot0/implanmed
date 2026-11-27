@@ -16,20 +16,26 @@ const ld = {
 };
 ---
 
-<header class="page-header">
-  <div class="page-header-inner">
-    <nav aria-label="Ruta" class="breadcrumbs">
-      <ol>
+<header
+  class="border-b border-white/8 bg-tinta bg-[radial-gradient(1200px_300px_at_80%_0%,rgb(123_45_139/0.18),transparent_60%)] px-4 pt-[calc(var(--spacing-nav)+28px)] pb-10 sm:px-[8%] sm:pt-[calc(var(--spacing-nav)+48px)] sm:pb-14"
+>
+  <div class="max-w-[1100px]">
+    <nav aria-label="Ruta">
+      <ol class="mb-6 flex flex-wrap gap-1.5 text-[0.82rem] text-slate-400">
         {all.map((c, i) => (
-          <li>
-            {c.href && i < all.length - 1 ? <a href={url(c.href)}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+          <li class="flex gap-1.5 [&+&]:before:text-slate-600 [&+&]:before:content-['/']">
+            {c.href && i < all.length - 1 ? (
+              <a href={url(c.href)} class="hover:text-white hover:underline">{c.label}</a>
+            ) : (
+              <span aria-current="page" class="text-slate-300">{c.label}</span>
+            )}
           </li>
         ))}
       </ol>
     </nav>
-    {eyebrow && <span class="page-header-eyebrow">{eyebrow}</span>}
-    <h1 class="page-header-titulo">{title}</h1>
-    {text && <p class="page-header-texto">{text}</p>}
+    {eyebrow && <span class="mb-3 inline-block text-[0.8rem] font-bold tracking-[0.08em] text-azul">{eyebrow}</span>}
+    <h1 class="max-w-[22ch] text-[2rem] leading-[1.15] font-extrabold tracking-[-0.02em] sm:text-5xl">{title}</h1>
+    {text && <p class="mt-4 max-w-[62ch] text-[1.05rem] leading-relaxed text-slate-400">{text}</p>}
     <slot />
   </div>
   <script type="application/ld+json" set:html={JSON.stringify(ld)} />

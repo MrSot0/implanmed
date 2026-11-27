@@ -6,26 +6,31 @@ import { NAV } from '../data/site';
 import { url } from '../data/url';
 
 const current = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
-const isActive = (href: string) =>
-  href === '/' ? current === '/' || current === '' : current.startsWith(href);
+const isActive = (href: string) => (href === '/' ? current === '/' : current.startsWith(href));
 ---
 
-<nav class="navbar" aria-label="Principal">
-  <div class="nav-logo">
-    <a href={url('/')} aria-label="IMPLANMED, inicio">
-      <Image src={logo} alt="IMPLANMED" class="logo" width={160} height={50} loading="eager" />
-    </a>
-  </div>
+<nav
+  id="navbar"
+  data-open="false"
+  aria-label="Principal"
+  class="group fixed inset-x-0 top-0 z-[100] flex h-nav items-center justify-between gap-2 bg-white px-[4%] shadow-[0_2px_12px_rgb(0_0_0/0.08)] lg:gap-4 lg:px-[5%]"
+>
+  <a href={url('/')} aria-label="IMPLANMED, inicio" class="flex-1 lg:flex-none">
+    <Image src={logo} alt="IMPLANMED" width={160} height={50} loading="eager" class="block h-10 w-auto" />
+  </a>
 
-  <button class="nav-menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
-    <span></span><span></span><span></span>
-  </button>
-
-  <ul class="nav-links" id="nav-links">
+  <ul
+    id="nav-links"
+    class="flex gap-8 max-lg:pointer-events-none max-lg:absolute max-lg:inset-x-0 max-lg:top-full max-lg:max-h-0 max-lg:flex-col max-lg:gap-0 max-lg:overflow-hidden max-lg:border-t max-lg:border-slate-200 max-lg:bg-white max-lg:text-center max-lg:opacity-0 max-lg:shadow-[0_8px_24px_rgb(0_0_0/0.08)] max-lg:transition-all max-lg:duration-300 max-lg:group-data-[open=true]:pointer-events-auto max-lg:group-data-[open=true]:max-h-[560px] max-lg:group-data-[open=true]:opacity-100"
+  >
     {
       NAV.map((item) => (
         <li>
-          <a href={url(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
+          <a
+            href={url(item.href)}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class="block text-[0.95rem] font-medium text-slate-600 transition-colors hover:text-slate-900 aria-[current=page]:font-bold aria-[current=page]:text-morado max-lg:border-b max-lg:border-slate-100 max-lg:px-6 max-lg:py-3.5 max-lg:text-base"
+          >
             {item.label}
           </a>
         </li>
@@ -33,11 +38,31 @@ const isActive = (href: string) =>
     }
   </ul>
 
-  <div class="nav-acciones">
-    <a class="btn-registro" href={url('/contacto')}>Cotizar</a>
-    <a class="btn-carrito" href={url('/carrito')} aria-label="Ver solicitud de pedido">
+  <div class="flex shrink-0 items-center gap-1.5 lg:gap-3">
+    <a
+      href={url('/contacto')}
+      class="rounded-lg border-[1.5px] border-morado px-2.5 py-1.5 text-xs font-semibold text-morado transition-colors hover:bg-morado-oscuro hover:text-white lg:px-5 lg:py-2 lg:text-[0.9rem]"
+      >Cotizar</a
+    >
+    <a href={url('/carrito')} aria-label="Ver solicitud de pedido" class="relative inline-flex p-2 text-slate-700 hover:text-slate-900">
       <Icon name="cart" size={20} />
-      <span class="contador-carrito" data-cart-count hidden>0</span>
+      <span
+        data-cart-count
+        hidden
+        class="absolute -top-1 -right-1.5 h-[18px] min-w-[18px] rounded-full bg-morado px-1.5 text-center text-[0.7rem] leading-[18px] font-bold text-white"
+        >0</span
+      >
     </a>
+    <button
+      id="menu-toggle"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="nav-links"
+      class="ml-1 flex h-5 w-7 flex-col justify-between lg:hidden"
+    >
+      <span class="block h-0.5 w-full rounded bg-slate-700 transition group-data-[open=true]:translate-y-[9px] group-data-[open=true]:rotate-45"></span>
+      <span class="block h-0.5 w-full rounded bg-slate-700 transition group-data-[open=true]:scale-x-0 group-data-[open=true]:opacity-0"></span>
+      <span class="block h-0.5 w-full rounded bg-slate-700 transition group-data-[open=true]:-translate-y-[9px] group-data-[open=true]:-rotate-45"></span>
+    </button>
   </div>
 </nav>

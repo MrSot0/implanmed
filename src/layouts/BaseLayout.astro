@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import '../styles/site.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import FloatingButtons from '../components/FloatingButtons.astro';
@@ -79,14 +78,24 @@ const ld = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
     <slot name="head" />
   </head>
   <body>
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <a
+      href="#contenido"
+      class="fixed -top-16 left-3 z-[1000] rounded-lg bg-morado px-4 py-2.5 font-bold text-white focus:top-3"
+      >Saltar al contenido</a
+    >
     <Navbar />
-    <div id="contenido">
+    <main id="contenido">
       <slot />
-    </div>
+    </main>
     <Footer />
     <FloatingButtons />
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div
+      id="toast"
+      role="status"
+      aria-live="polite"
+      class="pointer-events-none fixed bottom-24 left-1/2 z-[1001] max-w-[calc(100vw-32px)] -translate-x-1/2 translate-y-5 rounded-xl bg-slate-900 px-5 py-3 text-[0.9rem] font-semibold text-white opacity-0 shadow-[0_10px_30px_rgb(0_0_0/0.25)] transition data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100 sm:bottom-7"
+    >
+    </div>
     <script>
       import '../scripts/ui';
     </script>

@@ -4,9 +4,19 @@ import BrandIcon from './BrandIcon.astro';
 import { waLink } from '../data/site';
 ---
 
-<button class="btn-volver-arriba" id="btn-top" aria-label="Volver arriba">
+<button
+  id="btn-top"
+  aria-label="Volver arriba"
+  class="pointer-events-none fixed right-5 bottom-[88px] z-[999] flex size-14 translate-y-2.5 items-center justify-center rounded-full bg-morado text-white opacity-0 shadow-[0_6px_24px_rgb(123_45_139/0.4)] transition hover:-translate-y-0.5 data-[visible=true]:pointer-events-auto data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100 sm:right-7 sm:bottom-[100px]"
+>
   <Icon name="up" size={28} />
 </button>
-<a href={waLink()} target="_blank" rel="noopener" class="btn-whatsapp-flotante" aria-label="Escribir por WhatsApp">
+<a
+  href={waLink()}
+  target="_blank"
+  rel="noopener"
+  aria-label="Escribir por WhatsApp"
+  class="fixed right-5 bottom-5 z-[999] flex size-14 animate-entrada items-center justify-center rounded-full bg-whatsapp text-white shadow-[0_6px_24px_rgb(37_211_102/0.4)] transition hover:-translate-y-0.5 sm:right-7 sm:bottom-7"
+>
   <BrandIcon name="whatsapp" size={28} />
 </a>

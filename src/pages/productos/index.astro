@@ -14,7 +14,7 @@ const products = await getProducts();
     text="Agrega los productos a tu solicitud y te enviamos un presupuesto formal. Los precios dependen de la marca, la cantidad y la cobertura del seguro."
     crumbs={[{ label: 'Productos' }]}
   />
-  <section class="productos-seccion tienda-seccion">
+  <section class="bg-slate-50 px-4 pt-12 pb-20 sm:px-[8%]">
     <Catalog products={products} />
   </section>
 </BaseLayout>

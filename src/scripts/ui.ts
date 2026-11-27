@@ -17,9 +17,9 @@ export function toast(message: string) {
   const el = document.getElementById('toast');
   if (!el) return;
   el.textContent = message;
-  el.classList.add('visible');
+  el.dataset.visible = 'true';
   window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => el.classList.remove('visible'), 2600);
+  toastTimer = window.setTimeout(() => (el.dataset.visible = 'false'), 2600);
 }
 
 // --- Botones "agregar" en tarjetas y fichas ---
@@ -61,16 +61,16 @@ document.addEventListener('click', (e) => {
 });
 
 // --- Menú móvil ---
+const nav = document.getElementById('navbar');
 const toggle = document.getElementById('menu-toggle');
 const links = document.getElementById('nav-links');
-if (toggle && links) {
+if (nav && toggle && links) {
   const setOpen = (open: boolean) => {
-    links.classList.toggle('activo', open);
-    toggle.classList.toggle('abierto', open);
+    nav.dataset.open = String(open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
   };
-  toggle.addEventListener('click', () => setOpen(!links.classList.contains('activo')));
+  toggle.addEventListener('click', () => setOpen(nav.dataset.open !== 'true'));
   links.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
 }
@@ -78,7 +78,7 @@ if (toggle && links) {
 // --- Volver arriba ---
 const btnTop = document.getElementById('btn-top');
 if (btnTop) {
-  const onScroll = () => btnTop.classList.toggle('visible', window.scrollY > 400);
+  const onScroll = () => (btnTop.dataset.visible = String(window.scrollY > 400));
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
   btnTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));

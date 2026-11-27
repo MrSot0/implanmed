@@ -1,0 +1,20 @@
+---
+import Eyebrow from './Eyebrow.astro';
+import { h2 } from '../data/ui';
+interface Props {
+  eyebrow: string;
+  title: string;
+  text?: string;
+  center?: boolean;
+  as?: 'h1' | 'h2';
+  class?: string;
+}
+const { eyebrow, title, text, center = false, as: H = 'h2', class: cls } = Astro.props;
+---
+
+<div class:list={[center ? 'mx-auto max-w-[700px] text-center' : 'max-w-3xl', cls]}>
+  <Eyebrow both={center}>{eyebrow}</Eyebrow>
+  <H class:list={[h2, 'mt-4']}>{title}</H>
+  {text && <p class="mt-4 text-[1.05rem] leading-relaxed text-slate-500">{text}</p>}
+  <slot />
+</div>

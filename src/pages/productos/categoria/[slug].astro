@@ -19,7 +19,7 @@ const products = (await getProducts()).filter((p) => p.data.category === categor
     text={categoria.resumen}
     crumbs={[{ label: 'Productos', href: '/productos' }, { label: categoria.nombre }]}
   />
-  <section class="productos-seccion tienda-seccion">
+  <section class="bg-slate-50 px-4 pt-12 pb-20 sm:px-[8%]">
     <Catalog products={products} active={categoria.slug} />
   </section>
 </BaseLayout>

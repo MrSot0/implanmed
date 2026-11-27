@@ -6,56 +6,89 @@ import trauma from '../assets/img/traumatologia.webp';
 import craneo from '../assets/img/craneo-maxilo.webp';
 import insumos from '../assets/img/insumos-medicos.webp';
 import { url } from '../data/url';
+import { TONOS, type Tono } from '../data/tonos';
+
+const arrow =
+  'absolute top-[45%] z-10 hidden size-11 md:flex -translate-y-1/2 items-center justify-center rounded-full border border-white/8 bg-slate-900/40 text-white backdrop-blur-md transition hover:scale-105 hover:bg-slate-900/80';
 
 const slides = [
   {
     title: 'Sistemas de fijación y reconstrucción de columna',
     text: 'Implantes cervicales, lumbares y torácicos en titanio grado médico, con certificación ISO y trazabilidad de cada pieza.',
     img: columna, alt: 'Tornillos pediculares fijados a una columna vertebral',
-    tag: 'COLUMNA Y NEUROCIRUGÍA', tone: 'azul', href: '/productos/categoria/columna',
+    tag: 'COLUMNA Y NEUROCIRUGÍA', tone: 'azul' as Tono, href: '/productos/categoria/columna',
   },
   {
     title: 'Implantes para traumatología y osteosíntesis',
     text: 'Mini fragmentos, placas DCP, L y T en titanio quirúrgico. Fijación interna y fijadores externos.',
     img: trauma, alt: 'Implantes para traumatología',
-    tag: 'TRAUMATOLOGÍA Y OSTEOSÍNTESIS', tone: 'verde', href: '/productos/categoria/traumatologia',
+    tag: 'TRAUMATOLOGÍA Y OSTEOSÍNTESIS', tone: 'verde' as Tono, href: '/productos/categoria/traumatologia',
   },
   {
     title: 'Cirugía cráneo buco maxilofacial a la medida',
     text: 'Placas, mallas y sistemas de reconstrucción facial adaptados a la anatomía de cada paciente, con guías quirúrgicas.',
     img: craneo, alt: 'Cirugía maxilofacial en quirófano',
-    tag: 'CRÁNEO BUCO MAXILOFACIAL', tone: 'coral', href: '/productos/categoria/maxilofacial',
+    tag: 'CRÁNEO BUCO MAXILOFACIAL', tone: 'coral' as Tono, href: '/productos/categoria/maxilofacial',
   },
   {
     title: 'Insumos y descartables para pabellón',
     text: 'Material estéril, vestimenta quirúrgica y complementos de pabellón. Entrega inmediata en Maracaibo.',
     img: insumos, alt: 'Personal médico en pabellón quirúrgico',
-    tag: 'INSUMOS MÉDICOS', tone: 'amarillo', href: '/productos/categoria/insumos',
+    tag: 'INSUMOS MÉDICOS', tone: 'amarillo' as Tono, href: '/productos/categoria/insumos',
   },
 ];
 ---
 
-<section id="inicio" class="hero-seccion-global" aria-roledescription="carrusel" aria-label="Líneas de producto" data-carousel>
-  <button class="carrusel-btn btn-izq" data-prev aria-label="Lámina anterior"><Icon name="left" size={18} /></button>
-  <button class="carrusel-btn btn-der" data-next aria-label="Lámina siguiente"><Icon name="right" size={18} /></button>
+<section
+  id="inicio"
+  aria-roledescription="carrusel"
+  aria-label="Líneas de producto"
+  data-carousel
+  class="relative flex min-h-dvh w-full flex-col justify-start overflow-hidden bg-tinta px-[4%] pt-[calc(var(--spacing-nav)+16px)] pb-8 sm:px-[8%] sm:pt-[calc(var(--spacing-nav)+24px)] md:justify-center md:pb-[110px]"
+>
+  <button data-prev aria-label="Lámina anterior" class={arrow + ' left-[15px]'}><Icon name="left" size={18} /></button>
+  <button data-next aria-label="Lámina siguiente" class={arrow + ' right-[15px]'}><Icon name="right" size={18} /></button>
 
-  <div class="carrusel-ventana-global">
-    <div class="carrusel-track" data-track aria-live="off">
+  <div class="w-full overflow-hidden">
+    <div data-track class="flex transition-transform duration-[600ms] ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform">
       {slides.map((s, i) => {
         const Heading = i === 0 ? 'h1' : 'h2';
         return (
-          <div class:list={['carrusel-slide', { 'slide-activa': i === 0 }]} role="group" aria-roledescription="lámina" aria-label={`${i + 1} de ${slides.length}`} aria-hidden={i === 0 ? undefined : 'true'} data-slide>
-            <div class="hero-contenido">
-              <Heading class="hero-titulo">{s.title}</Heading>
-              <p class="hero-descripcion">{s.text}</p>
-              <div class="hero-botones">
-                <a class="btn-cta-morado" href={url(s.href)} tabindex={i === 0 ? undefined : -1}>VER PRODUCTOS</a>
-                <a class="btn-cta-transparente" href={url('/contacto')} tabindex={i === 0 ? undefined : -1}>Pedir presupuesto</a>
+          <div
+            data-slide
+            data-active={i === 0 ? 'true' : 'false'}
+            role="group"
+            aria-roledescription="lámina"
+            aria-label={`${i + 1} de ${slides.length}`}
+            aria-hidden={i === 0 ? undefined : 'true'}
+            class="group/slide flex w-full shrink-0 flex-col-reverse items-center gap-5 px-5 pt-[30px] pb-10 lg:flex-row lg:justify-between lg:gap-[60px] lg:px-5 lg:py-2.5"
+          >
+            <div class="w-full min-w-0 lg:max-w-[600px] lg:flex-1">
+              <Heading class="mb-6 text-[1.75rem] leading-[1.2] font-extrabold tracking-[-0.02em] sm:text-[2rem] lg:text-[3.2rem] lg:leading-[1.15]">
+                {s.title}
+              </Heading>
+              <p class="mb-9 text-[1.1rem] leading-relaxed text-slate-400">{s.text}</p>
+              <div class="flex flex-col gap-3 md:flex-row md:gap-[18px]">
+                <a href={url(s.href)} tabindex={i === 0 ? undefined : -1} class="rounded-xl bg-morado px-5 py-3.5 text-center text-[0.9rem] font-bold tracking-[0.02em] transition-colors hover:bg-morado-oscuro md:px-9 md:py-[18px] md:text-[1.05rem]">
+                  VER PRODUCTOS
+                </a>
+                <a href={url('/contacto')} tabindex={i === 0 ? undefined : -1} class="rounded-xl border border-white/20 px-5 py-3.5 text-center text-[0.9rem] font-semibold transition-colors hover:bg-white/5 md:px-9 md:py-[18px] md:text-[1.05rem]">
+                  Pedir presupuesto
+                </a>
               </div>
             </div>
-            <div class="hero-imagen-wrapper">
-              <Image src={s.img} alt={s.alt} width={620} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} />
-              <span class={`slide-tag tag-${s.tone}`}>{s.tag}</span>
+            <div class="relative aspect-video w-full overflow-hidden rounded-3xl border border-white/14 bg-panel shadow-[0_20px_60px_rgb(0_0_0/0.45)] lg:aspect-[4/3] lg:max-w-[620px] lg:min-w-[320px] lg:flex-[1.15]">
+              <Image
+                src={s.img}
+                alt={s.alt}
+                width={620}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : undefined}
+                class="block size-full object-cover brightness-105 contrast-105 saturate-[1.08] transition-transform duration-[8s] ease-out group-data-[active=true]/slide:scale-[1.06]"
+              />
+              <span class:list={['absolute bottom-5 left-5 rounded-md bg-black/35 px-3 py-1.5 text-xs font-bold tracking-[0.05em] backdrop-blur-md', TONOS[s.tone].bright]}>
+                {s.tag}
+              </span>
             </div>
           </div>
         );
@@ -63,16 +96,22 @@ const slides = [
     </div>
   </div>
 
-  <div class="carrusel-dots" role="tablist" aria-label="Elegir lámina">
+  <div role="tablist" aria-label="Elegir lámina" class="mt-10 flex justify-center gap-2">
     {slides.map((s, i) => (
-      <button class:list={['dot', { activo: i === 0 }]} role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-label={s.tag.toLowerCase()} data-dot={i} />
+      <button
+        role="tab"
+        data-dot={i}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        aria-label={s.tag.toLowerCase()}
+        class="h-2 w-2 rounded-full bg-slate-700 transition-all duration-300 aria-selected:w-7"
+      />
     ))}
   </div>
 
-  <div class="hero-beneficios-bar">
-    <span class="beneficio-item"><span class="punto-check">•</span> Titanio grado médico</span>
-    <span class="beneficio-item"><span class="punto-check">•</span> Certificación ISO</span>
-    <span class="beneficio-item"><span class="punto-check">•</span> Entrega inmediata en Maracaibo</span>
+  <div class="mt-[30px] flex flex-col items-center gap-3 pt-5 text-[0.85rem] font-semibold text-slate-400 md:absolute md:inset-x-0 md:bottom-0 md:z-[5] md:mt-0 md:flex-row md:flex-wrap md:justify-center md:gap-8 md:border-t md:border-white/8 md:bg-white/[0.02] md:px-[8%] md:py-5 md:backdrop-blur-sm">
+    {['Titanio grado médico', 'Certificación ISO', 'Entrega inmediata en Maracaibo'].map((b) => (
+      <span><span data-check class="mr-1.5 align-middle text-xl text-azul transition-colors">•</span>{b}</span>
+    ))}
   </div>
 </section>
 
@@ -84,22 +123,21 @@ const slides = [
     const track = root.querySelector<HTMLElement>('[data-track]')!;
     const slides = [...root.querySelectorAll<HTMLElement>('[data-slide]')];
     const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
-    const checks = root.querySelectorAll<HTMLElement>('.punto-check');
+    const checks = root.querySelectorAll<HTMLElement>('[data-check]');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let index = 0;
     let timer: number | undefined;
 
     const render = () => {
-      track.style.transform = `translateX(${(index * -100) / slides.length}%)`;
+      track.style.transform = `translateX(${index * -100}%)`;
       slides.forEach((s, i) => {
         const on = i === index;
-        s.classList.toggle('slide-activa', on);
+        s.dataset.active = String(on);
         if (on) s.removeAttribute('aria-hidden');
         else s.setAttribute('aria-hidden', 'true');
         s.querySelectorAll('a').forEach((a) => (on ? a.removeAttribute('tabindex') : a.setAttribute('tabindex', '-1')));
       });
       dots.forEach((d, i) => {
-        d.classList.toggle('activo', i === index);
         d.setAttribute('aria-selected', String(i === index));
         d.style.backgroundColor = i === index ? COLORS[index] : '#334155';
       });

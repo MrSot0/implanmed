@@ -3,47 +3,52 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
 import { url } from '../data/url';
+import { btn, link } from '../data/ui';
+
+const summary = 'flex flex-col gap-4 rounded-[20px] border border-slate-200 bg-white p-7 lg:sticky lg:top-[calc(var(--spacing-nav)+24px)]';
+const row = 'flex justify-between border-b border-slate-100 py-2';
+const qtyBtn = 'h-10 w-9 bg-slate-50 text-lg text-slate-900 hover:bg-lila-suave';
 ---
 
 <BaseLayout title="Mi solicitud de pedido" noindex>
   <PageHeader eyebrow="PEDIDO" title="Mi solicitud" crumbs={[{ label: 'Mi solicitud' }]} />
 
-  <section class="carrito-seccion">
-    <div class="carrito-lista" data-cart-list aria-live="polite"></div>
+  <section class="grid grid-cols-1 items-start gap-8 bg-slate-50 px-4 pt-12 pb-24 text-slate-900 sm:px-[8%] lg:grid-cols-[minmax(0,1fr)_340px]">
+    <div data-cart-list aria-live="polite" class="flex flex-col gap-3 empty:hidden"></div>
 
-    <div class="carrito-vacio" data-cart-empty hidden>
-      <h2>Tu solicitud está vacía</h2>
-      <p>Agrega productos desde el catálogo y envíanos la solicitud para recibir un presupuesto formal.</p>
-      <a class="btn-cotizar" href={url('/productos')}>Ir al catálogo</a>
+    <div data-cart-empty hidden class="col-span-full flex flex-col items-center gap-3 rounded-[20px] border border-slate-200 bg-white px-6 py-14 text-center">
+      <h2 class="text-[1.4rem] font-bold">Tu solicitud está vacía</h2>
+      <p class="mb-2 max-w-[46ch] text-slate-500">Agrega productos desde el catálogo y envíanos la solicitud para recibir un presupuesto formal.</p>
+      <a class:list={[btn.primary, 'px-6 py-3']} href={url('/productos')}>Ir al catálogo</a>
     </div>
 
-    <aside class="carrito-resumen" data-cart-summary hidden>
-      <h2 class="form-card-titulo">Resumen</h2>
-      <dl>
-        <div><dt>Productos</dt><dd data-sum-lines>0</dd></div>
-        <div><dt>Unidades</dt><dd data-sum-units>0</dd></div>
-        <div data-sum-ref-row hidden><dt>Referencia (USD)</dt><dd data-sum-ref>0</dd></div>
+    <aside data-cart-summary hidden class={summary}>
+      <h2 class="text-[1.4rem] font-bold">Resumen</h2>
+      <dl class="text-[0.92rem]">
+        <div class={row}><dt class="text-slate-500">Productos</dt><dd class="font-bold" data-sum-lines>0</dd></div>
+        <div class={row}><dt class="text-slate-500">Unidades</dt><dd class="font-bold" data-sum-units>0</dd></div>
+        <div class={row} data-sum-ref-row hidden><dt class="text-slate-500">Referencia (USD)</dt><dd class="font-bold" data-sum-ref>0</dd></div>
       </dl>
-      <p class="form-disclaimer">El total final lo confirma un asesor en el presupuesto formal, según marca, disponibilidad y cobertura del seguro.</p>
-      <a class="btn-enviar-whatsapp" href={url('/checkout')}>CONTINUAR</a>
-      <a class="link-morado carrito-seguir" href={url('/productos')}>Seguir agregando productos</a>
+      <p class="text-[0.78rem] leading-normal text-slate-400">El total final lo confirma un asesor en el presupuesto formal, según marca, disponibilidad y cobertura del seguro.</p>
+      <a class={btn.submit} href={url('/checkout')}>CONTINUAR</a>
+      <a class:list={[link, 'text-center text-[0.88rem] font-semibold']} href={url('/productos')}>Seguir agregando productos</a>
     </aside>
   </section>
 
   <template id="tpl-item">
-    <article class="carrito-item">
-      <img alt="" width="96" height="72" loading="lazy" />
-      <div class="carrito-item-info">
-        <span class="card-categoria"></span>
-        <a class="carrito-item-titulo"></a>
-        <span class="carrito-item-variante"></span>
+    <article class="grid grid-cols-[72px_minmax(0,1fr)_auto] items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3.5 sm:grid-cols-[96px_minmax(0,1fr)_auto_auto] sm:gap-5">
+      <img alt="" width="96" height="72" loading="lazy" class="h-14 w-[72px] rounded-[10px] object-cover sm:h-[72px] sm:w-24" />
+      <div class="flex min-w-0 flex-col gap-0.5">
+        <span data-cat class="text-[0.72rem] font-bold tracking-[0.05em] text-slate-500 uppercase"></span>
+        <a data-title class="font-bold text-slate-900 hover:text-morado"></a>
+        <span data-variant class="text-[0.82rem] text-slate-500"></span>
       </div>
-      <div class="carrito-item-qty">
-        <button type="button" data-dec aria-label="Restar uno">−</button>
-        <input type="number" min="1" max="999" inputmode="numeric" aria-label="Cantidad" />
-        <button type="button" data-inc aria-label="Sumar uno">+</button>
+      <div class="col-start-2 flex items-center justify-self-start overflow-hidden rounded-[10px] border border-slate-200 sm:col-start-auto">
+        <button type="button" data-dec aria-label="Restar uno" class={qtyBtn}>−</button>
+        <input type="number" min="1" max="999" inputmode="numeric" aria-label="Cantidad" class="h-10 w-[52px] [appearance:textfield] border-0 text-center text-[0.95rem] [&::-webkit-inner-spin-button]:appearance-none" />
+        <button type="button" data-inc aria-label="Sumar uno" class={qtyBtn}>+</button>
       </div>
-      <button type="button" class="carrito-item-quitar" data-remove aria-label="Quitar">
+      <button type="button" data-remove aria-label="Quitar" class="col-start-3 row-start-1 rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-700 sm:col-start-auto">
         <Icon name="trash" size={18} />
       </button>
     </article>
@@ -68,11 +73,11 @@ import { url } from '../data/url';
       const node = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
       const img = node.querySelector('img')!;
       if (item.image) img.src = item.image; else img.remove();
-      node.querySelector('.card-categoria')!.textContent = item.category;
-      const a = node.querySelector<HTMLAnchorElement>('.carrito-item-titulo')!;
+      node.querySelector('[data-cat]')!.textContent = item.category;
+      const a = node.querySelector<HTMLAnchorElement>('[data-title]')!;
       a.textContent = item.title;
       a.href = item.url;
-      node.querySelector('.carrito-item-variante')!.textContent = variantLabel(item.variant);
+      node.querySelector('[data-variant]')!.textContent = variantLabel(item.variant);
       const qty = node.querySelector('input')!;
       qty.value = String(item.qty);
       qty.addEventListener('change', () => setQty(item.key, Math.max(1, Number(qty.value) || 1)));

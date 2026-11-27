@@ -1,16 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Eyebrow from '../components/Eyebrow.astro';
+import { btn, h2 } from '../data/ui';
 import { url } from '../data/url';
 ---
 
 <BaseLayout title="Página no encontrada" noindex>
-  <section class="pagina-404">
-    <span class="subtitulo-seccion">ERROR 404</span>
-    <h1 class="titulo-seccion">No encontramos esta página</h1>
-    <p>Puede que el enlace esté desactualizado. Prueba con el catálogo o vuelve al inicio.</p>
-    <div class="hero-botones">
-      <a class="btn-cotizar" href={url('/productos')}>Ver catálogo</a>
-      <a class="btn-ver-mapa" href={url('/')}>Ir al inicio</a>
+  <section class="flex min-h-[70vh] flex-col items-center gap-4 bg-slate-50 px-4 pt-[calc(var(--spacing-nav)+80px)] pb-20 text-center text-slate-900 sm:px-[8%]">
+    <Eyebrow>Error 404</Eyebrow>
+    <h1 class={h2}>No encontramos esta página</h1>
+    <p class="text-slate-500">Puede que el enlace esté desactualizado. Prueba con el catálogo o vuelve al inicio.</p>
+    <div class="mt-2 flex flex-wrap justify-center gap-3">
+      <a class:list={[btn.primary, 'px-6 py-3']} href={url('/productos')}>Ver catálogo</a>
+      <a class={btn.medium} href={url('/')}>Ir al inicio</a>
     </div>
   </section>
 </BaseLayout>

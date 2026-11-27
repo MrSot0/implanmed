@@ -8,7 +8,7 @@ const posts = await getPosts();
 
 <BaseLayout title="Blog" description="Guías de postoperatorio para pacientes, artículos médicos y novedades del catálogo de IMPLANMED.">
   <PageHeader eyebrow="BLOG" title="Guías y novedades" text="Indicaciones generales para pacientes y novedades del catálogo. Las instrucciones de su médico siempre tienen prioridad." crumbs={[{ label: 'Blog' }]} />
-  <section class="blog-seccion">
+  <section class="bg-slate-50 px-4 py-[50px] sm:px-[6%] sm:py-20">
     <BlogGrid posts={posts} highlightFirst={posts.length > 2} />
   </section>
 </BaseLayout>

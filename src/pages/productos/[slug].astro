@@ -10,6 +10,9 @@ import { getProducts } from '../../data/productos';
 import { getCategoria } from '../../data/categorias';
 import { SITE, waLink } from '../../data/site';
 import { url } from '../../data/url';
+import SectionIntro from '../../components/SectionIntro.astro';
+import { TONOS } from '../../data/tonos';
+import { btn, bullets, form, link, prose } from '../../data/ui';
 
 export async function getStaticPaths() {
   const all = await getProducts();
@@ -18,6 +21,7 @@ export async function getStaticPaths() {
 const { product: p, all } = Astro.props;
 const { Content } = await render(p);
 const cat = getCategoria(p.data.category)!;
+const t = TONOS[cat.tono];
 const href = url(`/productos/${p.id}`);
 const related = all.filter((x) => x.data.category === p.data.category && x.id !== p.id).slice(0, 4);
 const og = await getImage({ src: p.data.image, width: 1200, format: 'jpg' });
@@ -55,46 +59,45 @@ const ld = {
     ]}
   />
 
-  <section class="producto-detalle">
-    <div class={`producto-detalle-media borde-top-${cat.tono}`}>
-      <Image src={p.data.image} alt={p.data.imageAlt} width={720} loading="eager" />
+  <section class="grid grid-cols-1 items-start gap-8 bg-white px-4 pt-14 pb-20 text-slate-900 sm:px-[8%] lg:grid-cols-2 lg:gap-14">
+    <div class:list={['overflow-hidden rounded-[20px] border border-t-4 border-slate-200 bg-slate-50 lg:sticky lg:top-[calc(var(--spacing-nav)+24px)]', t.borderT]}>
+      <Image src={p.data.image} alt={p.data.imageAlt} width={720} loading="eager" class="block aspect-[4/3] w-full object-cover" />
     </div>
 
-    <div class="producto-detalle-info" data-product-form>
-      {p.data.brand && <span class="producto-marca">Marca {p.data.brand}</span>}
-      <p class="producto-resumen">{p.data.summary}</p>
+    <div data-product-form class="flex flex-col gap-[18px]">
+      {p.data.brand && <span class="text-[0.8rem] font-bold tracking-[0.05em] text-morado uppercase">Marca {p.data.brand}</span>}
+      <p class="text-[1.1rem] leading-relaxed text-slate-700">{p.data.summary}</p>
 
-      <p class="producto-precio">
+      <p class="flex flex-wrap items-center gap-3">
         {p.data.price ? <>Precio de referencia: <strong>USD {p.data.price.toFixed(2)}</strong></> : <>Precio según cotización</>}
-        <span class:list={['producto-stock', p.data.availability]}>
+        <span class:list={['rounded-full px-2.5 py-1 text-xs font-bold', p.data.availability === 'disponible' ? 'bg-verde-tint text-verde-texto' : 'bg-slate-100 text-slate-600']}>
           {p.data.availability === 'disponible' ? 'Disponible' : 'Bajo pedido'}
         </span>
       </p>
 
       {p.data.features.length > 0 && (
-        <ul class={`card-lista lista-${cat.tono} producto-features`}>
+        <ul class:list={[bullets, t.marker]}>
           {p.data.features.map((f) => <li>{f}</li>)}
         </ul>
       )}
 
       {p.data.variants.map((v, i) => (
-        <div class="form-campo">
-          <label for={`var-${i}`}>{v.name}</label>
-          <select id={`var-${i}`} data-variant={v.name} required>
+        <div class={form.field}>
+          <label for={`var-${i}`} class={form.label}>{v.name}</label>
+          <select id={`var-${i}`} data-variant={v.name} required class:list={[form.input, 'select-arrow']}>
             <option value="">Elegir {v.name.toLowerCase()}</option>
             {v.options.map((o) => <option>{o}</option>)}
           </select>
         </div>
       ))}
 
-      <div class="producto-compra">
-        <div class="form-campo campo-cantidad">
-          <label for="cantidad">Cantidad</label>
-          <input id="cantidad" type="number" min="1" max="999" value="1" inputmode="numeric" data-qty />
+      <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-end">
+        <div class:list={[form.field, 'sm:w-[110px] sm:flex-none']}>
+          <label for="cantidad" class={form.label}>Cantidad</label>
+          <input id="cantidad" type="number" min="1" max="999" value="1" inputmode="numeric" data-qty class={form.input} />
         </div>
         <button
           type="button"
-          class="btn-enviar-whatsapp btn-agregar"
           data-add-to-cart
           data-slug={p.id}
           data-title={p.data.title}
@@ -102,32 +105,28 @@ const ld = {
           data-image={p.data.image.src}
           data-url={href}
           data-price={p.data.price}
+          class:list={[btn.submit, 'min-h-[50px] sm:flex-1']}
         >
           <Icon name="cart" size={18} /> AGREGAR A LA SOLICITUD
         </button>
       </div>
-      <div class="producto-links">
-        <a href={url('/carrito')} class="link-morado">Ver mi solicitud</a>
-        <a href={waLink(`Hola, quiero consultar por: ${p.data.title}`)} target="_blank" rel="noopener" class="producto-wa">
+      <div class="flex flex-wrap items-center gap-5 text-[0.9rem] font-semibold">
+        <a href={url('/carrito')} class={link}>Ver mi solicitud</a>
+        <a href={waLink(`Hola, quiero consultar por: ${p.data.title}`)} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-[#128C4A] hover:underline">
           <BrandIcon name="whatsapp" size={16} /> Consultar por WhatsApp
         </a>
       </div>
 
-      <div class="prose producto-descripcion">
+      <div class:list={[prose, 'border-t border-slate-200 pt-5']}>
         <Content />
       </div>
     </div>
   </section>
 
   {related.length > 0 && (
-    <section class="productos-seccion tienda-seccion">
-      <div class="blog-header">
-        <div>
-          <span class="subtitulo-seccion">MISMA LÍNEA</span>
-          <h2 class="titulo-seccion">Otros productos de {cat.nombre.toLowerCase()}</h2>
-        </div>
-      </div>
-      <div class="productos-grid tienda-grid">
+    <section class="bg-slate-50 px-4 pt-12 pb-20 sm:px-[8%]">
+      <SectionIntro eyebrow="Misma línea" title={`Otros productos de ${cat.nombre.toLowerCase()}`} class="mb-10" />
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
         {related.map((r) => <ProductCard product={r} />)}
       </div>
     </section>

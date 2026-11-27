@@ -3,52 +3,63 @@ import BrandIcon from './BrandIcon.astro';
 import Icon from './Icon.astro';
 import { waLink } from '../data/site';
 import { url } from '../data/url';
+import Eyebrow from './Eyebrow.astro';
+import { TONOS, type Tono } from '../data/tonos';
+import { btn, form, link } from '../data/ui';
 interface Props { heading?: 'h1' | 'h2' }
 const { heading: H = 'h2' } = Astro.props;
+const items: { tono: Tono; label: string; valor: string }[] = [
+  { tono: 'coral', label: 'Respuesta', valor: 'Menos de 2 horas hábiles' },
+  { tono: 'verde', label: 'Atendemos a', valor: 'Médicos, instituciones y pacientes' },
+  { tono: 'azul', label: 'Documentación', valor: 'Presupuesto formal con códigos de seguro' },
+];
 ---
 
-<section id="contacto" class="presupuesto-seccion">
-  <div class="presupuesto-info">
-    <span class="presupuesto-subtitulo">SOLICITAR PRESUPUESTO</span>
-    <H class="presupuesto-titulo">Cuéntanos qué cirugía necesitas cubrir</H>
-    <p class="presupuesto-descripcion">
+<section id="contacto" class="flex w-full flex-col items-stretch gap-[50px] bg-white px-[5%] py-[60px] text-slate-900 sm:px-[8%] sm:py-[100px] lg:flex-row lg:items-start lg:gap-20">
+  <div class="flex-1 lg:max-w-[480px]">
+    <Eyebrow>Solicitar presupuesto</Eyebrow>
+    <H class="mt-5 mb-5 text-[1.8rem] leading-[1.15] font-extrabold tracking-[-0.02em] sm:text-[2.2rem] lg:text-[2.8rem]">Cuéntanos qué cirugía necesitas cubrir</H>
+    <p class="mb-8 leading-[1.7] text-slate-600">
       Envíanos el requerimiento y te respondemos con un presupuesto formal. Si ya sabes qué productos necesitas,
-      agrégalos a tu <a href={url('/carrito')} class="link-morado">solicitud de pedido</a> desde el catálogo.
+      agrégalos a tu <a href={url('/carrito')} class={link}>solicitud de pedido</a> desde el catálogo.
     </p>
 
-    <a href={waLink()} target="_blank" rel="noopener" class="btn-whatsapp-cta">
+    <a href={waLink()} target="_blank" rel="noopener" class:list={[btn.whatsapp, 'mb-10']}>
       <BrandIcon name="whatsapp" size={20} /> Escribir por WhatsApp
     </a>
 
-    <div class="presupuesto-items">
-      <div class="pres-item borde-coral"><span class="pres-item-label label-coral">Respuesta</span><span class="pres-item-valor">Menos de 2 horas hábiles</span></div>
-      <div class="pres-item borde-verde"><span class="pres-item-label label-verde">Atendemos a</span><span class="pres-item-valor">Médicos, instituciones y pacientes</span></div>
-      <div class="pres-item borde-azul"><span class="pres-item-label label-azul">Documentación</span><span class="pres-item-valor">Presupuesto formal con códigos de seguro</span></div>
-    </div>
+    <dl class="flex flex-col gap-3.5">
+      {items.map((it) => (
+        <div class:list={['flex flex-col-reverse gap-1 rounded-[10px] border-l-4 bg-slate-50 px-5 py-4', TONOS[it.tono].borderL]}>
+          <dd class="text-[0.95rem] font-bold">{it.valor}</dd>
+          <dt class:list={['text-[0.78rem] font-bold tracking-[0.03em] uppercase', TONOS[it.tono].text]}>{it.label}</dt>
+        </div>
+      ))}
+    </dl>
   </div>
 
-  <div class="presupuesto-form-wrapper">
-    <div class="presupuesto-form-card">
-      <h3 class="form-card-titulo">Formulario de presupuesto</h3>
-      <form class="presupuesto-form" id="form-presupuesto" novalidate>
-        <div class="form-fila-doble">
-          <div class="form-campo">
-            <label for="q-nombre">Nombre completo <span class="req">*</span></label>
-            <input type="text" id="q-nombre" name="nombre" autocomplete="name" placeholder="Dr. Juan Pérez" required />
+  <div class="flex-1">
+    <div class={form.card}>
+      <h3 class={form.title}>Formulario de presupuesto</h3>
+      <form id="form-presupuesto" novalidate class="flex flex-col gap-5">
+        <div class={form.row}>
+          <div class={form.field}>
+            <label for="q-nombre" class={form.label}>Nombre completo <span class="text-red-500">*</span></label>
+            <input type="text" id="q-nombre" name="nombre" autocomplete="name" placeholder="Dr. Juan Pérez" required class={form.input} />
           </div>
-          <div class="form-campo">
-            <label for="q-telefono">Teléfono / WhatsApp <span class="req">*</span></label>
-            <input type="tel" id="q-telefono" name="telefono" autocomplete="tel" placeholder="+58 424 000 0000" required pattern="[+0-9 ()-]{7,}" />
+          <div class={form.field}>
+            <label for="q-telefono" class={form.label}>Teléfono / WhatsApp <span class="text-red-500">*</span></label>
+            <input type="tel" id="q-telefono" name="telefono" autocomplete="tel" placeholder="+58 424 000 0000" required pattern="[+0-9 ()-]{7,}" class={form.input} />
           </div>
         </div>
-        <div class="form-campo">
-          <label for="q-correo">Correo electrónico <span class="req">*</span></label>
-          <input type="email" id="q-correo" name="correo" autocomplete="email" placeholder="correo@ejemplo.com" required />
+        <div class={form.field}>
+          <label for="q-correo" class={form.label}>Correo electrónico <span class="text-red-500">*</span></label>
+          <input type="email" id="q-correo" name="correo" autocomplete="email" placeholder="correo@ejemplo.com" required class={form.input} />
         </div>
-        <div class="form-fila-doble">
-          <div class="form-campo">
-            <label for="q-perfil">Soy <span class="req">*</span></label>
-            <select id="q-perfil" name="perfil" required>
+        <div class={form.row}>
+          <div class={form.field}>
+            <label for="q-perfil" class={form.label}>Soy <span class="text-red-500">*</span></label>
+            <select id="q-perfil" name="perfil" required class:list={[form.input, 'select-arrow']}>
               <option value="">Seleccione una opción</option>
               <option>Médico / Cirujano</option>
               <option>Institución de salud</option>
@@ -56,21 +67,21 @@ const { heading: H = 'h2' } = Astro.props;
               <option>Otro</option>
             </select>
           </div>
-          <div class="form-campo">
-            <label for="q-fecha">Fecha de cirugía</label>
-            <input type="date" id="q-fecha" name="fecha" />
+          <div class={form.field}>
+            <label for="q-fecha" class={form.label}>Fecha de cirugía</label>
+            <input type="date" id="q-fecha" name="fecha" class={form.input} />
           </div>
         </div>
-        <div class="form-campo">
-          <label for="q-detalle">Requerimiento <span class="req">*</span></label>
-          <textarea id="q-detalle" name="detalle" rows="5" required minlength="10"
+        <div class={form.field}>
+          <label for="q-detalle" class={form.label}>Requerimiento <span class="text-red-500">*</span></label>
+          <textarea id="q-detalle" name="detalle" rows="5" required minlength="10" class:list={[form.input, 'min-h-[120px] resize-y']}
             placeholder="Tipo de implante, cantidad, cirujano tratante, seguro o cualquier especificación técnica."></textarea>
         </div>
-        <p class="form-error" data-form-error hidden></p>
-        <button type="submit" class="btn-enviar-whatsapp">
+        <p data-form-error hidden class={form.error}></p>
+        <button type="submit" class={btn.submit}>
           <Icon name="send" size={18} /> ENVIAR POR WHATSAPP
         </button>
-        <p class="form-disclaimer">Se abrirá WhatsApp con tu solicitud escrita. No guardamos estos datos en el sitio.</p>
+        <p class={form.disclaimer}>Se abrirá WhatsApp con tu solicitud escrita. No guardamos estos datos en el sitio.</p>
       </form>
     </div>
   </div>

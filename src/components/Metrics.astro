@@ -1,6 +1,20 @@
-<div class="academia-grid-metricas">
-  <div class="metrica-tarjeta border-azul"><span class="metrica-numero text-azul">+15</span><span class="metrica-label">años en Maracaibo</span></div>
-  <div class="metrica-tarjeta border-verde"><span class="metrica-numero text-verde">+200</span><span class="metrica-label">cirugías respaldadas al año</span></div>
-  <div class="metrica-tarjeta border-salmon"><span class="metrica-numero text-salmon">+50</span><span class="metrica-label">especialistas aliados</span></div>
-  <div class="metrica-tarjeta border-lima"><span class="metrica-numero text-lima">ISO</span><span class="metrica-label">certificación de calidad</span></div>
-</div>
+---
+import { TONOS, type Tono } from '../data/tonos';
+const metricas: { tono: Tono; valor: string; label: string }[] = [
+  { tono: 'azul', valor: '+15', label: 'años en Maracaibo' },
+  { tono: 'verde', valor: '+200', label: 'cirugías respaldadas al año' },
+  { tono: 'coral', valor: '+50', label: 'especialistas aliados' },
+  { tono: 'amarillo', valor: 'ISO', label: 'certificación de calidad' },
+];
+---
+
+<dl class="grid w-full flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
+  {
+    metricas.map((m) => (
+      <div class:list={['flex flex-col-reverse gap-1.5 rounded-xl border-l-4 bg-white p-6 shadow-[0_2px_8px_rgb(15_23_42/0.02)]', TONOS[m.tono].borderL]}>
+        <dt class="text-[0.85rem] leading-snug font-semibold text-slate-500">{m.label}</dt>
+        <dd class:list={['text-[2.2rem] leading-none font-extrabold', TONOS[m.tono].bright]}>{m.valor}</dd>
+      </div>
+    ))
+  }
+</dl>

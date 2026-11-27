@@ -3,7 +3,6 @@ import { Image, getImage } from 'astro:assets';
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import BlogCard from '../../components/BlogCard.astro';
 import BrandIcon from '../../components/BrandIcon.astro';
 import { getPosts, BLOG_CATEGORIAS, formatDate } from '../../data/blog';
 import { SITE, waLink } from '../../data/site';
@@ -28,32 +27,35 @@ const ld = {
   author: { '@type': 'Organization', name: post.data.author },
   publisher: { '@type': 'Organization', name: SITE.name },
 };
+import SectionIntro from '../../components/SectionIntro.astro';
+import BlogGrid from '../../components/BlogGrid.astro';
+import { btn, prose } from '../../data/ui';
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description} image={og.src} type="article" jsonLd={ld}>
   <PageHeader eyebrow={cat.label.toUpperCase()} title={post.data.title} crumbs={[{ label: 'Blog', href: '/blog' }, { label: post.data.title }]}>
-    <p class="articulo-meta">
+    <p class="mt-4 text-[0.9rem] text-slate-400">
       <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time> · {post.data.author}
     </p>
   </PageHeader>
 
-  <article class="articulo">
-    <Image src={post.data.image} alt={post.data.imageAlt} width={960} class="articulo-portada" loading="eager" />
-    <div class="prose">
+  <article class="bg-white px-4 pt-14 pb-20 text-slate-900 sm:px-[8%] [&>*]:mx-auto [&>*]:max-w-[760px]">
+    <Image src={post.data.image} alt={post.data.imageAlt} width={960} class="mb-10 block aspect-video w-full rounded-[20px] object-cover" loading="eager" />
+    <div class={prose}>
       <Content />
     </div>
-    <aside class="articulo-cta">
-      <p>¿Tienes una cirugía programada o dudas sobre un implante?</p>
-      <a class="btn-whatsapp-cta" href={waLink(`Hola, leí el artículo "${post.data.title}" y tengo una consulta.`)} target="_blank" rel="noopener">
+    <aside class="mt-12 flex flex-wrap items-center justify-between gap-4 rounded-[20px] border border-slate-200 bg-slate-50 p-7">
+      <p class="font-bold">¿Tienes una cirugía programada o dudas sobre un implante?</p>
+      <a class={btn.whatsapp} href={waLink(`Hola, leí el artículo "${post.data.title}" y tengo una consulta.`)} target="_blank" rel="noopener">
         <BrandIcon name="whatsapp" size={20} /> Escribir por WhatsApp
       </a>
     </aside>
   </article>
 
   {otros.length > 0 && (
-    <section class="blog-seccion">
-      <div class="blog-header"><div><span class="subtitulo-seccion">SEGUIR LEYENDO</span><h2 class="titulo-seccion">Otros artículos</h2></div></div>
-      <div class="blog-grid blog-grid-lista">{otros.map((p) => <BlogCard post={p} />)}</div>
+    <section class="bg-slate-50 px-4 py-[50px] sm:px-[6%] sm:py-20">
+      <SectionIntro eyebrow="Seguir leyendo" title="Otros artículos" class="mb-10" />
+      <BlogGrid posts={otros} highlightFirst={false} />
     </section>
   )}
 </BaseLayout>

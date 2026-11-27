@@ -3,63 +3,64 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Icon from '../components/Icon.astro';
 import { url } from '../data/url';
+import { btn, form, link } from '../data/ui';
 ---
 
 <BaseLayout title="Enviar solicitud" noindex>
   <PageHeader eyebrow="PEDIDO" title="Datos para el presupuesto" crumbs={[{ label: 'Mi solicitud', href: '/carrito' }, { label: 'Enviar' }]} />
 
-  <section class="checkout-seccion">
-    <form class="presupuesto-form-card checkout-form presupuesto-form" id="checkout" novalidate>
-      <fieldset>
-        <legend class="form-card-titulo">Quién solicita</legend>
-        <div class="form-fila-doble">
-          <div class="form-campo"><label for="c-nombre">Nombre y apellido <span class="req">*</span></label><input id="c-nombre" name="Nombre" autocomplete="name" required /></div>
-          <div class="form-campo"><label for="c-doc">Cédula o RIF <span class="req">*</span></label><input id="c-doc" name="Cédula/RIF" required placeholder="V-12345678 / J-12345678-9" /></div>
+  <section class="grid grid-cols-1 items-start gap-8 bg-slate-50 px-4 pt-12 pb-24 text-slate-900 sm:px-[8%] lg:grid-cols-[minmax(0,1fr)_340px]">
+    <form id="checkout" novalidate class:list={[form.card, 'flex flex-col gap-5']}>
+      <fieldset class="flex flex-col gap-[18px]">
+        <legend class:list={[form.title, 'mb-[18px]']}>Quién solicita</legend>
+        <div class={form.row}>
+          <div class={form.field}><label for="c-nombre" class={form.label}>Nombre y apellido <span class="text-red-500">*</span></label><input id="c-nombre" name="Nombre" autocomplete="name" required class={form.input} /></div>
+          <div class={form.field}><label for="c-doc" class={form.label}>Cédula o RIF <span class="text-red-500">*</span></label><input id="c-doc" name="Cédula/RIF" required placeholder="V-12345678 / J-12345678-9" class={form.input} /></div>
         </div>
-        <div class="form-fila-doble">
-          <div class="form-campo"><label for="c-tel">Teléfono / WhatsApp <span class="req">*</span></label><input id="c-tel" name="Teléfono" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{7,}" /></div>
-          <div class="form-campo"><label for="c-mail">Correo <span class="req">*</span></label><input id="c-mail" name="Correo" type="email" autocomplete="email" required /></div>
+        <div class={form.row}>
+          <div class={form.field}><label for="c-tel" class={form.label}>Teléfono / WhatsApp <span class="text-red-500">*</span></label><input id="c-tel" name="Teléfono" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{7,}" class={form.input} /></div>
+          <div class={form.field}><label for="c-mail" class={form.label}>Correo <span class="text-red-500">*</span></label><input id="c-mail" name="Correo" type="email" autocomplete="email" required class={form.input} /></div>
         </div>
-        <div class="form-fila-doble">
-          <div class="form-campo">
-            <label for="c-perfil">Soy <span class="req">*</span></label>
-            <select id="c-perfil" name="Perfil" required>
+        <div class={form.row}>
+          <div class={form.field}>
+            <label for="c-perfil" class={form.label}>Soy <span class="text-red-500">*</span></label>
+            <select id="c-perfil" name="Perfil" required class:list={[form.input, 'select-arrow']}>
               <option value="">Seleccione</option>
               <option>Médico / Cirujano</option>
               <option>Institución de salud</option>
               <option>Paciente o familiar</option>
             </select>
           </div>
-          <div class="form-campo"><label for="c-inst">Clínica u hospital</label><input id="c-inst" name="Institución" /></div>
+          <div class={form.field}><label for="c-inst" class={form.label}>Clínica u hospital</label><input id="c-inst" name="Institución" class={form.input} /></div>
         </div>
       </fieldset>
 
-      <fieldset>
-        <legend class="form-card-titulo">Cirugía</legend>
-        <div class="form-fila-doble">
-          <div class="form-campo"><label for="c-medico">Cirujano tratante</label><input id="c-medico" name="Cirujano" /></div>
-          <div class="form-campo"><label for="c-fecha">Fecha tentativa</label><input id="c-fecha" name="Fecha de cirugía" type="date" /></div>
+      <fieldset class="flex flex-col gap-[18px]">
+        <legend class:list={[form.title, 'mb-[18px]']}>Cirugía</legend>
+        <div class={form.row}>
+          <div class={form.field}><label for="c-medico" class={form.label}>Cirujano tratante</label><input id="c-medico" name="Cirujano" class={form.input} /></div>
+          <div class={form.field}><label for="c-fecha" class={form.label}>Fecha tentativa</label><input id="c-fecha" name="Fecha de cirugía" type="date" class={form.input} /></div>
         </div>
-        <div class="form-campo"><label for="c-seguro">Seguro o forma de cobertura</label><input id="c-seguro" name="Seguro" placeholder="Nombre de la aseguradora, o particular" /></div>
+        <div class={form.field}><label for="c-seguro" class={form.label}>Seguro o forma de cobertura</label><input id="c-seguro" name="Seguro" placeholder="Nombre de la aseguradora, o particular" class={form.input} /></div>
       </fieldset>
 
-      <fieldset>
-        <legend class="form-card-titulo">Entrega y pago</legend>
-        <div class="form-fila-doble">
-          <div class="form-campo">
-            <label for="c-entrega">Entrega <span class="req">*</span></label>
-            <select id="c-entrega" name="Entrega" required>
+      <fieldset class="flex flex-col gap-[18px]">
+        <legend class:list={[form.title, 'mb-[18px]']}>Entrega y pago</legend>
+        <div class={form.row}>
+          <div class={form.field}>
+            <label for="c-entrega" class={form.label}>Entrega <span class="text-red-500">*</span></label>
+            <select id="c-entrega" name="Entrega" required class:list={[form.input, 'select-arrow']}>
               <option value="">Seleccione</option>
               <option>Entrega en la clínica (Maracaibo)</option>
               <option>Retiro en tienda</option>
               <option>Envío a otra ciudad</option>
             </select>
           </div>
-          <div class="form-campo"><label for="c-ciudad">Ciudad</label><input id="c-ciudad" name="Ciudad" value="Maracaibo" /></div>
+          <div class={form.field}><label for="c-ciudad" class={form.label}>Ciudad</label><input id="c-ciudad" name="Ciudad" value="Maracaibo" class={form.input} /></div>
         </div>
-        <div class="form-campo">
-          <label for="c-pago">Forma de pago preferida <span class="req">*</span></label>
-          <select id="c-pago" name="Pago" required>
+        <div class={form.field}>
+          <label for="c-pago" class={form.label}>Forma de pago preferida <span class="text-red-500">*</span></label>
+          <select id="c-pago" name="Pago" required class:list={[form.input, 'select-arrow']}>
             <option value="">Seleccione</option>
             <option>Carta aval / seguro</option>
             <option>Transferencia en bolívares</option>
@@ -68,22 +69,22 @@ import { url } from '../data/url';
             <option>Zelle</option>
           </select>
         </div>
-        <div class="form-campo"><label for="c-notas">Notas</label><textarea id="c-notas" name="Notas" rows="3" placeholder="Medidas, niveles, instrucciones de entrega..."></textarea></div>
+        <div class={form.field}><label for="c-notas" class={form.label}>Notas</label><textarea class={form.input} id="c-notas" name="Notas" rows="3" placeholder="Medidas, niveles, instrucciones de entrega..."></textarea></div>
       </fieldset>
 
-      <label class="check-campo">
-        <input type="checkbox" required id="c-acepto" />
-        <span>Acepto los <a class="link-morado" href={url('/legal/terminos')} target="_blank">términos</a> y la <a class="link-morado" href={url('/legal/privacidad')} target="_blank">política de privacidad</a>.</span>
+      <label class="flex items-start gap-2.5 text-[0.88rem] leading-normal text-slate-700">
+        <input type="checkbox" required id="c-acepto" class="mt-0.5 size-4 flex-none accent-morado" />
+        <span>Acepto los <a class={link} href={url('/legal/terminos')} target="_blank">términos</a> y la <a class={link} href={url('/legal/privacidad')} target="_blank">política de privacidad</a>.</span>
       </label>
-      <p class="form-error" data-form-error hidden></p>
-      <button type="submit" class="btn-enviar-whatsapp"><Icon name="send" size={18} /> ENVIAR SOLICITUD POR WHATSAPP</button>
-      <p class="form-disclaimer">No se realiza ningún cobro en el sitio. Un asesor confirma precios, disponibilidad y forma de pago.</p>
+      <p data-form-error hidden class={form.error}></p>
+      <button type="submit" class={btn.submit}><Icon name="send" size={18} /> ENVIAR SOLICITUD POR WHATSAPP</button>
+      <p class={form.disclaimer}>No se realiza ningún cobro en el sitio. Un asesor confirma precios, disponibilidad y forma de pago.</p>
     </form>
 
-    <aside class="carrito-resumen checkout-resumen">
-      <h2 class="form-card-titulo">Tu solicitud</h2>
-      <ul class="checkout-items" data-items></ul>
-      <a class="link-morado" href={url('/carrito')}>Editar</a>
+    <aside class="flex flex-col gap-4 rounded-[20px] border border-slate-200 bg-white p-7 lg:sticky lg:top-[calc(var(--spacing-nav)+24px)]">
+      <h2 class="text-[1.4rem] font-bold">Tu solicitud</h2>
+      <ul data-items class="flex flex-col gap-2.5 text-[0.9rem] [&>li]:flex [&>li]:flex-col [&>li]:gap-0.5 [&>li]:border-b [&>li]:border-slate-100 [&>li]:pb-2.5 [&_span]:text-[0.82rem] [&_span]:text-slate-500"></ul>
+      <a class={link} href={url('/carrito')}>Editar</a>
     </aside>
   </section>
 </BaseLayout>

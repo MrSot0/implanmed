@@ -3,7 +3,7 @@ export const SERVICIOS = [
     id: 'instrumentacion',
     icon: 'stethoscope',
     color: '#4A8FA0',
-    punto: 'punto-azul',
+    tono: 'azul',
     nombre: 'Instrumentación quirúrgica',
     texto:
       'Nuestros instrumentistas acompañan al cirujano dentro del pabellón y se aseguran de que cada implante y cada herramienta estén listos en el momento en que se necesitan.',
@@ -20,7 +20,7 @@ export const SERVICIOS = [
     id: 'alquiler',
     icon: 'wrench',
     color: '#5A8A40',
-    punto: 'punto-verde',
+    tono: 'verde',
     nombre: 'Alquiler de instrumental quirúrgico',
     texto:
       'Sets de instrumental esterilizados y listos para cirugías programadas. La clínica no tiene que comprar ni mantener instrumental propio para cada especialidad.',
@@ -37,7 +37,7 @@ export const SERVICIOS = [
     id: 'pacientes',
     icon: 'clipboard',
     color: '#C87060',
-    punto: 'punto-coral',
+    tono: 'coral',
     nombre: 'Atención directa al paciente',
     texto:
       'Preparamos presupuestos formales para que el paciente los presente ante su seguro, nacional o internacional, y lo acompañamos hasta que la cobertura queda aprobada.',

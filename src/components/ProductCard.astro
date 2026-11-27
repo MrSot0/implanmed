@@ -3,53 +3,60 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Icon from './Icon.astro';
 import { getCategoria } from '../data/categorias';
+import { TONOS } from '../data/tonos';
+import { btn } from '../data/ui';
 import { url } from '../data/url';
 interface Props { product: CollectionEntry<'productos'> }
 const { product: p } = Astro.props;
 const cat = getCategoria(p.data.category)!;
+const t = TONOS[cat.tono];
 const href = url(`/productos/${p.id}`);
 const hasVariants = p.data.variants.length > 0;
 const img = p.data.image;
 ---
 
 <article
-  class={`producto-card tienda-card card-hover-${cat.tono}`}
   data-product
   data-category={p.data.category}
   data-search={`${p.data.title} ${p.data.summary} ${p.data.brand ?? ''} ${cat.nombre}`.toLowerCase()}
   data-title={p.data.title}
   data-order={p.data.order}
+  class:list={['flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1.5', t.card]}
 >
-  <a class="card-imagen-wrapper" href={href} tabindex="-1" aria-hidden="true">
-    {p.data.availability === 'bajo-pedido' && <span class="card-badge badge-pedido">Bajo pedido</span>}
-    <Image src={img} alt="" width={420} />
-    <div class={`linea-tematica linea-${cat.tono}`} />
+  <a href={href} tabindex="-1" aria-hidden="true" class="relative block h-[190px] bg-linear-135 from-slate-200 to-slate-300">
+    {p.data.availability === 'bajo-pedido' && (
+      <span class="absolute top-3 left-3 z-[1] rounded-md bg-slate-600 px-2.5 py-1 text-xs font-bold text-white">Bajo pedido</span>
+    )}
+    <Image src={img} alt="" width={420} class="size-full object-cover" />
+    <span class:list={['absolute inset-x-0 bottom-0 h-1', t.bg]} />
   </a>
-  <div class="card-cuerpo">
-    <span class={`card-categoria color-${cat.tono}`}>{cat.nombre}</span>
-    <h3 class="card-titulo"><a href={href}>{p.data.title}</a></h3>
-    <p class="card-descripcion">{p.data.summary}</p>
-    <p class="card-precio">{p.data.price ? `Ref. USD ${p.data.price.toFixed(2)}` : 'Precio según cotización'}</p>
-    <div class="card-acciones">
-      <a href={href} class="btn-cotizar">{hasVariants ? 'Elegir opciones' : 'Ver detalle'}</a>
-      {
-        !hasVariants && (
-          <button
-            type="button"
-            class={`btn-card-carrito btn-cart-${cat.tono}`}
-            aria-label={`Agregar ${p.data.title} a la solicitud`}
-            data-add-to-cart
-            data-slug={p.id}
-            data-title={p.data.title}
-            data-category={cat.nombre}
-            data-image={img.src}
-            data-url={href}
-            data-price={p.data.price}
-          >
-            <Icon name="cart" />
-          </button>
-        )
-      }
+  <div class="flex grow flex-col p-6">
+    <span class:list={['mb-2 block text-[0.72rem] font-bold tracking-[0.05em] uppercase', t.text]}>{cat.nombre}</span>
+    <h3 class="mb-3 text-xl font-bold text-slate-900">
+      <a href={href} class="hover:text-morado">{p.data.title}</a>
+    </h3>
+    <p class="mb-2 text-[0.85rem] leading-relaxed text-slate-500">{p.data.summary}</p>
+    <p class="mt-1 mb-[18px] text-[0.85rem] font-semibold text-slate-900">
+      {p.data.price ? `Ref. USD ${p.data.price.toFixed(2)}` : 'Precio según cotización'}
+    </p>
+    <div class="mt-auto flex gap-3">
+      <a href={href} class:list={[btn.primary, 'flex-1']}>{hasVariants ? 'Elegir opciones' : 'Ver detalle'}</a>
+      {!hasVariants && (
+        <button
+          type="button"
+          aria-label={`Agregar ${p.data.title} a la solicitud`}
+          data-add-to-cart
+          data-slug={p.id}
+          data-title={p.data.title}
+          data-category={cat.nombre}
+          data-image={img.src}
+          data-url={href}
+          data-price={p.data.price}
+          class:list={['flex size-11 items-center justify-center rounded-lg border transition-colors lg:size-[38px]', t.cartBtn]}
+        >
+          <Icon name="cart" />
+        </button>
+      )}
     </div>
   </div>
 </article>

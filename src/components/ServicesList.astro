@@ -1,27 +1,38 @@
 ---
 import Icon from './Icon.astro';
 import { SERVICIOS } from '../data/servicios';
+import { TONOS } from '../data/tonos';
+import { btn } from '../data/ui';
 import { waLink } from '../data/site';
 ---
 
-<div class="servicios-lista">
+<div class="flex flex-col gap-6">
   {
-    SERVICIOS.map((s) => (
-      <div class="servicio-bloque" id={s.id}>
-        <div class="servicio-icono-wrapper">
-          <Icon name={s.icon} size={28} stroke={s.color} />
-        </div>
-        <div class="servicio-info">
-          <h3 class="servicio-nombre">{s.nombre}</h3>
-          <p class="servicio-texto">{s.texto}</p>
-          <div class="servicio-detalles">
-            {s.detalles.map((d) => <span class={`detalle-item ${s.punto}`}>{d}</span>)}
+    SERVICIOS.map((s) => {
+      const t = TONOS[s.tono];
+      return (
+        <div
+          id={s.id}
+          class:list={[
+            'group flex flex-col items-start gap-6 rounded-[20px] border border-slate-100 bg-slate-50 p-8 text-slate-900 transition duration-300 hover:-translate-y-1 lg:flex-row lg:items-center lg:gap-10 lg:px-10 lg:py-9',
+            t.service,
+          ]}
+        >
+          <div class:list={['flex size-[72px] shrink-0 items-center justify-center rounded-[18px] bg-lila transition duration-300 group-hover:scale-105', t.serviceIcon]}>
+            <Icon name={s.icon} size={28} stroke={s.color} />
           </div>
+          <div class="flex-1">
+            <h3 class="mb-2 text-[1.4rem] font-bold lg:text-center">{s.nombre}</h3>
+            <p class="mb-5 max-w-[900px] text-[0.9rem] leading-relaxed text-slate-600">{s.texto}</p>
+            <ul class:list={['grid list-disc grid-cols-1 gap-x-12 gap-y-2.5 pl-4 text-[0.85rem] font-semibold text-slate-600 md:grid-cols-[repeat(2,auto)] md:justify-start', t.marker]}>
+              {s.detalles.map((d) => <li>{d}</li>)}
+            </ul>
+          </div>
+          <a href={waLink(s.mensaje)} target="_blank" rel="noopener" class:list={[btn.medium, 'w-full rounded-xl px-7 py-3.5 whitespace-nowrap lg:w-auto']}>
+            {s.cta}
+          </a>
         </div>
-        <div class="servicio-accion">
-          <a class="btn-servicio-cta" href={waLink(s.mensaje)} target="_blank" rel="noopener">{s.cta}</a>
-        </div>
-      </div>
-    ))
+      );
+    })
   }
 </div>

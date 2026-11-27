@@ -1,9 +1,9 @@
 import { getCollection } from 'astro:content';
 
 export const BLOG_CATEGORIAS = {
-  postoperatorio: { label: 'Postoperatorio', class: 'cat-postoperatorio' },
-  productos: { label: 'Productos', class: 'cat-productos' },
-  articulo: { label: 'Artículo médico', class: 'cat-articulo' },
+  postoperatorio: { label: 'Postoperatorio', class: 'bg-azul' },
+  productos: { label: 'Productos', class: 'bg-verde' },
+  articulo: { label: 'Artículo médico', class: 'bg-morado' },
 } as const;
 
 export async function getPosts() {

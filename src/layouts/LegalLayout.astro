@@ -2,11 +2,12 @@
 import BaseLayout from './BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 const { frontmatter } = Astro.props;
+import { prose } from '../data/ui';
 ---
 
 <BaseLayout title={frontmatter.title} description={frontmatter.description}>
   <PageHeader eyebrow="LEGAL" title={frontmatter.title} crumbs={[{ label: frontmatter.title }]}>
-    <p class="articulo-meta">Última actualización: {frontmatter.updated}</p>
+    <p class="mt-4 text-[0.9rem] text-slate-400">Última actualización: {frontmatter.updated}</p>
   </PageHeader>
-  <article class="articulo"><div class="prose"><slot /></div></article>
+  <article class="bg-white px-4 pt-14 pb-20 sm:px-[8%]"><div class:list={[prose, 'mx-auto max-w-[760px]']}><slot /></div></article>
 </BaseLayout>
