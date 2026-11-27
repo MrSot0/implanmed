@@ -1,5 +1,5 @@
 # Sveltia CMS (compatible con Decap CMS). Documentación: https://github.com/sveltia/sveltia-cms
-# Cada cambio guardado desde /admin crea un commit en GitHub; la Action de deploy publica el sitio.
+# Cada cambio guardado desde /admin crea un commit en main y Vercel vuelve a publicar el sitio.
 backend:
   name: github
   repo: MrSot0/implanmed
@@ -9,9 +9,7 @@ backend:
   # base_url: https://implanmed-cms-auth.<tu-cuenta>.workers.dev
   # Sin proxy se puede entrar con un token personal de GitHub (botón "Sign in with Token").
 
-site_url: https://mrsot0.github.io/implanmed
-display_url: https://mrsot0.github.io/implanmed
-logo_url: https://mrsot0.github.io/implanmed/logo.png
+logo_url: /logo.png
 locale: es
 
 media_folder: src/assets/uploads

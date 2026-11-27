@@ -14,7 +14,7 @@
 
 ### Pendiente de la empresa
 
-- [ ] Activar GitHub Pages con origen "GitHub Actions".
+- [x] Publicar en Vercel.
 - [ ] Revisar con un abogado los textos legales (`src/pages/legal/`).
 - [ ] Revisar con el equipo médico los artículos del blog.
 - [ ] Confirmar fichas del catálogo (medidas, marcas, disponibilidad) y fotos propias de cada producto.

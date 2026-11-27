@@ -2,10 +2,13 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// GitHub Pages sirve el sitio en https://mrsot0.github.io/implanmed/.
-// Con dominio propio: SITE_URL=https://implanmed.com BASE_PATH=/ npm run build
-const site = process.env.SITE_URL ?? 'https://mrsot0.github.io';
-const base = process.env.BASE_PATH ?? '/implanmed';
+// El sitio se publica en Vercel, en la raíz del dominio.
+// SITE_URL fija el dominio de producción (canonical, sitemap, Open Graph). Si no está
+// definida, se usa el dominio de producción que Vercel expone al compilar.
+// BASE_PATH solo hace falta si el sitio se sirve en una subcarpeta (p. ej. /implanmed).
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+const site = process.env.SITE_URL ?? (vercelHost ? `https://${vercelHost}` : 'http://localhost:4321');
+const base = process.env.BASE_PATH ?? '/';
 
 /** Prefija con `base` los enlaces absolutos escritos en Markdown (p. ej. desde el CMS). */
 function rehypeBaseLinks() {

@@ -8,7 +8,7 @@ Requiere Node 22.23 o superior.
 
 ```bash
 npm install
-npm run dev        # http://localhost:4321/implanmed/
+npm run dev        # http://localhost:4321/
 npm run build      # verifica tipos (astro check) y genera dist/
 npm run preview
 ```
@@ -34,7 +34,7 @@ El sitio es estático. El cliente arma una **solicitud de pedido** (productos, o
 
 ## CMS (blog y catálogo)
 
-El panel está en `/implanmed/admin` y usa [Sveltia CMS](https://github.com/sveltia/sveltia-cms) con backend de GitHub. Cada cambio guardado es un commit en `main`, y la Action de deploy publica el sitio en uno o dos minutos.
+El panel está en `/admin` y usa [Sveltia CMS](https://github.com/sveltia/sveltia-cms) con backend de GitHub. Cada cambio guardado es un commit en `main`, y Vercel vuelve a publicar el sitio en uno o dos minutos.
 
 Para entrar:
 
@@ -45,8 +45,8 @@ Las imágenes subidas desde el CMS quedan en `src/assets/uploads/` y Astro las o
 
 ## Despliegue
 
-`.github/workflows/deploy.yml` compila y publica en GitHub Pages en cada push a `main`. En el repositorio hay que ir una vez a **Settings → Pages → Build and deployment → Source** y elegir **GitHub Actions**.
+El sitio se publica en **Vercel**, que detecta Astro y ejecuta `npm run build` con salida en `dist/`. Cada push a `main` genera un despliegue de producción y cada rama, una vista previa.
 
-Con dominio propio: definir `SITE_URL` y `BASE_PATH=/` al compilar, y actualizar las URLs de `public/robots.txt` y `public/admin/config.yml`.
+El dominio para canonical, sitemap y Open Graph se toma de `VERCEL_PROJECT_PRODUCTION_URL`. Si se usa un dominio propio, definir `SITE_URL=https://dominio.com` en las variables de entorno del proyecto en Vercel.
 
 Plan de trabajo por fases: [docs/PLAN.md](docs/PLAN.md).

@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /implanmed/admin
-Disallow: /implanmed/carrito
-Disallow: /implanmed/checkout
-Disallow: /implanmed/pedido
-
-Sitemap: https://mrsot0.github.io/implanmed/sitemap-index.xml
