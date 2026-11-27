@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Catalog from '../../components/Catalog.astro';
+import { getProducts } from '../../data/productos';
+
+const products = await getProducts();
+---
+
+<BaseLayout title="Catálogo de productos" description="Implantes de columna, traumatología y maxilofacial e insumos de pabellón. Arma tu solicitud de pedido y recibe un presupuesto formal.">
+  <PageHeader
+    eyebrow="CATÁLOGO"
+    title="Productos"
+    text="Agrega los productos a tu solicitud y te enviamos un presupuesto formal. Los precios dependen de la marca, la cantidad y la cobertura del seguro."
+    crumbs={[{ label: 'Productos' }]}
+  />
+  <section class="productos-seccion tienda-seccion">
+    <Catalog products={products} />
+  </section>
+</BaseLayout>

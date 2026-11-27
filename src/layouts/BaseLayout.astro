@@ -1,0 +1,94 @@
+---
+import '../styles/global.css';
+import '../styles/site.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import FloatingButtons from '../components/FloatingButtons.astro';
+import { SITE } from '../data/site';
+import { url } from '../data/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article' | 'product';
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = url('/og-image.jpg'),
+  type = 'website',
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | IMPLANMED` : 'IMPLANMED | Implantes médicos y quirúrgicos en Maracaibo';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL(image, Astro.site);
+
+const orgLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalBusiness',
+  name: SITE.name,
+  legalName: SITE.legalName,
+  url: new URL(url('/'), Astro.site).href,
+  logo: new URL(url('/logo.png'), Astro.site).href,
+  image: ogImage.href,
+  telephone: SITE.phone,
+  email: SITE.email,
+  taxID: SITE.rif,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    addressRegion: SITE.address.region,
+    addressCountry: SITE.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.lat, longitude: SITE.geo.lng },
+  sameAs: [SITE.social.instagram, SITE.social.facebook],
+};
+const ld = [orgLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href={url('/favicon.ico')} />
+    <link rel="sitemap" href={url('/sitemap-index.xml')} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#090d16" />
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={type === 'article' ? 'article' : 'website'} />
+    <meta property="og:locale" content="es_VE" />
+    <meta property="og:site_name" content="IMPLANMED" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {ld.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <Navbar />
+    <div id="contenido">
+      <slot />
+    </div>
+    <Footer />
+    <FloatingButtons />
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script>
+      import '../scripts/ui';
+    </script>
+  </body>
+</html>

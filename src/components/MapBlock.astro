@@ -1,0 +1,15 @@
+---
+import { SITE } from '../data/site';
+---
+
+<div class="academia-ubicacion">
+  <div class="ubicacion-mapa">
+    <iframe src={SITE.mapsEmbed} title="Ubicación de IMPLANMED en Maracaibo" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+  </div>
+  <div class="ubicacion-info">
+    <span class="academia-subtitulo">UBICACIÓN</span>
+    <h3 class="ubicacion-titulo">Visítanos en Maracaibo</h3>
+    <p class="ubicacion-direccion">{SITE.address.full}</p>
+    <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer" class="btn-ver-mapa">Abrir en Google Maps</a>
+  </div>
+</div>

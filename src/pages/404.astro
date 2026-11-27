@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../data/url';
+---
+
+<BaseLayout title="Página no encontrada" noindex>
+  <section class="pagina-404">
+    <span class="subtitulo-seccion">ERROR 404</span>
+    <h1 class="titulo-seccion">No encontramos esta página</h1>
+    <p>Puede que el enlace esté desactualizado. Prueba con el catálogo o vuelve al inicio.</p>
+    <div class="hero-botones">
+      <a class="btn-cotizar" href={url('/productos')}>Ver catálogo</a>
+      <a class="btn-ver-mapa" href={url('/')}>Ir al inicio</a>
+    </div>
+  </section>
+</BaseLayout>

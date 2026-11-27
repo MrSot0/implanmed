@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
+import CategoryCards from '../components/CategoryCards.astro';
+import ServicesList from '../components/ServicesList.astro';
+import AcademiaBlock from '../components/AcademiaBlock.astro';
+import Metrics from '../components/Metrics.astro';
+import MapBlock from '../components/MapBlock.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+import BlogGrid from '../components/BlogGrid.astro';
+import { getPosts } from '../data/blog';
+import { url } from '../data/url';
+
+const posts = (await getPosts()).slice(0, 4);
+---
+
+<BaseLayout>
+  <HeroCarousel />
+
+  <section id="soluciones" class="productos-seccion">
+    <div class="productos-header">
+      <div class="header-texto">
+        <span class="subtitulo-seccion">CATÁLOGO</span>
+        <h2 class="titulo-seccion">Líneas de producto</h2>
+      </div>
+    </div>
+    <CategoryCards />
+    <p class="seccion-pie"><a class="btn-ver-todos-blog" href={url('/productos')}>Ver el catálogo completo</a></p>
+  </section>
+
+  <section id="servicios" class="servicios-seccion">
+    <div class="servicios-header">
+      <span class="servicios-subtitulo">SERVICIOS</span>
+      <h2 class="servicios-titulo">Servicios para el pabellón</h2>
+      <p class="servicios-descripcion">
+        Instrumentistas en la cirugía, alquiler de sets esterilizados y presupuestos listos para el seguro del paciente.
+      </p>
+    </div>
+    <ServicesList />
+  </section>
+
+  <section id="academia" class="academia-seccion">
+    <div class="academia-top">
+      <div class="academia-texto-bloque">
+        <span class="academia-subtitulo">ACADEMIA</span>
+        <h2 class="academia-titulo">Formación para cirujanos en el Zulia</h2>
+        <p class="academia-descripcion">
+          Además de distribuir implantes, organizamos talleres, sesiones de casos clínicos y charlas con cirujanos
+          invitados en Maracaibo.
+        </p>
+        <a class="btn-ver-todos-blog" href={url('/nosotros')}>Conocer al equipo</a>
+      </div>
+      <Metrics />
+    </div>
+    <AcademiaBlock />
+    <MapBlock />
+  </section>
+
+  <QuoteSection />
+
+  <section id="blog" class="blog-seccion">
+    <div class="blog-header">
+      <div>
+        <span class="subtitulo-seccion">BLOG</span>
+        <h2 class="titulo-seccion">Guías para pacientes y novedades del catálogo</h2>
+      </div>
+      <a href={url('/blog')} class="btn-ver-todos-blog">Todos los artículos</a>
+    </div>
+    <BlogGrid posts={posts} />
+  </section>
+</BaseLayout>

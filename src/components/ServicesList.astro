@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import { SERVICIOS } from '../data/servicios';
+import { waLink } from '../data/site';
+---
+
+<div class="servicios-lista">
+  {
+    SERVICIOS.map((s) => (
+      <div class="servicio-bloque" id={s.id}>
+        <div class="servicio-icono-wrapper">
+          <Icon name={s.icon} size={28} stroke={s.color} />
+        </div>
+        <div class="servicio-info">
+          <h3 class="servicio-nombre">{s.nombre}</h3>
+          <p class="servicio-texto">{s.texto}</p>
+          <div class="servicio-detalles">
+            {s.detalles.map((d) => <span class={`detalle-item ${s.punto}`}>{d}</span>)}
+          </div>
+        </div>
+        <div class="servicio-accion">
+          <a class="btn-servicio-cta" href={waLink(s.mensaje)} target="_blank" rel="noopener">{s.cta}</a>
+        </div>
+      </div>
+    ))
+  }
+</div>

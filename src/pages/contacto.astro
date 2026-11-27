@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+import MapBlock from '../components/MapBlock.astro';
+---
+
+<BaseLayout title="Contacto y presupuestos" description="Solicita un presupuesto formal de implantes médicos o escríbenos por WhatsApp. Maracaibo, Zulia.">
+  <PageHeader eyebrow="CONTACTO" title="Contacto" crumbs={[{ label: 'Contacto' }]} />
+  <QuoteSection />
+  <section class="academia-seccion"><MapBlock /></section>
+</BaseLayout>

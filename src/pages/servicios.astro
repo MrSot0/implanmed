@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ServicesList from '../components/ServicesList.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+---
+
+<BaseLayout title="Servicios" description="Instrumentación quirúrgica, alquiler de instrumental esterilizado y presupuestos para seguros en Maracaibo.">
+  <PageHeader eyebrow="SERVICIOS" title="Servicios para el pabellón" text="Instrumentistas en la cirugía, sets de instrumental esterilizados y presupuestos listos para el seguro del paciente." crumbs={[{ label: 'Servicios' }]} />
+  <section class="servicios-seccion">
+    <ServicesList />
+  </section>
+  <QuoteSection />
+</BaseLayout>

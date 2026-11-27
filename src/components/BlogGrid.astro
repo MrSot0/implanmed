@@ -1,0 +1,10 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+interface Props { posts: CollectionEntry<'blog'>[]; highlightFirst?: boolean }
+const { posts, highlightFirst = true } = Astro.props;
+---
+
+<div class:list={['blog-grid', { 'blog-grid-lista': !highlightFirst }]}>
+  {posts.map((p, i) => <BlogCard post={p} featured={highlightFirst && i === 0} />)}
+</div>

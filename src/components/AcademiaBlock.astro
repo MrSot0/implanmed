@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+const programas = [
+  { tono: 'azul', icon: 'cap', color: '#4A8FA0', tag: 'TRIMESTRAL', titulo: 'Talleres de técnica quirúrgica', texto: 'Talleres prácticos para cirujanos con modelos anatómicos y guías de uso de implantes.' },
+  { tono: 'verde', icon: 'users', color: '#5A8A40', tag: 'MENSUAL', titulo: 'Discusión de casos clínicos', texto: 'Revisión de casos complejos con equipos quirúrgicos de clínicas de la región zuliana.' },
+  { tono: 'salmon', icon: 'mic', color: '#C87060', tag: 'SEMESTRAL', titulo: 'Charlas con cirujanos invitados', texto: 'Cirujanos de Venezuela y del exterior presentan técnicas de fijación e implantología.' },
+  { tono: 'lima', icon: 'award', color: '#A0A030', tag: 'CONTINUO', titulo: 'Aval académico', texto: 'Actividades con aval de sociedades médicas nacionales y horas de educación médica continua.' },
+] as const;
+const soft = { azul: 'bg-soft-azul', verde: 'bg-soft-verde', salmon: 'bg-soft-salmon', lima: 'bg-soft-lima' };
+---
+
+<div class="academia-programas-container">
+  {
+    programas.map((p) => (
+      <div class={`programa-tarjeta hover-${p.tono}`}>
+        <div class={`programa-icono-wrapper ${soft[p.tono]}`}>
+          <Icon name={p.icon} size={24} stroke={p.color} />
+        </div>
+        <span class={`programa-tag text-${p.tono}`}>{p.tag}</span>
+        <h3 class="programa-titulo">{p.titulo}</h3>
+        <p class="programa-texto">{p.texto}</p>
+      </div>
+    ))
+  }
+</div>

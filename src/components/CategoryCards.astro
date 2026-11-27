@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Icon from './Icon.astro';
+import { CATEGORIAS } from '../data/categorias';
+import { url } from '../data/url';
+
+const productos = (await getCollection('productos', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<div class="productos-grid">
+  {
+    CATEGORIAS.map((c) => {
+      const items = productos.filter((p) => p.data.category === c.slug);
+      const shown = items.slice(0, 3);
+      const href = url(`/productos/categoria/${c.slug}`);
+      return (
+        <article class={`producto-card card-hover-${c.tono}`}>
+          <a class="card-imagen-wrapper" href={href} tabindex="-1" aria-hidden="true">
+            <span class={`card-badge ${c.badgeClass}`}>{c.badge}</span>
+            <Image src={c.imagen} alt="" width={420} />
+            <div class={`linea-tematica linea-${c.tono}`} />
+          </a>
+          <div class="card-cuerpo">
+            <span class={`card-linea-decorativa bg-${c.tono}`} />
+            <h3 class="card-titulo"><a href={href}>{c.nombre}</a></h3>
+            <p class="card-descripcion">{c.resumen}</p>
+            <ul class={`card-lista lista-${c.tono}`}>
+              {shown.map((p) => <li><a href={url(`/productos/${p.id}`)}>{p.data.title}</a></li>)}
+            </ul>
+            <a href={href} class={`btn-ver-mas color-${c.tono}`}>
+              Ver {items.length} productos
+            </a>
+            <div class="card-acciones">
+              <a href={href} class="btn-cotizar">Ver catálogo</a>
+              <a href={url('/carrito')} class={`btn-card-carrito btn-cart-${c.tono}`} aria-label="Ver mi solicitud">
+                <Icon name="cart" />
+              </a>
+            </div>
+          </div>
+        </article>
+      );
+    })
+  }
+</div>

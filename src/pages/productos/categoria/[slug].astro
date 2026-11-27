@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHeader from '../../../components/PageHeader.astro';
+import Catalog from '../../../components/Catalog.astro';
+import { CATEGORIAS } from '../../../data/categorias';
+import { getProducts } from '../../../data/productos';
+
+export function getStaticPaths() {
+  return CATEGORIAS.map((c) => ({ params: { slug: c.slug }, props: { categoria: c } }));
+}
+const { categoria } = Astro.props;
+const products = (await getProducts()).filter((p) => p.data.category === categoria.slug);
+---
+
+<BaseLayout title={categoria.nombre} description={categoria.resumen} image={categoria.imagen.src}>
+  <PageHeader
+    eyebrow="CATÁLOGO"
+    title={categoria.nombre}
+    text={categoria.resumen}
+    crumbs={[{ label: 'Productos', href: '/productos' }, { label: categoria.nombre }]}
+  />
+  <section class="productos-seccion tienda-seccion">
+    <Catalog products={products} active={categoria.slug} />
+  </section>
+</BaseLayout>

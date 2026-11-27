@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import { url } from '../data/url';
+---
+
+<BaseLayout title="Mi solicitud de pedido" noindex>
+  <PageHeader eyebrow="PEDIDO" title="Mi solicitud" crumbs={[{ label: 'Mi solicitud' }]} />
+
+  <section class="carrito-seccion">
+    <div class="carrito-lista" data-cart-list aria-live="polite"></div>
+
+    <div class="carrito-vacio" data-cart-empty hidden>
+      <h2>Tu solicitud está vacía</h2>
+      <p>Agrega productos desde el catálogo y envíanos la solicitud para recibir un presupuesto formal.</p>
+      <a class="btn-cotizar" href={url('/productos')}>Ir al catálogo</a>
+    </div>
+
+    <aside class="carrito-resumen" data-cart-summary hidden>
+      <h2 class="form-card-titulo">Resumen</h2>
+      <dl>
+        <div><dt>Productos</dt><dd data-sum-lines>0</dd></div>
+        <div><dt>Unidades</dt><dd data-sum-units>0</dd></div>
+        <div data-sum-ref-row hidden><dt>Referencia (USD)</dt><dd data-sum-ref>0</dd></div>
+      </dl>
+      <p class="form-disclaimer">El total final lo confirma un asesor en el presupuesto formal, según marca, disponibilidad y cobertura del seguro.</p>
+      <a class="btn-enviar-whatsapp" href={url('/checkout')}>CONTINUAR</a>
+      <a class="link-morado carrito-seguir" href={url('/productos')}>Seguir agregando productos</a>
+    </aside>
+  </section>
+
+  <template id="tpl-item">
+    <article class="carrito-item">
+      <img alt="" width="96" height="72" loading="lazy" />
+      <div class="carrito-item-info">
+        <span class="card-categoria"></span>
+        <a class="carrito-item-titulo"></a>
+        <span class="carrito-item-variante"></span>
+      </div>
+      <div class="carrito-item-qty">
+        <button type="button" data-dec aria-label="Restar uno">−</button>
+        <input type="number" min="1" max="999" inputmode="numeric" aria-label="Cantidad" />
+        <button type="button" data-inc aria-label="Sumar uno">+</button>
+      </div>
+      <button type="button" class="carrito-item-quitar" data-remove aria-label="Quitar">
+        <Icon name="trash" size={18} />
+      </button>
+    </article>
+  </template>
+</BaseLayout>
+
+<script>
+  import { getCart, setQty, removeItem, variantLabel } from '../scripts/cart';
+
+  const list = document.querySelector<HTMLElement>('[data-cart-list]')!;
+  const empty = document.querySelector<HTMLElement>('[data-cart-empty]')!;
+  const summary = document.querySelector<HTMLElement>('[data-cart-summary]')!;
+  const tpl = document.getElementById('tpl-item') as HTMLTemplateElement;
+  const $ = (sel: string) => document.querySelector<HTMLElement>(sel)!;
+
+  function render() {
+    const items = getCart();
+    list.replaceChildren();
+    empty.hidden = items.length > 0;
+    summary.hidden = items.length === 0;
+    for (const item of items) {
+      const node = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+      const img = node.querySelector('img')!;
+      if (item.image) img.src = item.image; else img.remove();
+      node.querySelector('.card-categoria')!.textContent = item.category;
+      const a = node.querySelector<HTMLAnchorElement>('.carrito-item-titulo')!;
+      a.textContent = item.title;
+      a.href = item.url;
+      node.querySelector('.carrito-item-variante')!.textContent = variantLabel(item.variant);
+      const qty = node.querySelector('input')!;
+      qty.value = String(item.qty);
+      qty.addEventListener('change', () => setQty(item.key, Math.max(1, Number(qty.value) || 1)));
+      node.querySelector('[data-dec]')!.addEventListener('click', () => setQty(item.key, item.qty - 1));
+      node.querySelector('[data-inc]')!.addEventListener('click', () => setQty(item.key, item.qty + 1));
+      node.querySelector('[data-remove]')!.addEventListener('click', () => removeItem(item.key));
+      list.appendChild(node);
+    }
+    $('[data-sum-lines]').textContent = String(items.length);
+    $('[data-sum-units]').textContent = String(items.reduce((n, i) => n + i.qty, 0));
+    const priced = items.filter((i) => i.price);
+    $('[data-sum-ref-row]').hidden = priced.length === 0;
+    $('[data-sum-ref]').textContent = priced.reduce((n, i) => n + (i.price ?? 0) * i.qty, 0).toFixed(2);
+  }
+  window.addEventListener('cart:change', render);
+  render();
+</script>

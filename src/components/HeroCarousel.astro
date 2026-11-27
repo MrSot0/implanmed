@@ -1,0 +1,147 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import columna from '../assets/img/columna-neuro.webp';
+import trauma from '../assets/img/traumatologia.webp';
+import craneo from '../assets/img/craneo-maxilo.webp';
+import insumos from '../assets/img/insumos-medicos.webp';
+import { url } from '../data/url';
+
+const slides = [
+  {
+    title: 'Sistemas de fijación y reconstrucción de columna',
+    text: 'Implantes cervicales, lumbares y torácicos en titanio grado médico, con certificación ISO y trazabilidad de cada pieza.',
+    img: columna, alt: 'Tornillos pediculares fijados a una columna vertebral',
+    tag: 'COLUMNA Y NEUROCIRUGÍA', tone: 'azul', href: '/productos/categoria/columna',
+  },
+  {
+    title: 'Implantes para traumatología y osteosíntesis',
+    text: 'Mini fragmentos, placas DCP, L y T en titanio quirúrgico. Fijación interna y fijadores externos.',
+    img: trauma, alt: 'Implantes para traumatología',
+    tag: 'TRAUMATOLOGÍA Y OSTEOSÍNTESIS', tone: 'verde', href: '/productos/categoria/traumatologia',
+  },
+  {
+    title: 'Cirugía cráneo buco maxilofacial a la medida',
+    text: 'Placas, mallas y sistemas de reconstrucción facial adaptados a la anatomía de cada paciente, con guías quirúrgicas.',
+    img: craneo, alt: 'Cirugía maxilofacial en quirófano',
+    tag: 'CRÁNEO BUCO MAXILOFACIAL', tone: 'coral', href: '/productos/categoria/maxilofacial',
+  },
+  {
+    title: 'Insumos y descartables para pabellón',
+    text: 'Material estéril, vestimenta quirúrgica y complementos de pabellón. Entrega inmediata en Maracaibo.',
+    img: insumos, alt: 'Personal médico en pabellón quirúrgico',
+    tag: 'INSUMOS MÉDICOS', tone: 'amarillo', href: '/productos/categoria/insumos',
+  },
+];
+---
+
+<section id="inicio" class="hero-seccion-global" aria-roledescription="carrusel" aria-label="Líneas de producto" data-carousel>
+  <button class="carrusel-btn btn-izq" data-prev aria-label="Lámina anterior"><Icon name="left" size={18} /></button>
+  <button class="carrusel-btn btn-der" data-next aria-label="Lámina siguiente"><Icon name="right" size={18} /></button>
+
+  <div class="carrusel-ventana-global">
+    <div class="carrusel-track" data-track aria-live="off">
+      {slides.map((s, i) => {
+        const Heading = i === 0 ? 'h1' : 'h2';
+        return (
+          <div class:list={['carrusel-slide', { 'slide-activa': i === 0 }]} role="group" aria-roledescription="lámina" aria-label={`${i + 1} de ${slides.length}`} aria-hidden={i === 0 ? undefined : 'true'} data-slide>
+            <div class="hero-contenido">
+              <Heading class="hero-titulo">{s.title}</Heading>
+              <p class="hero-descripcion">{s.text}</p>
+              <div class="hero-botones">
+                <a class="btn-cta-morado" href={url(s.href)} tabindex={i === 0 ? undefined : -1}>VER PRODUCTOS</a>
+                <a class="btn-cta-transparente" href={url('/contacto')} tabindex={i === 0 ? undefined : -1}>Pedir presupuesto</a>
+              </div>
+            </div>
+            <div class="hero-imagen-wrapper">
+              <Image src={s.img} alt={s.alt} width={620} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} />
+              <span class={`slide-tag tag-${s.tone}`}>{s.tag}</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <div class="carrusel-dots" role="tablist" aria-label="Elegir lámina">
+    {slides.map((s, i) => (
+      <button class:list={['dot', { activo: i === 0 }]} role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-label={s.tag.toLowerCase()} data-dot={i} />
+    ))}
+  </div>
+
+  <div class="hero-beneficios-bar">
+    <span class="beneficio-item"><span class="punto-check">•</span> Titanio grado médico</span>
+    <span class="beneficio-item"><span class="punto-check">•</span> Certificación ISO</span>
+    <span class="beneficio-item"><span class="punto-check">•</span> Entrega inmediata en Maracaibo</span>
+  </div>
+</section>
+
+<script>
+  const COLORS = ['#6BB8C8', '#8DC46A', '#E8A090', '#E8E87A'];
+  const INTERVAL = 6000;
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const slides = [...root.querySelectorAll<HTMLElement>('[data-slide]')];
+    const dots = [...root.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    const checks = root.querySelectorAll<HTMLElement>('.punto-check');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let index = 0;
+    let timer: number | undefined;
+
+    const render = () => {
+      track.style.transform = `translateX(${(index * -100) / slides.length}%)`;
+      slides.forEach((s, i) => {
+        const on = i === index;
+        s.classList.toggle('slide-activa', on);
+        if (on) s.removeAttribute('aria-hidden');
+        else s.setAttribute('aria-hidden', 'true');
+        s.querySelectorAll('a').forEach((a) => (on ? a.removeAttribute('tabindex') : a.setAttribute('tabindex', '-1')));
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('activo', i === index);
+        d.setAttribute('aria-selected', String(i === index));
+        d.style.backgroundColor = i === index ? COLORS[index] : '#334155';
+      });
+      checks.forEach((c) => (c.style.color = COLORS[index]));
+    };
+
+    const go = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      render();
+    };
+    const stop = () => window.clearInterval(timer);
+    const start = () => {
+      stop();
+      if (!reduced) timer = window.setInterval(() => go(index + 1), INTERVAL);
+    };
+
+    root.querySelector('[data-prev]')!.addEventListener('click', () => { go(index - 1); start(); });
+    root.querySelector('[data-next]')!.addEventListener('click', () => { go(index + 1); start(); });
+    dots.forEach((d, i) => d.addEventListener('click', () => { go(i); start(); }));
+
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { go(index + 1); start(); }
+      if (e.key === 'ArrowLeft') { go(index - 1); start(); }
+    });
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    let x0: number | null = null;
+    root.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+    root.addEventListener('touchend', (e) => {
+      if (x0 !== null) {
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 50) go(index + (dx < 0 ? 1 : -1));
+      }
+      x0 = null;
+      start();
+    }, { passive: true });
+
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+    render();
+    start();
+  });
+</script>
