@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import BlogGrid from '../../components/BlogGrid.astro';
+import { getPosts } from '../../data/blog';
+const posts = await getPosts();
+---
+
+<BaseLayout title="Blog" description="Guías de postoperatorio para pacientes, artículos médicos y novedades del catálogo de IMPLANMED.">
+  <PageHeader eyebrow="BLOG" title="Guías y novedades" text="Indicaciones generales para pacientes y novedades del catálogo. Las instrucciones de su médico siempre tienen prioridad." crumbs={[{ label: 'Blog' }]} />
+  <section class="blog-seccion">
+    <BlogGrid posts={posts} highlightFirst={posts.length > 2} />
+  </section>
+</BaseLayout>

@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import BrandIcon from '../components/BrandIcon.astro';
+import { url } from '../data/url';
+---
+
+<BaseLayout title="Solicitud enviada" noindex>
+  <PageHeader eyebrow="PEDIDO" title="Solicitud enviada" crumbs={[{ label: 'Solicitud enviada' }]} />
+  <section class="pedido-seccion">
+    <div class="presupuesto-form-card pedido-card">
+      <p class="pedido-codigo">Código de solicitud <strong data-code>—</strong></p>
+      <p>
+        Abrimos WhatsApp con el detalle de tu pedido. Si no se abrió, o lo cerraste antes de enviarlo, usa el botón de
+        abajo. Un asesor te responde con el presupuesto formal en menos de 2 horas hábiles.
+      </p>
+      <ul class="checkout-items" data-items></ul>
+      <a class="btn-whatsapp-cta" data-wa href="#"><BrandIcon name="whatsapp" size={20} /> Abrir WhatsApp de nuevo</a>
+      <p><a class="link-morado" href={url('/productos')}>Volver al catálogo</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { getOrder, orderMessage, variantLabel } from '../scripts/cart';
+  import { SITE } from '../data/site';
+
+  const code = new URLSearchParams(location.search).get('codigo') ?? '';
+  const order = getOrder(code);
+  const codeEl = document.querySelector<HTMLElement>('[data-code]')!;
+  const wa = document.querySelector<HTMLAnchorElement>('[data-wa]')!;
+  if (order) {
+    codeEl.textContent = order.code;
+    const ul = document.querySelector<HTMLElement>('[data-items]')!;
+    for (const i of order.items) {
+      const li = document.createElement('li');
+      const v = variantLabel(i.variant);
+      li.textContent = `${i.qty} × ${i.title}${v ? ` (${v})` : ''}`;
+      ul.appendChild(li);
+    }
+    wa.href = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(orderMessage(order))}`;
+    wa.target = '_blank';
+  } else {
+    codeEl.textContent = code || 'no disponible';
+    wa.href = `https://wa.me/${SITE.whatsapp}`;
+  }
+</script>

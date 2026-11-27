@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Metrics from '../components/Metrics.astro';
+import AcademiaBlock from '../components/AcademiaBlock.astro';
+import MapBlock from '../components/MapBlock.astro';
+import equipo from '../assets/img/equipo-stand.jpg';
+import evento from '../assets/img/academia-evento.jpg';
+import { SITE } from '../data/site';
+---
+
+<BaseLayout title="Nosotros y academia" description="IMPLANMED distribuye implantes médicos en Maracaibo desde hace más de 15 años y organiza actividades de formación para cirujanos.">
+  <PageHeader eyebrow="NOSOTROS" title="IMPLANMED en Maracaibo" crumbs={[{ label: 'Nosotros' }]} />
+
+  <section class="academia-seccion">
+    <div class="nosotros-intro">
+      <div class="academia-texto-bloque">
+        <span class="academia-subtitulo">QUIÉNES SOMOS</span>
+        <h2 class="academia-titulo">Implantes, insumos y soporte en pabellón</h2>
+        <p class="academia-descripcion">
+          {SITE.legalName} distribuye implantes de columna, traumatología y cirugía maxilofacial, además de insumos
+          para pabellón. Trabajamos con cirujanos, clínicas y pacientes del Zulia y del resto de Venezuela.
+        </p>
+        <p class="academia-descripcion">
+          Nuestros instrumentistas acompañan las cirugías y preparamos la documentación que piden las aseguradoras para
+          aprobar cada caso.
+        </p>
+      </div>
+      <figure class="nosotros-foto">
+        <Image src={equipo} alt="Equipo de IMPLANMED en su stand junto a modelos de columna y el sistema ZEUS" width={640} />
+        <figcaption>Equipo de IMPLANMED con el sistema de tornillos pediculares ZEUS.</figcaption>
+      </figure>
+    </div>
+    <Metrics />
+  </section>
+
+  <section class="academia-seccion academia-seccion-alt">
+    <div class="nosotros-intro nosotros-intro-inv">
+      <figure class="nosotros-foto">
+        <Image src={evento} alt="Cirujanos y residentes en una jornada académica organizada por IMPLANMED" width={640} />
+        <figcaption>Jornada académica con cirujanos y residentes en Maracaibo.</figcaption>
+      </figure>
+      <div class="academia-texto-bloque">
+        <span class="academia-subtitulo">ACADEMIA</span>
+        <h2 class="academia-titulo">Formación para cirujanos</h2>
+        <p class="academia-descripcion">
+          Organizamos y copatrocinamos actividades para especialistas y residentes: talleres con modelos anatómicos,
+          discusión de casos y charlas con cirujanos invitados.
+        </p>
+      </div>
+    </div>
+    <AcademiaBlock />
+    <MapBlock />
+  </section>
+</BaseLayout>

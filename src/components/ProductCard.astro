@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { getCategoria } from '../data/categorias';
+import { url } from '../data/url';
+interface Props { product: CollectionEntry<'productos'> }
+const { product: p } = Astro.props;
+const cat = getCategoria(p.data.category)!;
+const href = url(`/productos/${p.id}`);
+const hasVariants = p.data.variants.length > 0;
+const img = p.data.image;
+---
+
+<article
+  class={`producto-card tienda-card card-hover-${cat.tono}`}
+  data-product
+  data-category={p.data.category}
+  data-search={`${p.data.title} ${p.data.summary} ${p.data.brand ?? ''} ${cat.nombre}`.toLowerCase()}
+  data-title={p.data.title}
+  data-order={p.data.order}
+>
+  <a class="card-imagen-wrapper" href={href} tabindex="-1" aria-hidden="true">
+    {p.data.availability === 'bajo-pedido' && <span class="card-badge badge-pedido">Bajo pedido</span>}
+    <Image src={img} alt="" width={420} />
+    <div class={`linea-tematica linea-${cat.tono}`} />
+  </a>
+  <div class="card-cuerpo">
+    <span class={`card-categoria color-${cat.tono}`}>{cat.nombre}</span>
+    <h3 class="card-titulo"><a href={href}>{p.data.title}</a></h3>
+    <p class="card-descripcion">{p.data.summary}</p>
+    <p class="card-precio">{p.data.price ? `Ref. USD ${p.data.price.toFixed(2)}` : 'Precio según cotización'}</p>
+    <div class="card-acciones">
+      <a href={href} class="btn-cotizar">{hasVariants ? 'Elegir opciones' : 'Ver detalle'}</a>
+      {
+        !hasVariants && (
+          <button
+            type="button"
+            class={`btn-card-carrito btn-cart-${cat.tono}`}
+            aria-label={`Agregar ${p.data.title} a la solicitud`}
+            data-add-to-cart
+            data-slug={p.id}
+            data-title={p.data.title}
+            data-category={cat.nombre}
+            data-image={img.src}
+            data-url={href}
+            data-price={p.data.price}
+          >
+            <Icon name="cart" />
+          </button>
+        )
+      }
+    </div>
+  </div>
+</article>

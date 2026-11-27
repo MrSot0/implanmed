@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/img/logo.webp';
+import Icon from './Icon.astro';
+import { NAV } from '../data/site';
+import { url } from '../data/url';
+
+const current = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const isActive = (href: string) =>
+  href === '/' ? current === '/' || current === '' : current.startsWith(href);
+---
+
+<nav class="navbar" aria-label="Principal">
+  <div class="nav-logo">
+    <a href={url('/')} aria-label="IMPLANMED, inicio">
+      <Image src={logo} alt="IMPLANMED" class="logo" width={160} height={50} loading="eager" />
+    </a>
+  </div>
+
+  <button class="nav-menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links" id="nav-links">
+    {
+      NAV.map((item) => (
+        <li>
+          <a href={url(item.href)} aria-current={isActive(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="nav-acciones">
+    <a class="btn-registro" href={url('/contacto')}>Cotizar</a>
+    <a class="btn-carrito" href={url('/carrito')} aria-label="Ver solicitud de pedido">
+      <Icon name="cart" size={20} />
+      <span class="contador-carrito" data-cart-count hidden>0</span>
+    </a>
+  </div>
+</nav>

@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { BLOG_CATEGORIAS, formatDate } from '../data/blog';
+import { url } from '../data/url';
+interface Props { post: CollectionEntry<'blog'>; featured?: boolean }
+const { post, featured = false } = Astro.props;
+const cat = BLOG_CATEGORIAS[post.data.category];
+const href = url(`/blog/${post.id}`);
+---
+
+<article class:list={['blog-card', { 'blog-card-destacada': featured }]}>
+  <div class="blog-img-wrapper">
+    <Image src={post.data.image} alt={post.data.imageAlt} class="blog-img" width={featured ? 720 : 520} />
+    <span class={`blog-categoria ${cat.class}`}>{cat.label}</span>
+  </div>
+  <div class="blog-cuerpo">
+    <time class="blog-fecha" datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+    <h3 class="blog-titulo"><a href={href} class="stretched-link">{post.data.title}</a></h3>
+    <p class="blog-resumen">{post.data.description}</p>
+    <div class="blog-footer-card">
+      <span class="blog-autor">{post.data.author}</span>
+      <span class="blog-leer-mas" aria-hidden="true">Leer</span>
+    </div>
+  </div>
+</article>

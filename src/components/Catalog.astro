@@ -1,0 +1,86 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProductCard from './ProductCard.astro';
+import Icon from './Icon.astro';
+import { CATEGORIAS } from '../data/categorias';
+import { url } from '../data/url';
+interface Props { products: CollectionEntry<'productos'>[]; active?: string }
+const { products, active } = Astro.props;
+---
+
+<div class="catalogo" data-catalog>
+  <div class="catalogo-barra">
+    <div class="catalogo-busqueda">
+      <Icon name="search" size={18} />
+      <label class="sr-only" for="buscar">Buscar productos</label>
+      <input id="buscar" type="search" placeholder="Buscar por nombre, marca o uso" autocomplete="off" data-search />
+    </div>
+    <label class="catalogo-orden">
+      <span>Ordenar</span>
+      <select data-sort>
+        <option value="order">Recomendados</option>
+        <option value="az">Nombre A-Z</option>
+        <option value="za">Nombre Z-A</option>
+      </select>
+    </label>
+  </div>
+
+  <nav class="catalogo-filtros" aria-label="Categorías">
+    <a href={url('/productos')} class:list={['filtro-chip', { activo: !active }]} aria-current={!active ? 'page' : undefined}>Todos</a>
+    {CATEGORIAS.map((c) => (
+      <a href={url(`/productos/categoria/${c.slug}`)} class:list={['filtro-chip', `chip-${c.tono}`, { activo: active === c.slug }]} aria-current={active === c.slug ? 'page' : undefined}>
+        {c.nombre}
+      </a>
+    ))}
+  </nav>
+
+  <p class="catalogo-conteo" aria-live="polite" data-count>{products.length} productos</p>
+  <div class="productos-grid tienda-grid" data-grid>
+    {products.map((p) => <ProductCard product={p} />)}
+  </div>
+  <p class="catalogo-vacio" data-empty hidden>
+    No encontramos productos con esa búsqueda. Escríbenos y lo buscamos por ti: muchos implantes se consiguen bajo pedido.
+  </p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-catalog]').forEach((root) => {
+    const input = root.querySelector<HTMLInputElement>('[data-search]')!;
+    const sort = root.querySelector<HTMLSelectElement>('[data-sort]')!;
+    const grid = root.querySelector<HTMLElement>('[data-grid]')!;
+    const count = root.querySelector<HTMLElement>('[data-count]')!;
+    const empty = root.querySelector<HTMLElement>('[data-empty]')!;
+    const cards = [...grid.querySelectorAll<HTMLElement>('[data-product]')];
+    const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+    const params = new URLSearchParams(location.search);
+    input.value = params.get('q') ?? '';
+
+    const apply = () => {
+      const terms = norm(input.value.trim()).split(/\s+/).filter(Boolean);
+      let visible = 0;
+      for (const c of cards) {
+        const hay = norm(c.dataset.search ?? '');
+        const show = terms.every((t) => hay.includes(t));
+        c.hidden = !show;
+        if (show) visible++;
+      }
+      const mode = sort.value;
+      const sorted = [...cards].sort((a, b) =>
+        mode === 'order'
+          ? Number(a.dataset.order) - Number(b.dataset.order)
+          : (mode === 'az' ? 1 : -1) * (a.dataset.title ?? '').localeCompare(b.dataset.title ?? '', 'es'),
+      );
+      sorted.forEach((c) => grid.appendChild(c));
+      count.textContent = `${visible} ${visible === 1 ? 'producto' : 'productos'}`;
+      empty.hidden = visible > 0;
+      const u = new URL(location.href);
+      if (input.value.trim()) u.searchParams.set('q', input.value.trim());
+      else u.searchParams.delete('q');
+      history.replaceState(null, '', u);
+    };
+    input.addEventListener('input', apply);
+    sort.addEventListener('change', apply);
+    apply();
+  });
+</script>

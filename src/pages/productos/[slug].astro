@@ -1,0 +1,135 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Icon from '../../components/Icon.astro';
+import BrandIcon from '../../components/BrandIcon.astro';
+import { getProducts } from '../../data/productos';
+import { getCategoria } from '../../data/categorias';
+import { SITE, waLink } from '../../data/site';
+import { url } from '../../data/url';
+
+export async function getStaticPaths() {
+  const all = await getProducts();
+  return all.map((p) => ({ params: { slug: p.id }, props: { product: p, all } }));
+}
+const { product: p, all } = Astro.props;
+const { Content } = await render(p);
+const cat = getCategoria(p.data.category)!;
+const href = url(`/productos/${p.id}`);
+const related = all.filter((x) => x.data.category === p.data.category && x.id !== p.id).slice(0, 4);
+const og = await getImage({ src: p.data.image, width: 1200, format: 'jpg' });
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: p.data.title,
+  description: p.data.summary,
+  image: new URL(og.src, Astro.site).href,
+  category: cat.nombre,
+  ...(p.data.brand ? { brand: { '@type': 'Brand', name: p.data.brand } } : {}),
+  ...(p.data.price
+    ? {
+        offers: {
+          '@type': 'Offer',
+          price: p.data.price,
+          priceCurrency: 'USD',
+          availability: p.data.availability === 'disponible' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+          seller: { '@type': 'Organization', name: SITE.name },
+        },
+      }
+    : {}),
+};
+---
+
+<BaseLayout title={p.data.title} description={p.data.summary} image={og.src} type="product" jsonLd={ld}>
+  <PageHeader
+    eyebrow={cat.nombre.toUpperCase()}
+    title={p.data.title}
+    crumbs={[
+      { label: 'Productos', href: '/productos' },
+      { label: cat.nombre, href: `/productos/categoria/${cat.slug}` },
+      { label: p.data.title },
+    ]}
+  />
+
+  <section class="producto-detalle">
+    <div class={`producto-detalle-media borde-top-${cat.tono}`}>
+      <Image src={p.data.image} alt={p.data.imageAlt} width={720} loading="eager" />
+    </div>
+
+    <div class="producto-detalle-info" data-product-form>
+      {p.data.brand && <span class="producto-marca">Marca {p.data.brand}</span>}
+      <p class="producto-resumen">{p.data.summary}</p>
+
+      <p class="producto-precio">
+        {p.data.price ? <>Precio de referencia: <strong>USD {p.data.price.toFixed(2)}</strong></> : <>Precio según cotización</>}
+        <span class:list={['producto-stock', p.data.availability]}>
+          {p.data.availability === 'disponible' ? 'Disponible' : 'Bajo pedido'}
+        </span>
+      </p>
+
+      {p.data.features.length > 0 && (
+        <ul class={`card-lista lista-${cat.tono} producto-features`}>
+          {p.data.features.map((f) => <li>{f}</li>)}
+        </ul>
+      )}
+
+      {p.data.variants.map((v, i) => (
+        <div class="form-campo">
+          <label for={`var-${i}`}>{v.name}</label>
+          <select id={`var-${i}`} data-variant={v.name} required>
+            <option value="">Elegir {v.name.toLowerCase()}</option>
+            {v.options.map((o) => <option>{o}</option>)}
+          </select>
+        </div>
+      ))}
+
+      <div class="producto-compra">
+        <div class="form-campo campo-cantidad">
+          <label for="cantidad">Cantidad</label>
+          <input id="cantidad" type="number" min="1" max="999" value="1" inputmode="numeric" data-qty />
+        </div>
+        <button
+          type="button"
+          class="btn-enviar-whatsapp btn-agregar"
+          data-add-to-cart
+          data-slug={p.id}
+          data-title={p.data.title}
+          data-category={cat.nombre}
+          data-image={p.data.image.src}
+          data-url={href}
+          data-price={p.data.price}
+        >
+          <Icon name="cart" size={18} /> AGREGAR A LA SOLICITUD
+        </button>
+      </div>
+      <div class="producto-links">
+        <a href={url('/carrito')} class="link-morado">Ver mi solicitud</a>
+        <a href={waLink(`Hola, quiero consultar por: ${p.data.title}`)} target="_blank" rel="noopener" class="producto-wa">
+          <BrandIcon name="whatsapp" size={16} /> Consultar por WhatsApp
+        </a>
+      </div>
+
+      <div class="prose producto-descripcion">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="productos-seccion tienda-seccion">
+      <div class="blog-header">
+        <div>
+          <span class="subtitulo-seccion">MISMA LÍNEA</span>
+          <h2 class="titulo-seccion">Otros productos de {cat.nombre.toLowerCase()}</h2>
+        </div>
+      </div>
+      <div class="productos-grid tienda-grid">
+        {related.map((r) => <ProductCard product={r} />)}
+      </div>
+    </section>
+  )}
+</BaseLayout>

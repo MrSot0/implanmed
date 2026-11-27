@@ -1,0 +1,12 @@
+---
+import Icon from './Icon.astro';
+import BrandIcon from './BrandIcon.astro';
+import { waLink } from '../data/site';
+---
+
+<button class="btn-volver-arriba" id="btn-top" aria-label="Volver arriba">
+  <Icon name="up" size={28} />
+</button>
+<a href={waLink()} target="_blank" rel="noopener" class="btn-whatsapp-flotante" aria-label="Escribir por WhatsApp">
+  <BrandIcon name="whatsapp" size={28} />
+</a>

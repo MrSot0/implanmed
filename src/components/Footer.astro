@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/img/logo.webp';
+import Icon from './Icon.astro';
+import BrandIcon from './BrandIcon.astro';
+import { SITE, waLink } from '../data/site';
+import { url } from '../data/url';
+import { CATEGORIAS } from '../data/categorias';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer-contenido footer-contenido-4">
+    <div class="footer-col footer-col-marca">
+      <div class="footer-logo-wrapper">
+        <a href={url('/')}>
+          <Image src={logo} alt="IMPLANMED" class="footer-logo" width={160} height={50} />
+        </a>
+      </div>
+      <p class="footer-descripcion">
+        Implantes médicos, insumos de pabellón e instrumentación quirúrgica para médicos, clínicas y pacientes en Venezuela.
+      </p>
+      <span class="footer-rif">RIF: {SITE.rif}</span>
+      <div class="footer-social-dots">
+        <a href={waLink()} target="_blank" rel="noopener" class="social-dot dot-whatsapp" aria-label="WhatsApp"><BrandIcon name="whatsapp" size={15} /></a>
+        <a href={SITE.social.instagram} target="_blank" rel="noopener" class="social-dot dot-instagram" aria-label="Instagram"><BrandIcon name="instagram" size={15} /></a>
+        <a href={SITE.social.facebook} target="_blank" rel="noopener" class="social-dot dot-facebook" aria-label="Facebook"><BrandIcon name="facebook" size={15} /></a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h2 class="footer-col-titulo">PRODUCTOS</h2>
+      <ul class="footer-links-lista">
+        {CATEGORIAS.map((c) => <li><a href={url(`/productos/categoria/${c.slug}`)}>{c.nombre}</a></li>)}
+        <li><a href={url('/productos')}>Catálogo completo</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h2 class="footer-col-titulo">CONTACTO</h2>
+      <div class="footer-contacto-lista">
+        <div class="footer-contacto-item">
+          <div class="footer-contacto-icono-wrapper"><Icon name="pin" /></div>
+          <div class="footer-contacto-texto">
+            <span class="footer-contacto-label">DIRECCIÓN</span>
+            <p><a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">{SITE.address.full}</a></p>
+          </div>
+        </div>
+        <div class="footer-contacto-item">
+          <div class="footer-contacto-icono-wrapper"><Icon name="phone" /></div>
+          <div class="footer-contacto-texto">
+            <span class="footer-contacto-label">TELÉFONO / WHATSAPP</span>
+            <p><a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a></p>
+          </div>
+        </div>
+        <div class="footer-contacto-item">
+          <div class="footer-contacto-icono-wrapper"><Icon name="mail" /></div>
+          <div class="footer-contacto-texto">
+            <span class="footer-contacto-label">CORREO</span>
+            <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h2 class="footer-col-titulo">EMPRESA Y LEGAL</h2>
+      <ul class="footer-links-lista">
+        <li><a href={url('/nosotros')}>Nosotros</a></li>
+        <li><a href={url('/servicios')}>Servicios</a></li>
+        <li><a href={url('/blog')}>Blog</a></li>
+        <li><a href={url('/legal/terminos')}>Términos y condiciones</a></li>
+        <li><a href={url('/legal/devoluciones')}>Cambios y devoluciones</a></li>
+        <li><a href={url('/legal/privacidad')}>Privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-barra-inferior">
+    <p class="footer-copyright">© {year} {SITE.name} Maracaibo, Venezuela.</p>
+    <a class="footer-copyright" href={SITE.social.instagram} target="_blank" rel="noopener">{SITE.social.instagramHandle}</a>
+  </div>
+</footer>

@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import { url } from '../data/url';
+---
+
+<BaseLayout title="Enviar solicitud" noindex>
+  <PageHeader eyebrow="PEDIDO" title="Datos para el presupuesto" crumbs={[{ label: 'Mi solicitud', href: '/carrito' }, { label: 'Enviar' }]} />
+
+  <section class="checkout-seccion">
+    <form class="presupuesto-form-card checkout-form presupuesto-form" id="checkout" novalidate>
+      <fieldset>
+        <legend class="form-card-titulo">Quién solicita</legend>
+        <div class="form-fila-doble">
+          <div class="form-campo"><label for="c-nombre">Nombre y apellido <span class="req">*</span></label><input id="c-nombre" name="Nombre" autocomplete="name" required /></div>
+          <div class="form-campo"><label for="c-doc">Cédula o RIF <span class="req">*</span></label><input id="c-doc" name="Cédula/RIF" required placeholder="V-12345678 / J-12345678-9" /></div>
+        </div>
+        <div class="form-fila-doble">
+          <div class="form-campo"><label for="c-tel">Teléfono / WhatsApp <span class="req">*</span></label><input id="c-tel" name="Teléfono" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{7,}" /></div>
+          <div class="form-campo"><label for="c-mail">Correo <span class="req">*</span></label><input id="c-mail" name="Correo" type="email" autocomplete="email" required /></div>
+        </div>
+        <div class="form-fila-doble">
+          <div class="form-campo">
+            <label for="c-perfil">Soy <span class="req">*</span></label>
+            <select id="c-perfil" name="Perfil" required>
+              <option value="">Seleccione</option>
+              <option>Médico / Cirujano</option>
+              <option>Institución de salud</option>
+              <option>Paciente o familiar</option>
+            </select>
+          </div>
+          <div class="form-campo"><label for="c-inst">Clínica u hospital</label><input id="c-inst" name="Institución" /></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="form-card-titulo">Cirugía</legend>
+        <div class="form-fila-doble">
+          <div class="form-campo"><label for="c-medico">Cirujano tratante</label><input id="c-medico" name="Cirujano" /></div>
+          <div class="form-campo"><label for="c-fecha">Fecha tentativa</label><input id="c-fecha" name="Fecha de cirugía" type="date" /></div>
+        </div>
+        <div class="form-campo"><label for="c-seguro">Seguro o forma de cobertura</label><input id="c-seguro" name="Seguro" placeholder="Nombre de la aseguradora, o particular" /></div>
+      </fieldset>
+
+      <fieldset>
+        <legend class="form-card-titulo">Entrega y pago</legend>
+        <div class="form-fila-doble">
+          <div class="form-campo">
+            <label for="c-entrega">Entrega <span class="req">*</span></label>
+            <select id="c-entrega" name="Entrega" required>
+              <option value="">Seleccione</option>
+              <option>Entrega en la clínica (Maracaibo)</option>
+              <option>Retiro en tienda</option>
+              <option>Envío a otra ciudad</option>
+            </select>
+          </div>
+          <div class="form-campo"><label for="c-ciudad">Ciudad</label><input id="c-ciudad" name="Ciudad" value="Maracaibo" /></div>
+        </div>
+        <div class="form-campo">
+          <label for="c-pago">Forma de pago preferida <span class="req">*</span></label>
+          <select id="c-pago" name="Pago" required>
+            <option value="">Seleccione</option>
+            <option>Carta aval / seguro</option>
+            <option>Transferencia en bolívares</option>
+            <option>Pago móvil</option>
+            <option>Divisas en efectivo</option>
+            <option>Zelle</option>
+          </select>
+        </div>
+        <div class="form-campo"><label for="c-notas">Notas</label><textarea id="c-notas" name="Notas" rows="3" placeholder="Medidas, niveles, instrucciones de entrega..."></textarea></div>
+      </fieldset>
+
+      <label class="check-campo">
+        <input type="checkbox" required id="c-acepto" />
+        <span>Acepto los <a class="link-morado" href={url('/legal/terminos')} target="_blank">términos</a> y la <a class="link-morado" href={url('/legal/privacidad')} target="_blank">política de privacidad</a>.</span>
+      </label>
+      <p class="form-error" data-form-error hidden></p>
+      <button type="submit" class="btn-enviar-whatsapp"><Icon name="send" size={18} /> ENVIAR SOLICITUD POR WHATSAPP</button>
+      <p class="form-disclaimer">No se realiza ningún cobro en el sitio. Un asesor confirma precios, disponibilidad y forma de pago.</p>
+    </form>
+
+    <aside class="carrito-resumen checkout-resumen">
+      <h2 class="form-card-titulo">Tu solicitud</h2>
+      <ul class="checkout-items" data-items></ul>
+      <a class="link-morado" href={url('/carrito')}>Editar</a>
+    </aside>
+  </section>
+</BaseLayout>
+
+<script>
+  import { getCart, clearCart, newOrderCode, orderMessage, saveOrder, variantLabel } from '../scripts/cart';
+  import { validateForm } from '../scripts/forms';
+  import { SITE } from '../data/site';
+  import { url } from '../data/url';
+
+  const items = getCart();
+  if (items.length === 0) location.replace(url('/carrito'));
+
+  const ul = document.querySelector<HTMLElement>('[data-items]')!;
+  for (const i of items) {
+    const li = document.createElement('li');
+    const strong = document.createElement('strong');
+    strong.textContent = `${i.qty} × ${i.title}`;
+    li.appendChild(strong);
+    const v = variantLabel(i.variant);
+    if (v) {
+      const s = document.createElement('span');
+      s.textContent = v;
+      li.appendChild(s);
+    }
+    ul.appendChild(li);
+  }
+
+  const form = document.getElementById('checkout') as HTMLFormElement;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateForm(form)) return;
+    const customer: Record<string, string> = {};
+    for (const [k, v] of new FormData(form)) if (String(v).trim()) customer[k] = String(v).trim();
+
+    const code = newOrderCode();
+    const order = { code, createdAt: new Date().toISOString(), items, customer };
+    saveOrder(order);
+    const wa = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(orderMessage(order))}`;
+    window.open(wa, '_blank', 'noopener');
+    clearCart();
+    location.href = `${url('/pedido')}?codigo=${encodeURIComponent(code)}`;
+  });
+</script>

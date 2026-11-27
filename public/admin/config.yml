@@ -1,0 +1,104 @@
+# Sveltia CMS (compatible con Decap CMS). Documentación: https://github.com/sveltia/sveltia-cms
+# Cada cambio guardado desde /admin crea un commit en GitHub; la Action de deploy publica el sitio.
+backend:
+  name: github
+  repo: MrSot0/implanmed
+  branch: main
+  # Para iniciar sesión con el botón "Sign in with GitHub" hace falta un proxy OAuth
+  # (p. ej. sveltia-cms-auth en Cloudflare Workers). Descomenta y coloca su URL:
+  # base_url: https://implanmed-cms-auth.<tu-cuenta>.workers.dev
+  # Sin proxy se puede entrar con un token personal de GitHub (botón "Sign in with Token").
+
+site_url: https://mrsot0.github.io/implanmed
+display_url: https://mrsot0.github.io/implanmed
+logo_url: https://mrsot0.github.io/implanmed/logo.png
+locale: es
+
+media_folder: src/assets/uploads
+public_folder: /src/assets/uploads
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: blog
+    label: Blog
+    label_singular: Artículo
+    folder: src/content/blog
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    media_folder: /src/assets/uploads/blog
+    public_folder: ../../assets/uploads/blog
+    sortable_fields: [pubDate, title]
+    summary: '{{title}} ({{pubDate | date(''YYYY-MM-DD'')}})'
+    fields:
+      - { name: title, label: Título, widget: string }
+      - { name: description, label: Resumen (aparece en tarjetas y buscadores), widget: text }
+      - { name: pubDate, label: Fecha de publicación, widget: datetime, format: 'YYYY-MM-DD', time_format: false, date_format: 'DD/MM/YYYY' }
+      - { name: updatedDate, label: Fecha de actualización, widget: datetime, format: 'YYYY-MM-DD', time_format: false, date_format: 'DD/MM/YYYY', required: false }
+      - name: category
+        label: Categoría
+        widget: select
+        options:
+          - { label: Postoperatorio, value: postoperatorio }
+          - { label: Productos, value: productos }
+          - { label: Artículo médico, value: articulo }
+      - { name: image, label: Imagen de portada, widget: image }
+      - { name: imageAlt, label: Descripción de la imagen, widget: string, hint: 'Qué se ve en la foto, para lectores de pantalla.' }
+      - { name: author, label: Autor, widget: string, default: Equipo IMPLANMED }
+      - { name: featured, label: Destacado, widget: boolean, default: false, required: false }
+      - { name: draft, label: Borrador (no se publica), widget: boolean, default: false, required: false }
+      - { name: body, label: Contenido, widget: markdown }
+
+  - name: productos
+    label: Productos
+    label_singular: Producto
+    folder: src/content/productos
+    create: true
+    slug: '{{slug}}'
+    extension: md
+    format: frontmatter
+    media_folder: /src/assets/uploads/productos
+    public_folder: ../../assets/uploads/productos
+    sortable_fields: [title, category, order]
+    view_groups:
+      - { label: Categoría, field: category }
+    summary: '{{title}} [{{category}}]'
+    fields:
+      - { name: title, label: Nombre, widget: string }
+      - name: category
+        label: Categoría
+        widget: select
+        options:
+          - { label: Columna y Neurocirugía, value: columna }
+          - { label: Traumatología y Osteosíntesis, value: traumatologia }
+          - { label: Cráneo Buco Maxilofacial, value: maxilofacial }
+          - { label: Insumos Médicos, value: insumos }
+      - { name: summary, label: Resumen, widget: text }
+      - { name: image, label: Imagen, widget: image }
+      - { name: imageAlt, label: Descripción de la imagen, widget: string }
+      - { name: brand, label: Marca, widget: string, required: false }
+      - { name: features, label: Características, widget: list, field: { name: item, label: Característica, widget: string }, required: false }
+      - name: variants
+        label: Opciones que elige el cliente
+        widget: list
+        required: false
+        hint: 'Ejemplo: nombre "Lado", opciones "Izquierda" y "Derecha".'
+        fields:
+          - { name: name, label: Nombre de la opción, widget: string }
+          - { name: options, label: Valores, widget: list, field: { name: value, label: Valor, widget: string } }
+      - { name: price, label: Precio de referencia (USD), widget: number, value_type: float, required: false, hint: 'Déjalo vacío para mostrar "Precio según cotización".' }
+      - name: availability
+        label: Disponibilidad
+        widget: select
+        default: disponible
+        options:
+          - { label: Disponible, value: disponible }
+          - { label: Bajo pedido, value: bajo-pedido }
+      - { name: featured, label: Destacado, widget: boolean, default: false, required: false }
+      - { name: order, label: Orden dentro de la categoría, widget: number, value_type: int, default: 100 }
+      - { name: draft, label: Oculto, widget: boolean, default: false, required: false }
+      - { name: body, label: Descripción, widget: markdown }
